@@ -16,6 +16,10 @@ add_action(
 		add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 80, 'flex-width' => true ) );
 		add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
 		add_theme_support( 'responsive-embeds' );
+		add_theme_support( 'editor-styles' );
+		add_theme_support( 'wp-block-styles' );
+		remove_theme_support( 'core-block-patterns' );
+		add_editor_style( array( 'assets/fonts/fonts.css', 'assets/css/main.css', 'assets/css/editor.css' ) );
 		add_image_size( 'gfa-card', 720, 960, true );
 		register_nav_menus(
 			array(

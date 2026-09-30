@@ -1,0 +1,3 @@
+/* Editor: le animazioni non partono, quindi tutto resta visibile; le sezioni restano leggibili. */
+.editor-styles-wrapper { background: var(--paper); }
+.editor-styles-wrapper .section, .editor-styles-wrapper .hero, .editor-styles-wrapper .page-hero { outline: 1px dashed var(--line); }

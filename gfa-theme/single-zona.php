@@ -30,5 +30,5 @@ while ( have_posts() ) :
 	</div></section>
 	<?php
 endwhile;
-get_template_part( 'parts/quote' );
+echo do_blocks( gfa_pattern( 'preventivo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
 get_footer();

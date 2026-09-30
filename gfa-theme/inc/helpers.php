@@ -28,8 +28,6 @@ function gfa_defaults() {
 		'anno'          => '',
 		'sedi'          => 'Milano, Como, Rapallo, Genova, Sanremo, Bassano del Grappa, Modena, Reggio Emilia',
 		'copie_anno'    => '',
-		'hero_titolo'   => 'Volantinaggio che si può verificare.',
-		'hero_testo'    => 'Distribuiamo volantini in cassetta, nei negozi e agli eventi. Pianifichiamo zone e quantità con te e ti mostriamo dove è passato ogni distributore.',
 		'email_preventivi' => '',
 	);
 }

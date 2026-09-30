@@ -20,6 +20,24 @@
     onScroll();
   }
 
+  // Linea del percorso: aggiunta da script, così nei blocchi resta solo il contenuto
+  document.querySelectorAll('.route-line').forEach(function (line) {
+    if (!line.querySelector('.route-progress')) {
+      var bar = document.createElement('span');
+      bar.className = 'route-progress';
+      bar.setAttribute('aria-hidden', 'true');
+      line.insertBefore(bar, line.firstChild);
+    }
+  });
+
+  // Titolo hero: ogni riga (separata da un a capo) diventa animabile
+  document.querySelectorAll('.hero h1').forEach(function (h1) {
+    if (h1.querySelector('.line')) { return; }
+    var parts = h1.innerHTML.split(/<br\s*\/?>/i);
+    if (parts.length < 2) { return; }
+    h1.innerHTML = parts.map(function (part) { return '<span class="line">' + part + '</span>'; }).join('');
+  });
+
   // Modulo preventivo a passi
   document.querySelectorAll('[data-quote-form]').forEach(function (form) {
     var steps = Array.prototype.slice.call(form.querySelectorAll('fieldset[data-step]'));
@@ -90,7 +108,7 @@
 
   // Hero: le righe del titolo salgono in sequenza
   gsap.from('.hero h1 .line', { yPercent: 35, duration: 0.8, ease: 'power3.out', stagger: 0.12 });
-  gsap.from('.ticket', { y: 30, rotate: -3, duration: 0.9, ease: 'power3.out', delay: 0.35 });
+  if (document.querySelector('.ticket')) { gsap.from('.ticket', { y: 30, rotate: -3, duration: 0.9, ease: 'power3.out', delay: 0.35 }); }
 
   // Percorso GPS nel report: il tracciato si disegna come un giro reale
   var route = document.querySelector('.report__map .route-draw');
@@ -120,7 +138,7 @@
   }
 
   // Card e blocchi: salgono di poco quando entrano (niente dissolvenze da zero)
-  gsap.utils.toArray('.path, .mode, .quote, .zone-list li').forEach(function (el, i) {
+  gsap.utils.toArray('.path, .mode, .quote, .person, .zone-list li').forEach(function (el, i) {
     gsap.from(el, {
       y: 24, duration: 0.6, ease: 'power2.out', delay: (i % 3) * 0.08,
       scrollTrigger: { trigger: el, start: 'top 90%' }

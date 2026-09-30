@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 3,
+	"settings": {
+		"appearanceTools": false,
+		"layout": { "contentSize": "1180px", "wideSize": "1180px" },
+		"spacing": { "blockGap": null, "margin": false, "padding": false },
+		"color": {
+			"custom": false,
+			"customGradient": false,
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"palette": [
+				{ "slug": "gfa-giallo", "color": "#f5c518", "name": "Giallo GFA" },
+				{ "slug": "gfa-blu", "color": "#1f3fae", "name": "Blu GFA" },
+				{ "slug": "gfa-inchiostro", "color": "#141a2e", "name": "Inchiostro" },
+				{ "slug": "gfa-carta", "color": "#fbfaf6", "name": "Carta" }
+			]
+		},
+		"typography": { "customFontSize": false, "fontSizes": [], "defaultFontSizes": false }
+	},
+	"styles": {
+		"spacing": { "blockGap": "0" }
+	}
+}

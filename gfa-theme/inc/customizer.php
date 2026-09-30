@@ -30,8 +30,6 @@ add_action(
 			'anno'             => array( 'Anno di inizio attività', 'text' ),
 			'sedi'             => array( 'Sedi operative, separate da virgola', 'text' ),
 			'copie_anno'       => array( 'Copie distribuite in un anno (dato reale)', 'text' ),
-			'hero_titolo'      => array( 'Titolo homepage', 'text' ),
-			'hero_testo'       => array( 'Testo homepage', 'textarea' ),
 			'email_preventivi' => array( 'Email che riceve le richieste di preventivo', 'email' ),
 		);
 

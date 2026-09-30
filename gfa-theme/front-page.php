@@ -1,18 +1,18 @@
 <?php
 /**
- * Homepage: servizio → prove → lavori → zone → preventivo.
+ * Homepage: il contenuto della pagina impostata come homepage (modelli GFA).
+ * Se la pagina è vuota mostra il modello "Pagina Homepage".
  *
  * @package gfa
  */
 
 get_header();
-get_template_part( 'parts/hero' );
-get_template_part( 'parts/facts' );
-get_template_part( 'parts/paths' );
-get_template_part( 'parts/method' );
-get_template_part( 'parts/control' );
-get_template_part( 'parts/works' );
-get_template_part( 'parts/zones' );
-get_template_part( 'parts/trust' );
-get_template_part( 'parts/quote' );
+if ( have_posts() ) {
+	the_post();
+}
+if ( is_page() && '' !== trim( get_the_content() ) ) {
+	the_content();
+} else {
+	echo do_blocks( gfa_page_content( 'home' ) ); // phpcs:ignore WordPress.Security.EscapeOutput -- markup a blocchi del tema.
+}
 get_footer();

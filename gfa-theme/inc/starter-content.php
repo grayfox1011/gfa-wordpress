@@ -45,7 +45,8 @@ add_action(
 					'post_status'  => 'publish',
 					'post_title'   => $title,
 					'post_name'    => $slug,
-					'post_content' => 'cookie-policy' === $slug ? '<p>Testo della cookie policy da redigere con il consulente privacy.</p>' : '',
+					'post_content' => 'cookie-policy' === $slug ? "<!-- wp:paragraph -->\n<p>Testo della cookie policy da redigere con il consulente privacy.</p>\n<!-- /wp:paragraph -->" : gfa_page_content( $slug ),
+					'page_template' => 'cookie-policy' === $slug ? '' : 'template-sezioni.php',
 				)
 			);
 		}

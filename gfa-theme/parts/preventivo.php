@@ -5,22 +5,9 @@
  * @package gfa
  */
 $gfa_state     = isset( $_GET['preventivo'] ) ? sanitize_key( wp_unslash( $_GET['preventivo'] ) ) : '';
-$gfa_prototype = ! empty( $args['prototype'] );
+$gfa_prototype = false;
 ?>
-<section class="section section--blue" id="preventivo">
-	<div class="wrap quote-box">
-		<div>
-			<p class="eyebrow"><?php esc_html_e( 'Preventivo', 'gfa' ); ?></p>
-			<h2>Tre domande e ti richiamiamo.</h2>
-			<p class="lead" style="margin-top:1rem">Se non sai quante copie ti servono, va bene: lo scegliamo insieme.</p>
-			<ul class="contact-lines">
-				<li><?php gfa_value( 'telefono', 'telefono principale' ); ?></li>
-				<li><?php echo esc_html( gfa_opt( 'email' ) ); ?></li>
-				<?php if ( gfa_opt( 'whatsapp' ) ) : ?>
-					<li><a href="<?php echo esc_url( 'https://wa.me/' . preg_replace( '/\D/', '', gfa_opt( 'whatsapp' ) ) ); ?>">WhatsApp</a></li>
-				<?php endif; ?>
-			</ul>
-		</div>
+
 		<form class="form" data-quote-form <?php echo $gfa_prototype ? 'data-prototype' : ''; ?> method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" novalidate>
 			<input type="hidden" name="action" value="gfa_preventivo">
 			<?php wp_nonce_field( 'gfa_quote', 'gfa_quote_nonce' ); ?>
@@ -77,5 +64,3 @@ $gfa_prototype = ! empty( $args['prototype'] );
 				<button class="btn btn--primary" type="submit" data-send>Invia la richiesta</button>
 			</div>
 		</form>
-	</div>
-</section>
