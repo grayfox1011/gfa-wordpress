@@ -13,8 +13,8 @@ function wp_kses_post( $s ) { return $s; }
 function get_theme_mod( $k, $d = '' ) { return $d; }
 function get_template_directory() { global $T; return $T; }
 function home_url( $p = '/' ) {
-	$map = array( '/volantinaggio/' => '#servizi', '/stampa-e-grafica/' => '#servizi', '/promozione-eventi/' => '#servizi', '/lavori/' => '#lavori', '/zone/' => '#zone', '/chi-siamo/' => '#metodo', '/#preventivo' => '#preventivo', '/' => '#top', '/franchising/' => '#zone', '/cookie-policy/' => '#top', '/privacy-policy/' => '#top' );
-	return isset( $map[ $p ] ) ? $map[ $p ] : '#zone';
+	$map = array( '/' => 'home.html', '/volantinaggio/' => 'volantinaggio.html', '/stampa-e-grafica/' => 'stampa-e-grafica.html', '/promozione-eventi/' => 'promozione-eventi.html', '/chi-siamo/' => 'chi-siamo.html', '/franchising/' => 'franchising.html', '/contatti/' => 'contatti.html', '/lavori/' => 'home.html#lavori', '/zone/' => 'home.html#zone', '/#preventivo' => '#preventivo', '/cookie-policy/' => '#top', '/privacy-policy/' => '#top' );
+	return isset( $map[ $p ] ) ? $map[ $p ] : 'home.html#zone';
 }
 function sanitize_title( $s ) { return strtolower( preg_replace( '/\W+/', '-', $s ) ); }
 function sanitize_key( $s ) { return $s; }
@@ -39,6 +39,7 @@ function get_footer() { global $T; ob_start(); include $T . '/footer.php'; $h = 
 function get_template_part( $slug, $name = null, $args = array( 'prototype' => true ) ) { global $T; include $T . '/' . $slug . '.php'; }
 require $T . '/inc/helpers.php';
 function gfa_fallback_menu() {
-	echo '<ul><li><a href="#servizi">Volantinaggio</a></li><li><a href="#servizi">Stampa e grafica</a></li><li><a href="#servizi">Promozione eventi</a></li><li><a href="#lavori">Lavori svolti</a></li><li><a href="#zone">Zone servite</a></li><li><a href="#metodo">Chi siamo</a></li></ul>';
+	echo '<ul><li><a href="volantinaggio.html">Volantinaggio</a></li><li><a href="stampa-e-grafica.html">Stampa e grafica</a></li><li><a href="promozione-eventi.html">Promozione eventi</a></li><li><a href="home.html#lavori">Lavori svolti</a></li><li><a href="home.html#zone">Zone servite</a></li><li><a href="chi-siamo.html">Chi siamo</a></li></ul>';
 }
-include $T . '/front-page.php';
+$tpl = isset( $argv[1] ) ? $argv[1] : 'front-page';
+include $T . '/' . $tpl . '.php';

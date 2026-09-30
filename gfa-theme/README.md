@@ -10,13 +10,20 @@ font e GSAP sono inclusi nel tema (niente invio di dati a Google Fonts o CDN).
 3. Aspetto → Personalizza → **Dati GFA**: compila solo i dati confermati. I campi vuoti
    compaiono sul sito come segnaposto arancioni ("da fornire").
 
-## Pagine da creare (lo slug decide il layout)
+## Pagine (create in automatico alla prima attivazione)
+All'attivazione il tema crea le pagine mancanti, imposta la homepage statica, crea il menu
+principale e una zona in bozza per ogni sede. Non sovrascrive pagine o menu che esistono già.
+
 | Pagina | Slug | Layout |
 | --- | --- | --- |
-| Home | (pagina statica o lettura "Ultimi articoli") | `front-page.php` |
+| Home | `home` (homepage statica) | `front-page.php` |
 | Volantinaggio | `volantinaggio` | `page-volantinaggio.php` |
+| Stampa e grafica | `stampa-e-grafica` | `page-stampa-e-grafica.php` |
 | Promozione eventi | `promozione-eventi` | `page-promozione-eventi.php` |
-| Stampa e grafica, Chi siamo, Franchising, Privacy, Cookie | a scelta | `page.php` |
+| Chi siamo | `chi-siamo` | `page-chi-siamo.php` |
+| Franchising | `franchising` | `page-franchising.php` |
+| Contatti | `contatti` (stesso indirizzo del vecchio sito) | `page-contatti.php` |
+| Cookie policy, Privacy | `cookie-policy`, pagina privacy di WordPress | `page.php` |
 
 Contenuti dedicati nel menu di amministrazione:
 - **Lavori svolti** → `/lavori/` — campi: servizio, esigenza, zona e periodo, attività, prova.
@@ -39,7 +46,7 @@ Menu: Aspetto → Menu, posizione "Menu principale". Finché è vuoto viene most
   - `/servizi/servizi-stampa/`, `/servizi/studio-grafico-ideazione-logo/` → `/stampa-e-grafica/`
   - `/servizi/pubblicita-mobile-wow/`, `/servizi/pubblicita-veicolare/`, `/servizi/noleggio-strumentazioni/` → `/volantinaggio/` (o pagine dedicate se restano)
   - `/servizi/prodotti-web/`, `/servizi/web-marketing/`, `/servizi/consulenze-e-strategie-di-marketing/` → da decidere
-  - `/promozione/` → `/volantinaggio/#prezzi`, `/portfoglio/` → `/lavori/`, `/contatti/` → `/#preventivo`
+  - `/promozione/` → `/volantinaggio/`, `/portfoglio/` → `/lavori/` (`/contatti/` resta valido)
 - Eliminare l'articolo "Ciao mondo!".
 
 ## Struttura

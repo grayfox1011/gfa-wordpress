@@ -258,7 +258,8 @@ p { margin: 0; max-width: 62ch; }
 @media (max-width: 420px) { .zone-list { grid-template-columns: 1fr; } }
 
 /* Fiducia */
-.trust { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+.trust { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.2rem; }
+.trust > * { min-width: 0; }
 .quote { padding: 1.5rem; border-top: 3px solid var(--ink); display: grid; gap: .8rem; }
 .quote blockquote { margin: 0; font-size: var(--step-1); line-height: 1.4; font-family: var(--f-display); font-stretch: 95%; font-weight: 500; }
 .quote cite { font-style: normal; color: var(--ink-2); font-size: .9rem; }

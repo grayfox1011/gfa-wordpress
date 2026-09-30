@@ -43,7 +43,7 @@ foreach ( $gfa_zone_posts as $gfa_zone ) {
 			<?php foreach ( $gfa_pos as $gfa_city => $gfa_xy ) : ?>
 				<?php if ( in_array( $gfa_city, gfa_sedi(), true ) ) : ?>
 					<circle class="dot<?php echo 'Rapallo' === $gfa_city ? ' dot--home' : ''; ?>" cx="<?php echo (int) $gfa_xy[0]; ?>" cy="<?php echo (int) $gfa_xy[1]; ?>" r="<?php echo 'Rapallo' === $gfa_city ? 8 : 6; ?>"/>
-					<?php $gfa_left = in_array( $gfa_city, array( 'Genova', 'Reggio Emilia' ), true ); ?><text x="<?php echo (int) $gfa_xy[0] + ( $gfa_left ? -11 : 11 ); ?>" y="<?php echo (int) $gfa_xy[1] + ( 'Rapallo' === $gfa_city ? 18 : 4 ); ?>" text-anchor="<?php echo $gfa_left ? 'end' : 'start'; ?>"><?php echo esc_html( $gfa_city ); ?></text>
+					<?php $gfa_left = in_array( $gfa_city, array( 'Genova', 'Reggio Emilia', 'Bassano del Grappa' ), true ); ?><text x="<?php echo (int) $gfa_xy[0] + ( $gfa_left ? -11 : 11 ); ?>" y="<?php echo (int) $gfa_xy[1] + ( 'Rapallo' === $gfa_city ? 18 : 4 ); ?>" text-anchor="<?php echo $gfa_left ? 'end' : 'start'; ?>"><?php echo esc_html( $gfa_city ); ?></text>
 				<?php endif; ?>
 			<?php endforeach; ?>
 		</svg>
