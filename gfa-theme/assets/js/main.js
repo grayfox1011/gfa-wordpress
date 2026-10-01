@@ -12,7 +12,7 @@
 
   // Mostra tutto: usato quando le animazioni non possono partire o qualcosa va storto.
   function revealAll() {
-    root.classList.remove('gfa-anim', 'gfa-preload');
+    root.classList.remove('gfa-anim', 'gfa-preload', 'gfa-enter');
     var pre = document.querySelector('.preloader');
     if (pre) { pre.remove(); }
     if (window.gsap) {
@@ -140,6 +140,39 @@
     });
   }
 
+  /* ---------- Posizione di partenza e passaggio tra pagine ---------- */
+  function initPageFlow() {
+    // Ogni pagina nuova parte dall'alto, salvo un link a una sezione (#preventivo...).
+    if (!window.location.hash) { window.scrollTo(0, 0); }
+
+    // Ingresso: il contenuto compare con un fade leggero.
+    if (root.classList.contains('gfa-enter')) {
+      root.classList.add('gfa-fade');
+      requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove('gfa-enter'); }); });
+    }
+
+    // Uscita: sfuma prima di cambiare pagina (solo link interni a un'altra pagina).
+    if (reduced()) { return; }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { return; }
+      if (a.target && a.target !== '_self') { return; }
+      if (a.hasAttribute('download') || a.closest('#wpadminbar')) { return; }
+      var url;
+      try { url = new URL(a.href, window.location.href); } catch (err) { return; }
+      if (url.origin !== window.location.origin || /\/wp-(admin|login)/.test(url.pathname)) { return; }
+      if (url.pathname === window.location.pathname && url.search === window.location.search) { return; } // stessa pagina: ci pensa lo scroll
+      e.preventDefault();
+      root.classList.add('gfa-fade', 'gfa-leaving');
+      setTimeout(function () { window.location.href = url.href; }, 260);
+    });
+    // Tornando indietro dalla cache del browser la pagina non deve restare sfumata.
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) { root.classList.remove('gfa-leaving', 'gfa-enter'); }
+    });
+  }
+
+  initPageFlow();
   initMenu();
   initHeader();
   initBrand();
@@ -170,6 +203,7 @@
     var lenis = null;
     if (window.Lenis) {
       lenis = new window.Lenis({ lerp: 0.1, anchors: { offset: -90 } });
+      if (!window.location.hash) { lenis.scrollTo(0, { immediate: true, force: true }); }
       lenis.on('scroll', ST.update);
       gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
       gsap.ticker.lagSmoothing(0);
@@ -222,6 +256,17 @@
       if (lenis) { lenis.start(); }
       heroIntro();
       ST.refresh();
+      // Link a una sezione da un'altra pagina: ci si arriva quando le misure sono definitive.
+      if (window.location.hash && window.location.hash.length > 1) {
+        var target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+        if (target) {
+          var go = function () { if (lenis) { lenis.scrollTo(target, { offset: -90, immediate: true, force: true }); } else { target.scrollIntoView(); } };
+          go();
+          if (document.fonts && document.fonts.ready) { document.fonts.ready.then(go); }
+          window.addEventListener('load', function () { ST.refresh(); go(); });
+          setTimeout(go, 700);
+        }
+      }
     }
 
     // 2. Preload

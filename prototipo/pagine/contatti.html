@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 </head>
 <body>
-<script>(function () { var d = document.documentElement; try { var r = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if (!r) { d.classList.add('gfa-anim'); if (!window.sessionStorage.getItem('gfaSeen')) { d.classList.add('gfa-preload'); } } } catch (e) {} setTimeout(function () { if (!window.gfaReady) { d.classList.remove('gfa-anim', 'gfa-preload'); } }, 4000); })();</script>
+<script>(function () { var d = document.documentElement; try { if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } var r = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if (!r) { d.classList.add('gfa-anim'); if (!window.sessionStorage.getItem('gfaSeen')) { d.classList.add('gfa-preload'); } else { d.classList.add('gfa-enter'); } } } catch (e) {} setTimeout(function () { if (!window.gfaReady) { d.classList.remove('gfa-anim', 'gfa-preload', 'gfa-enter'); } }, 4000); })();</script>
 <title>Contatti &#8211; GFA</title>
 <style>
 /* Font self-hosted (GDPR): Archivo, Public Sans, JetBrains Mono - SIL Open Font License */
@@ -518,17 +518,11 @@ mark.todo { background: var(--todo-bg); color: var(--todo); }
 .split-line { padding-bottom: .08em; margin-bottom: -.08em; }
 mark.hl { background-repeat: no-repeat; background-size: 100% 100%; }
 
-/* ---- Passaggio tra pagine ---- */
-@view-transition { navigation: auto; }
-::view-transition-old(root) { animation: gfa-vt-out .22s cubic-bezier(.4, 0, 1, 1) both; }
-::view-transition-new(root) { animation: gfa-vt-in .4s cubic-bezier(0, 0, .2, 1) .2s both; }
-@keyframes gfa-vt-out { to { opacity: 0; transform: translateY(-12px); } }
-@keyframes gfa-vt-in { from { opacity: 0; transform: translateY(16px); } }
-.site-header { view-transition-name: gfa-header; }
-::view-transition-group(gfa-header) { animation: none; }
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
-}
+/* ---- Passaggio tra pagine: fade leggero in uscita e in entrata ----
+   L'header resta fermo, sfumano contenuto e footer. */
+.gfa-enter main, .gfa-enter .site-footer { opacity: 0; }
+.gfa-fade main, .gfa-fade .site-footer { transition: opacity .4s ease; }
+.gfa-leaving main, .gfa-leaving .site-footer { opacity: 0; transition: opacity .25s ease; }
 
 /* ---- Stato iniziale delle animazioni (solo se JavaScript e animazioni sono attivi) ----
    Evita che il contenuto compaia e poi sparisca un attimo prima di animarsi.
@@ -829,7 +823,7 @@ function t(t,e,i){return Math.max(t,Math.min(e,i))}var e=class{isRunning=!1;valu
 
   // Mostra tutto: usato quando le animazioni non possono partire o qualcosa va storto.
   function revealAll() {
-    root.classList.remove('gfa-anim', 'gfa-preload');
+    root.classList.remove('gfa-anim', 'gfa-preload', 'gfa-enter');
     var pre = document.querySelector('.preloader');
     if (pre) { pre.remove(); }
     if (window.gsap) {
@@ -957,6 +951,39 @@ function t(t,e,i){return Math.max(t,Math.min(e,i))}var e=class{isRunning=!1;valu
     });
   }
 
+  /* ---------- Posizione di partenza e passaggio tra pagine ---------- */
+  function initPageFlow() {
+    // Ogni pagina nuova parte dall'alto, salvo un link a una sezione (#preventivo...).
+    if (!window.location.hash) { window.scrollTo(0, 0); }
+
+    // Ingresso: il contenuto compare con un fade leggero.
+    if (root.classList.contains('gfa-enter')) {
+      root.classList.add('gfa-fade');
+      requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove('gfa-enter'); }); });
+    }
+
+    // Uscita: sfuma prima di cambiare pagina (solo link interni a un'altra pagina).
+    if (reduced()) { return; }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href]');
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { return; }
+      if (a.target && a.target !== '_self') { return; }
+      if (a.hasAttribute('download') || a.closest('#wpadminbar')) { return; }
+      var url;
+      try { url = new URL(a.href, window.location.href); } catch (err) { return; }
+      if (url.origin !== window.location.origin || /\/wp-(admin|login)/.test(url.pathname)) { return; }
+      if (url.pathname === window.location.pathname && url.search === window.location.search) { return; } // stessa pagina: ci pensa lo scroll
+      e.preventDefault();
+      root.classList.add('gfa-fade', 'gfa-leaving');
+      setTimeout(function () { window.location.href = url.href; }, 260);
+    });
+    // Tornando indietro dalla cache del browser la pagina non deve restare sfumata.
+    window.addEventListener('pageshow', function (e) {
+      if (e.persisted) { root.classList.remove('gfa-leaving', 'gfa-enter'); }
+    });
+  }
+
+  initPageFlow();
   initMenu();
   initHeader();
   initBrand();
@@ -987,6 +1014,7 @@ function t(t,e,i){return Math.max(t,Math.min(e,i))}var e=class{isRunning=!1;valu
     var lenis = null;
     if (window.Lenis) {
       lenis = new window.Lenis({ lerp: 0.1, anchors: { offset: -90 } });
+      if (!window.location.hash) { lenis.scrollTo(0, { immediate: true, force: true }); }
       lenis.on('scroll', ST.update);
       gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
       gsap.ticker.lagSmoothing(0);
@@ -1039,6 +1067,17 @@ function t(t,e,i){return Math.max(t,Math.min(e,i))}var e=class{isRunning=!1;valu
       if (lenis) { lenis.start(); }
       heroIntro();
       ST.refresh();
+      // Link a una sezione da un'altra pagina: ci si arriva quando le misure sono definitive.
+      if (window.location.hash && window.location.hash.length > 1) {
+        var target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
+        if (target) {
+          var go = function () { if (lenis) { lenis.scrollTo(target, { offset: -90, immediate: true, force: true }); } else { target.scrollIntoView(); } };
+          go();
+          if (document.fonts && document.fonts.ready) { document.fonts.ready.then(go); }
+          window.addEventListener('load', function () { ST.refresh(); go(); });
+          setTimeout(go, 700);
+        }
+      }
     }
 
     // 2. Preload

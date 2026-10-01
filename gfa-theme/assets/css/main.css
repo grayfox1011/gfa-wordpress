@@ -415,17 +415,11 @@ mark.todo { background: var(--todo-bg); color: var(--todo); }
 .split-line { padding-bottom: .08em; margin-bottom: -.08em; }
 mark.hl { background-repeat: no-repeat; background-size: 100% 100%; }
 
-/* ---- Passaggio tra pagine ---- */
-@view-transition { navigation: auto; }
-::view-transition-old(root) { animation: gfa-vt-out .22s cubic-bezier(.4, 0, 1, 1) both; }
-::view-transition-new(root) { animation: gfa-vt-in .4s cubic-bezier(0, 0, .2, 1) .2s both; }
-@keyframes gfa-vt-out { to { opacity: 0; transform: translateY(-12px); } }
-@keyframes gfa-vt-in { from { opacity: 0; transform: translateY(16px); } }
-.site-header { view-transition-name: gfa-header; }
-::view-transition-group(gfa-header) { animation: none; }
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
-}
+/* ---- Passaggio tra pagine: fade leggero in uscita e in entrata ----
+   L'header resta fermo, sfumano contenuto e footer. */
+.gfa-enter main, .gfa-enter .site-footer { opacity: 0; }
+.gfa-fade main, .gfa-fade .site-footer { transition: opacity .4s ease; }
+.gfa-leaving main, .gfa-leaving .site-footer { opacity: 0; transition: opacity .25s ease; }
 
 /* ---- Stato iniziale delle animazioni (solo se JavaScript e animazioni sono attivi) ----
    Evita che il contenuto compaia e poi sparisca un attimo prima di animarsi.

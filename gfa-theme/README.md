@@ -90,6 +90,7 @@ Animazioni (GSAP 3.13 + ScrollTrigger + SplitText, Lenis 1.3 per lo scroll morbi
 - titolo della homepage che sale riga per riga e evidenziatore giallo che si disegna;
 - titoli di sezione divisi in righe, card che entrano a gruppi, percorso GPS che si disegna,
   linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
-- passaggio morbido tra le pagine (View Transitions: Chrome, Edge, Safari 18; altrove cambio normale);
+- fade leggero tra le pagine su tutti i browser (header fermo); ogni pagina parte dall'alto, anche dopo
+  ricarica o "indietro", salvo i link a una sezione (#preventivo), che arrivano alla sezione giusta;
 - gli elementi animati partono già nascosti, così non compaiono e spariscono prima di animarsi;
 - tutto si spegne con "riduci animazioni" del sistema operativo: la pagina resta completa e ferma.
