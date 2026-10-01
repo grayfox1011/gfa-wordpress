@@ -163,9 +163,8 @@
       var go = function () { window.location.href = url.href; };
       if (a.classList.contains('brand')) { go(); return; } // il logo apre con il preload
       curtain.classList.add('is-active');
-      window.gsap.fromTo(curtain, { yPercent: 100 }, { yPercent: 0, duration: 0.55, ease: 'power3.inOut', onComplete: go });
-      window.gsap.fromTo('.page-curtain__mark', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, delay: 0.25, ease: 'power3.out' });
-      setTimeout(go, 1200); // se l'animazione si interrompe, si cambia pagina comunque
+      window.gsap.fromTo(curtain, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: 'power1.inOut', onComplete: go });
+      setTimeout(go, 900); // se l'animazione si interrompe, si cambia pagina comunque
     });
 
     // Tornando indietro dalla cache del browser la tendina non deve restare chiusa.
@@ -290,15 +289,16 @@
       root.classList.remove('gfa-preload');
       if (preloader) { preloader.remove(); }
       if (lenis) { lenis.stop(); }
-      gsap.set(curtain, { yPercent: 0 });
+      gsap.set(curtain, { autoAlpha: 1 });
       var opened = false;
       var open = function () {
         if (opened) { return; }
         opened = true;
         ST.refresh();
         if (!window.location.hash) { window.scrollTo(0, 0); if (lenis) { lenis.scrollTo(0, { immediate: true, force: true }); } }
+        startSite();
         gsap.to(curtain, {
-          yPercent: -100, duration: 0.75, ease: 'expo.inOut', onStart: startSite,
+          autoAlpha: 0, duration: 0.5, ease: 'power1.out',
           onComplete: function () { root.classList.remove('gfa-trans-in'); gsap.set(curtain, { clearProps: 'all' }); }
         });
       };

@@ -14,7 +14,7 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <a class="skip" href="#main"><?php esc_html_e( 'Vai al contenuto', 'gfa' ); ?></a>
-<div class="page-curtain" aria-hidden="true"><span class="page-curtain__mark">GFA</span></div>
+<div class="page-curtain" aria-hidden="true"></div>
 <div class="preloader" aria-hidden="true">
 	<div class="preloader__inner">
 		<div class="preloader__box"><span class="preloader__letter">G</span><span class="preloader__letter">F</span><span class="preloader__letter">A</span></div>
