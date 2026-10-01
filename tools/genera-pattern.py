@@ -127,7 +127,7 @@ P['percorsi'] = ('Tre percorsi', section('section',
 
 P['metodo'] = ('Come lavoriamo', section('section section--alt',
     head('Come lavoriamo', 'Quattro tappe, un solo referente.', 'Non devi sapere quante copie ti servono: lo decidiamo insieme partendo da cosa vuoi promuovere e da chi vuoi raggiungere.'),
-    steps(('Brief', 'Ci racconti cosa promuovi, dove e quando. Ti richiamiamo entro ' + todo('tempo di risposta da confermare') + '.'),
+    steps(('Brief', 'Ci racconti cosa promuovi, dove e quando. Ti ricontattiamo entro ' + todo('tempo di risposta da confermare') + '.'),
           ('Piano zone', 'Scegliamo vie, comuni e modalità, e ti diciamo quante copie servono e perché.'),
           ('Distribuzione', 'Personale riconoscibile, in divisa, con un capo squadra che segue il giro.'),
           ('Report', 'A fine lavoro ricevi mappa del percorso, foto a campione e copie consegnate per zona.')),
@@ -176,7 +176,7 @@ P['recensioni'] = ('Recensioni', section('section',
     anchor='recensioni'))
 
 P['preventivo'] = ('Preventivo', section('section section--blue',
-    grp('quote-box__text', p('Preventivo', 'eyebrow'), h('Tre domande e ti richiamiamo.'), p('Se non sai quante copie ti servono, va bene: lo scegliamo insieme.', 'lead'), dyn('contatti')),
+    grp('quote-box__text', p('Preventivo', 'eyebrow'), h('Tre passaggi, poi ti ricontattiamo.'), p('Se non sai quante copie ti servono, va bene: lo scegliamo insieme.', 'lead'), dyn('contatti')),
     dyn('preventivo'), anchor='preventivo', wrap='wrap quote-box'))
 
 # Volantinaggio
@@ -270,12 +270,12 @@ P['franchising-percorso'] = ('Franchising: come funziona', section('section sect
     steps(('Candidatura', 'Ci dici dove vuoi operare e con quale esperienza.'), ('Colloquio', 'Verifichiamo insieme la zona e il potenziale.'),
           ('Formazione', 'Metodo, strumenti, primi clienti affiancati.'), ('Avvio', 'La tua sede compare nella rete e sul sito.'))))
 P['franchising-candidatura'] = ('Franchising: candidatura', section('section section--blue',
-    grp('quote-box__text', p('Candidatura', 'eyebrow'), h('Parliamone.'), p('Scrivici la zona che ti interessa: ti richiamiamo per un primo colloquio senza impegno.', 'lead')),
+    grp('quote-box__text', p('Candidatura', 'eyebrow'), h('Parliamone.'), p('Scrivici la zona che ti interessa: ti ricontattiamo per un primo colloquio senza impegno.', 'lead')),
     grp('form', p('<strong>Scrivi a</strong> <?php echo esc_html( gfa_opt( \'email\' ) ); ?> con oggetto "Franchising", indicando zona, esperienza e un recapito.'),
         p(todo('In alternativa: modulo dedicato, se GFA vuole ricevere le candidature separate dai preventivi'), 'hint')),
     anchor='candidatura', wrap='wrap quote-box'))
 
-P['contatti-intro'] = ('Contatti: apertura', page_intro('Contatti', 'Parla con la sede più vicina', 'Per un preventivo usa il modulo qui sotto: ti richiama il referente della tua zona.', cta=False))
+P['contatti-intro'] = ('Contatti: apertura', page_intro('Contatti', 'Parla con la sede più vicina', 'Per un preventivo usa il modulo qui sotto: ti ricontatta il referente della tua zona.', cta=False))
 
 os.makedirs(OUT, exist_ok=True)
 for slug, (title, content) in P.items():

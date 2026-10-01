@@ -34,8 +34,8 @@ function gfa_starter_pages() {
  *
  * @return array<string,string[]> Cosa è stato fatto, per il riepilogo.
  */
-function gfa_run_setup() {
-	$done = array( 'create' => array(), 'riempite' => array(), 'saltate' => array() );
+function gfa_run_setup( $reset = false ) {
+	$done = array( 'create' => array(), 'riempite' => array(), 'ripristinate' => array(), 'saltate' => array() );
 	$ids  = array();
 
 	foreach ( gfa_starter_pages() as $slug => $title ) {
@@ -45,7 +45,12 @@ function gfa_run_setup() {
 
 		if ( $page && 'trash' !== $page->post_status ) {
 			$ids[ $slug ] = $page->ID;
-			if ( '' === trim( $page->post_content ) ) {
+			if ( $reset && ! $is_cookie ) {
+				// Ripristino richiesto: il contenuto precedente resta nelle revisioni della pagina.
+				wp_update_post( array( 'ID' => $page->ID, 'post_content' => $content, 'post_status' => 'publish' ) );
+				update_post_meta( $page->ID, '_wp_page_template', 'template-sezioni.php' );
+				$done['ripristinate'][] = $title;
+			} elseif ( '' === trim( $page->post_content ) ) {
 				// Pagina vuota: la riempiamo con i modelli GFA.
 				wp_update_post( array( 'ID' => $page->ID, 'post_content' => $content, 'post_status' => 'publish' ) );
 				if ( ! $is_cookie ) {
@@ -83,6 +88,7 @@ function gfa_run_setup() {
 		$menu    = wp_get_nav_menu_object( 'Menu principale GFA' );
 		$menu_id = $menu ? $menu->term_id : wp_create_nav_menu( 'Menu principale GFA' );
 		if ( ! is_wp_error( $menu_id ) && ! $menu ) {
+			wp_update_nav_menu_item( $menu_id, 0, array( 'menu-item-title' => 'Home', 'menu-item-object' => 'page', 'menu-item-type' => 'post_type', 'menu-item-object-id' => (int) $ids['home'], 'menu-item-status' => 'publish' ) );
 			foreach ( array( 'volantinaggio', 'stampa-e-grafica', 'promozione-eventi' ) as $slug ) {
 				wp_update_nav_menu_item( $menu_id, 0, array( 'menu-item-object' => 'page', 'menu-item-type' => 'post_type', 'menu-item-object-id' => (int) $ids[ $slug ], 'menu-item-status' => 'publish' ) );
 			}
@@ -93,6 +99,20 @@ function gfa_run_setup() {
 		if ( ! is_wp_error( $menu_id ) ) {
 			$locations['primary'] = $menu_id;
 			set_theme_mod( 'nav_menu_locations', $locations );
+		}
+	}
+
+	// Menu GFA creato da una versione precedente senza la voce Home: la aggiunge in testa.
+	$gfa_menu = wp_get_nav_menu_object( 'Menu principale GFA' );
+	if ( $gfa_menu && ! empty( $ids['home'] ) ) {
+		$has_home = false;
+		foreach ( (array) wp_get_nav_menu_items( $gfa_menu->term_id ) as $item ) {
+			if ( (int) $item->object_id === (int) $ids['home'] || trailingslashit( $item->url ) === trailingslashit( home_url( '/' ) ) ) {
+				$has_home = true;
+			}
+		}
+		if ( ! $has_home ) {
+			wp_update_nav_menu_item( $gfa_menu->term_id, 0, array( 'menu-item-title' => 'Home', 'menu-item-object' => 'page', 'menu-item-type' => 'post_type', 'menu-item-object-id' => (int) $ids['home'], 'menu-item-position' => -1, 'menu-item-status' => 'publish' ) );
 		}
 	}
 
@@ -172,12 +192,12 @@ add_action(
 function gfa_setup_page() {
 	$result = null;
 	if ( isset( $_POST['gfa_setup_nonce'] ) && wp_verify_nonce( sanitize_key( $_POST['gfa_setup_nonce'] ), 'gfa_setup' ) && current_user_can( 'manage_options' ) ) {
-		$result = gfa_run_setup();
+		$result = gfa_run_setup( ! empty( $_POST['gfa_reset'] ) );
 	}
 	echo '<div class="wrap"><h1>' . esc_html__( 'Configura sito GFA', 'gfa' ) . '</h1>';
 	if ( $result ) {
 		echo '<div class="notice notice-success"><p><strong>Configurazione completata.</strong></p><ul style="list-style:disc;padding-left:1.5em">';
-		foreach ( array( 'create' => 'Pagine create', 'riempite' => 'Pagine vuote riempite con i modelli', 'saltate' => 'Pagine già scritte, lasciate come sono' ) as $key => $label ) {
+		foreach ( array( 'create' => 'Pagine create', 'riempite' => 'Pagine vuote riempite con i modelli', 'ripristinate' => 'Pagine riportate ai modelli aggiornati', 'saltate' => 'Pagine già scritte, lasciate come sono' ) as $key => $label ) {
 			if ( $result[ $key ] ) {
 				echo '<li>' . esc_html( $label . ': ' . implode( ', ', $result[ $key ] ) ) . '</li>';
 			}
@@ -189,6 +209,7 @@ function gfa_setup_page() {
 	echo '<p>Homepage: <strong>' . ( gfa_home_ok() ? esc_html__( 'impostata', 'gfa' ) : esc_html__( 'non impostata', 'gfa' ) ) . '</strong></p>';
 	echo '<form method="post">';
 	wp_nonce_field( 'gfa_setup', 'gfa_setup_nonce' );
+	echo '<p><label><input type="checkbox" name="gfa_reset" value="1"> Riporta anche le pagine GFA già scritte ai modelli più recenti del tema (Home, Volantinaggio, Stampa e grafica, Promozione eventi, Chi siamo, Franchising, Contatti). I testi modificati a mano si perdono, ma restano recuperabili dalle revisioni di ogni pagina.</label></p>';
 	submit_button( __( 'Configura il sito', 'gfa' ) );
 	echo '</form></div>';
 }

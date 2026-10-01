@@ -6,8 +6,12 @@
 - `tools/build-prototipo.py` — rigenera il prototipo da un WordPress con il tema attivo:
   `python3 tools/build-prototipo.py http://localhost:8080`
 
-Verificato su WordPress 7.1.2: attivazione, creazione di pagine e menu, validità dei blocchi
-nell'editor, modulo preventivo (invio e messaggio di conferma), redirect, pagine senza
-scorrimento orizzontale a 1366 e 400 px.
+Verificato su WordPress 7.1.2 (versione 0.4.0), seguendo i criteri del report di verifica desktop/mobile:
+- titoli e hero sempre visibili dopo caricamento, 5 ridimensionamenti desktop/mobile, scroll completo,
+  librerie bloccate e movimento ridotto; nessuna riga lasciata divisa da SplitText;
+- portfolio fissato solo se il blocco intero entra nello schermo (1366×768 e 1024×600: scorrimento normale);
+- menu mobile: voci separate (min 48 px), Escape e CTA chiudono, scorrimento interno a 640×360;
+- nessuno scorrimento laterale a 320, 390, 421 e 768 px su tutte le pagine; prezzi a schede su telefono;
+- modulo: errore del server visibile, funziona anche senza JavaScript, un solo invio, email ricevuta.
 
 Tutti i dati aziendali non confermati compaiono come segnaposto arancioni "da fornire".

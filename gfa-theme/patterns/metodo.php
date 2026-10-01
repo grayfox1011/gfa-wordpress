@@ -28,7 +28,7 @@
 <h3 class="wp-block-heading">Brief</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Ci racconti cosa promuovi, dove e quando. Ti richiamiamo entro <mark class="todo">tempo di risposta da confermare</mark>.</p>
+<p>Ci racconti cosa promuovi, dove e quando. Ti ricontattiamo entro <mark class="todo">tempo di risposta da confermare</mark>.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"route-step","layout":{"type":"default"}} -->

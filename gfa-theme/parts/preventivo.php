@@ -14,9 +14,13 @@ $gfa_prototype = false;
 			<div class="hp" aria-hidden="true"><label for="gfa_website">Sito web</label><input type="text" id="gfa_website" name="gfa_website" tabindex="-1" autocomplete="off"></div>
 
 			<?php if ( 'inviato' === $gfa_state ) : ?>
-				<p class="form__ok" role="status"><strong>Richiesta inviata.</strong> Ti ricontattiamo al più presto all'email che hai indicato.</p>
-			<?php elseif ( 'errore' === $gfa_state ) : ?>
-				<p class="form__error" role="alert">Non siamo riusciti a inviare la richiesta. Controlla nome, email e consenso privacy, oppure chiamaci.</p>
+				<p class="form__notice form__notice--ok" role="status"><strong>Richiesta inviata.</strong> Ti ricontattiamo al più presto all'email che hai indicato.</p>
+				<p><a href="<?php echo esc_url( remove_query_arg( 'preventivo' ) ); ?>#preventivo"><?php esc_html_e( 'Invia un\'altra richiesta', 'gfa' ); ?></a></p>
+		</form>
+				<?php
+				return;
+			elseif ( 'errore' === $gfa_state ) : ?>
+				<p class="form__notice form__notice--error" role="alert">Non siamo riusciti a inviare la richiesta. Controlla nome, email e consenso privacy, oppure chiamaci.</p>
 			<?php endif; ?>
 
 			<ol class="form__steps" aria-label="Passi del modulo"><li>1 · Servizio</li><li>2 · Zona e quantità</li><li>3 · Contatti</li></ol>
@@ -31,7 +35,7 @@ $gfa_prototype = false;
 				</div>
 			</fieldset>
 
-			<fieldset data-step="2" hidden>
+			<fieldset data-step="2">
 				<legend>Dove e quanto?</legend>
 				<div class="field"><label for="gfa_zona">Comune o zona</label><input id="gfa_zona" name="gfa_zona" type="text" required data-label="il comune o la zona" placeholder="Es. Rapallo e Santa Margherita"></div>
 				<div class="field--row">
@@ -43,7 +47,7 @@ $gfa_prototype = false;
 				<div class="field"><label for="gfa_dettagli">Cosa promuovi? <span class="hint">(facoltativo)</span></label><textarea id="gfa_dettagli" name="gfa_dettagli" rows="3" placeholder="Apertura, offerta, evento…"></textarea></div>
 			</fieldset>
 
-			<fieldset data-step="3" hidden>
+			<fieldset data-step="3">
 				<legend>Come ti ricontattiamo?</legend>
 				<div class="field--row">
 					<div class="field"><label for="gfa_nome">Nome</label><input id="gfa_nome" name="gfa_nome" type="text" required autocomplete="name" data-label="il nome"></div>
@@ -56,11 +60,11 @@ $gfa_prototype = false;
 				<label class="check" for="gfa_privacy"><input type="checkbox" id="gfa_privacy" name="gfa_privacy" value="1" required data-label="il consenso privacy"><span>Ho letto l'<a href="<?php echo esc_url( get_privacy_policy_url() ? get_privacy_policy_url() : home_url( '/privacy-policy/' ) ); ?>">informativa privacy</a> e accetto di essere ricontattato per questa richiesta.</span></label>
 			</fieldset>
 
-			<div class="form__ok" hidden tabindex="-1" role="status"><strong>Richiesta pronta.</strong> <span>Nel prototipo non viene inviato nulla; nel sito vero arriva via email a GFA.</span></div>
-			<p class="form__error" aria-live="polite"></p>
+			<div class="form__ok" hidden tabindex="-1" role="status"><strong>Richiesta pronta.</strong> <span>Questa è una dimostrazione: non è stato inviato nulla. Sul sito la richiesta arriva via email a GFA.</span></div>
+			<p class="form__error" aria-live="polite" data-step-error></p>
 			<div class="form__nav">
-				<button class="btn btn--ghost" type="button" data-back>← Indietro</button>
-				<button class="btn btn--blue" type="button" data-next>Avanti →</button>
+				<button class="btn btn--ghost" type="button" data-back hidden>← Indietro</button>
+				<button class="btn btn--blue" type="button" data-next hidden>Avanti →</button>
 				<button class="btn btn--primary" type="submit" data-send>Invia la richiesta</button>
 			</div>
 		</form>

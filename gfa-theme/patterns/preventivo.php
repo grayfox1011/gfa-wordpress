@@ -15,7 +15,7 @@
 <p class="eyebrow">Preventivo</p>
 <!-- /wp:paragraph -->
 <!-- wp:heading -->
-<h2 class="wp-block-heading">Tre domande e ti richiamiamo.</h2>
+<h2 class="wp-block-heading">Tre passaggi, poi ti ricontattiamo.</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead"} -->
 <p class="lead">Se non sai quante copie ti servono, va bene: lo scegliamo insieme.</p>

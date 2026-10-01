@@ -34,6 +34,8 @@ menu, zone in bozza, permalink) parte da sola:
   il tema già attivo.
 
 Non sovrascrive pagine già scritte. Il pulsante in Aspetto → Configura sito GFA la rilancia a mano;
+con la casella "Riporta anche le pagine GFA già scritte ai modelli più recenti" aggiorna i testi delle
+pagine dopo un aggiornamento del tema (il contenuto precedente resta nelle revisioni);
 finché la homepage non è impostata, la bacheca mostra un avviso con il link.
 
 ### Creazione automatica all'attivazione

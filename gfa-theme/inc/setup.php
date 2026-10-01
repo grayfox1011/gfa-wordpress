@@ -78,6 +78,7 @@ remove_action( 'wp_print_styles', 'print_emoji_styles' );
  */
 function gfa_fallback_menu() {
 	$items = array(
+		''                 => 'Home',
 		'volantinaggio'    => 'Volantinaggio',
 		'stampa-e-grafica' => 'Stampa e grafica',
 		'promozione-eventi' => 'Promozione eventi',
@@ -87,7 +88,7 @@ function gfa_fallback_menu() {
 	);
 	echo '<ul>';
 	foreach ( $items as $slug => $label ) {
-		echo '<li><a href="' . esc_url( home_url( '/' . $slug . '/' ) ) . '">' . esc_html( $label ) . '</a></li>';
+		echo '<li><a href="' . esc_url( home_url( '' === $slug ? '/' : '/' . $slug . '/' ) ) . '">' . esc_html( $label ) . '</a></li>';
 	}
 	echo '</ul>';
 }

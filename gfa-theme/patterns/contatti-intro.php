@@ -17,7 +17,7 @@
 <h1 class="wp-block-heading">Parla con la sede più vicina</h1>
 <!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead"} -->
-<p class="lead">Per un preventivo usa il modulo qui sotto: ti richiama il referente della tua zona.</p>
+<p class="lead">Per un preventivo usa il modulo qui sotto: ti ricontatta il referente della tua zona.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->

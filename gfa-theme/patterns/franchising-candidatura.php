@@ -18,7 +18,7 @@
 <h2 class="wp-block-heading">Parliamone.</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead"} -->
-<p class="lead">Scrivici la zona che ti interessa: ti richiamiamo per un primo colloquio senza impegno.</p>
+<p class="lead">Scrivici la zona che ti interessa: ti ricontattiamo per un primo colloquio senza impegno.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"form","layout":{"type":"default"}} -->
