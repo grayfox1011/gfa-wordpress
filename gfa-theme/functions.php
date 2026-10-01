@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GFA_VERSION', '0.3.1' );
+define( 'GFA_VERSION', '0.3.2' );
 
 require get_template_directory() . '/inc/helpers.php';
 require get_template_directory() . '/inc/setup.php';

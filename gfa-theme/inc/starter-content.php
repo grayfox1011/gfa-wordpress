@@ -122,14 +122,30 @@ function gfa_run_setup() {
 	return $done;
 }
 
+// All'attivazione del tema: sempre (non sovrascrive nulla di già scritto).
 add_action(
 	'after_switch_theme',
 	function () {
-		if ( ! get_option( 'gfa_starter_done' ) ) {
-			gfa_run_setup();
-		}
+		gfa_run_setup();
+		update_option( 'gfa_setup_version', GFA_VERSION );
 	},
 	20
+);
+
+// Installazione caricando lo zip sopra il tema già attivo (WordPress non la conta come
+// attivazione) o aggiornamento: alla prima apertura della bacheca con la nuova versione.
+add_action(
+	'admin_init',
+	function () {
+		if ( ! current_user_can( 'manage_options' ) || wp_doing_ajax() ) {
+			return;
+		}
+		if ( get_option( 'gfa_setup_version' ) === GFA_VERSION ) {
+			return;
+		}
+		update_option( 'gfa_setup_version', GFA_VERSION );
+		gfa_run_setup();
+	}
 );
 
 /**

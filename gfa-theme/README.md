@@ -27,10 +27,14 @@ Numeri, Lavori svolti, Elenco sedi, Mappa sedi, Modulo preventivo, Recapiti, Dat
 Header e footer leggono i dati da Aspetto → Personalizza → Dati GFA.
 
 ### Configurazione del sito (Aspetto → Configura sito GFA)
-Un pulsante crea le pagine mancanti, riempie quelle vuote, imposta la homepage statica, il menu,
-le zone in bozza e i permalink. Serve soprattutto quando si sostituisce il tema caricando lo zip
-(WordPress non lo conta come nuova attivazione). Finché la homepage non è impostata, la bacheca
-mostra un avviso con il link.
+La configurazione (pagine mancanti, pagine vuote riempite, homepage statica sulla pagina "Home",
+menu, zone in bozza, permalink) parte da sola:
+- a ogni attivazione del tema;
+- alla prima apertura della bacheca dopo aver caricato una nuova versione dello zip, anche sopra
+  il tema già attivo.
+
+Non sovrascrive pagine già scritte. Il pulsante in Aspetto → Configura sito GFA la rilancia a mano;
+finché la homepage non è impostata, la bacheca mostra un avviso con il link.
 
 ### Creazione automatica all'attivazione
 Il tema crea le pagine mancanti già riempite con i modelli, con il template *Pagina a sezioni GFA*,
