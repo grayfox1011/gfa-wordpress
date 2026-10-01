@@ -25,6 +25,11 @@ prezzi, domande frequenti e foto si modificano direttamente nell'editor, come in
 Blocchi automatici (categoria *GFA*), che leggono i dati invece di scriverli a mano:
 Numeri, Lavori svolti, Elenco sedi, Mappa sedi, Modulo preventivo, Recapiti, Dati societari.
 Header e footer leggono i dati da Aspetto → Personalizza → Dati GFA.
+- **Logo:** Personalizza → Identità del sito. Nell'header è alto 38 px al posto del riquadro giallo
+  "GFA"; un logo largo (almeno il doppio dell'altezza) contiene già il nome, quindi il testo
+  "GFA · Volantinaggio e distribuzione" accanto non compare.
+- **Menu del footer:** la colonna "Servizi" usa il menu assegnato alla posizione *Menu footer*
+  (Aspetto → Menu); senza menu mostra l'elenco predefinito.
 
 ### Configurazione del sito (Aspetto → Configura sito GFA)
 La configurazione (pagine mancanti, pagine vuote riempite, homepage statica sulla pagina "Home",
@@ -58,7 +63,9 @@ aprila, scegli il template *Pagina a sezioni GFA* e inserisci il modello *Pagina
 Contenuti dedicati nel menu di amministrazione:
 - **Lavori svolti** → `/lavori/`: campi servizio, esigenza, zona e periodo, attività, prova.
 - **Zone servite** → `/zone/` e `/volantinaggio/<città>/`: campi indirizzo, telefono, comuni.
-  Il titolo della zona deve coincidere con il nome della sede (es. "Rapallo").
+  Il titolo della zona deve coincidere con il nome della sede (es. "Rapallo"). Nell'elenco sedi
+  una sede compare con il link solo quando la sua zona è pubblicata: le zone in bozza darebbero
+  "pagina non trovata".
 
 ### Redirect dai vecchi indirizzi
 Già inclusi nel tema (301, solo se il vecchio indirizzo non esiste più): tutte le pagine
@@ -66,6 +73,12 @@ Già inclusi nel tema (301, solo se il vecchio indirizzo non esiste più): tutte
 
 ## Modulo preventivo
 - Invio via `admin-post.php`, con nonce, campo esca anti-spam e consenso privacy obbligatorio.
+- Compare da solo in fondo alle pagine standard, agli articoli, ai lavori e alle zone, ma non
+  nella privacy policy, nella cookie policy e nelle pagine che lo contengono già.
+- Finché l'informativa privacy non è pubblicata (Impostazioni → Privacy), al posto del link il
+  consenso mostra il segnaposto arancione "informativa privacy da pubblicare".
+- Premendo Invio nei primi due passi si va al passo successivo: la richiesta parte solo
+  dall'ultimo, con nome, email e consenso.
 - Arriva all'email "richieste di preventivo" (Dati GFA), altrimenti all'email dell'amministratore.
 - Installare un plugin SMTP (es. WP Mail SMTP) e fare una prova reale di invio e ricezione.
 
@@ -82,7 +95,9 @@ inc/      helpers, setup, customizer, post-types, quote-form, blocks (blocchi di
 patterns/ 29 sezioni a blocchi (generate da tools/genera-pattern.py)
 parts/    markup dei blocchi dinamici (lavori, sedi, modulo, recapiti)
 theme.json palette GFA e impostazioni editor
-assets/   css/main.css, css/editor.css, js/main.js, js/editor.js, img/foto-da-fornire.svg, js/vendor (GSAP 3.12.5 + ScrollTrigger), fonts (OFL)
+assets/   css/main.css, css/editor.css, js/main.js, js/editor.js, img/foto-da-fornire.svg,
+          js/vendor (GSAP 3.13 con ScrollTrigger e SplitText, Lenis 1.3.11), fonts (OFL; Public Sans
+          è variabile: un solo file per normale e semigrassetto)
 ```
 Animazioni (GSAP 3.13 + ScrollTrigger + SplitText, Lenis 1.3 per lo scroll morbido, tutto incluso nel tema):
 - schermata di caricamento con il logo GFA, solo alla prima pagina visitata in una sessione;
@@ -90,9 +105,14 @@ Animazioni (GSAP 3.13 + ScrollTrigger + SplitText, Lenis 1.3 per lo scroll morbi
 - titolo della homepage che sale riga per riga e evidenziatore giallo che si disegna;
 - titoli di sezione divisi in righe, card che entrano a gruppi, percorso GPS che si disegna,
   linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
-- transizione tra le pagine con GSAP: una tendina blu GFA copre tutta la pagina (header compreso), si cambia
-  pagina e la tendina si apre solo quando la nuova pagina è pronta e in cima; tutti i browser;
-- ogni pagina parte dall'alto, anche dopo ricarica o "indietro"; i link a una sezione (#preventivo)
-  arrivano alla sezione giusta; il logo apre la home con il preload;
+- passaggio tra le pagine con GSAP: una dissolvenza a schermo intero (header compreso) copre la pagina,
+  si cambia pagina e il velo si toglie quando la nuova pagina è pronta; i link a file (PDF, documenti,
+  immagini…) aprono il file senza dissolvenza e, se una pagina non arriva, dopo 4 secondi il velo si
+  toglie comunque;
+- le pagine nuove e le ricariche partono dall'alto; con "indietro" e "avanti" si torna al punto in cui
+  si era; i link a una sezione (#preventivo) arrivano alla sezione giusta e "Chiedi un preventivo"
+  dell'header scorre al modulo quando la pagina lo contiene già; il logo apre la home con il preload;
 - gli elementi animati partono già nascosti, così non compaiono e spariscono prima di animarsi;
 - tutto si spegne con "riduci animazioni" del sistema operativo: la pagina resta completa e ferma.
+
+Il sito è sempre chiaro, come il prototipo approvato: la modalità scura del sistema non cambia i colori.

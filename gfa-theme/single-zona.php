@@ -20,15 +20,17 @@ while ( have_posts() ) :
 	<section class="section"><div class="wrap control">
 		<div class="prose"><?php the_content(); ?></div>
 		<div class="stack">
-			<h3>Sede</h3>
+			<h2 class="is-h3">Sede</h2>
 			<p><?php echo esc_html( get_post_meta( $gfa_id, 'gfa_indirizzo', true ) ); ?><br><?php echo esc_html( get_post_meta( $gfa_id, 'gfa_telefono', true ) ); ?></p>
 			<?php if ( $gfa_comuni ) : ?>
-				<h3>Comuni serviti</h3>
+				<h2 class="is-h3">Comuni serviti</h2>
 				<p><?php echo esc_html( implode( ' · ', $gfa_comuni ) ); ?></p>
 			<?php endif; ?>
 		</div>
 	</div></section>
 	<?php
 endwhile;
-echo do_blocks( gfa_pattern( 'preventivo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+if ( gfa_show_quote_form() ) {
+	echo do_blocks( gfa_pattern( 'preventivo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+}
 get_footer();

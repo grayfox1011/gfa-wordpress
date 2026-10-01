@@ -24,15 +24,16 @@
 </div>
 <header class="site-header">
 	<div class="wrap">
-		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'GFA, torna alla homepage', 'gfa' ); ?>">
+		<?php // Un logo largo (almeno 2:1) contiene già il nome: il testo accanto non si ripete. ?>
+		<a class="brand<?php echo has_custom_logo() && gfa_logo_ratio() >= 2 ? ' brand--logo-wide' : ''; ?>" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'GFA, torna alla homepage', 'gfa' ); ?>">
 			<?php if ( has_custom_logo() ) : ?>
-				<?php echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'thumbnail', false, array( 'class' => 'brand__logo', 'alt' => '' ) ); ?>
+				<?php echo gfa_brand_logo(); // phpcs:ignore WordPress.Security.EscapeOutput -- immagine di WordPress. ?>
 			<?php else : ?>
 				<span class="brand__mark" aria-hidden="true">GFA</span>
 			<?php endif; ?>
-			<span><?php echo esc_html( gfa_opt( 'brand' ) ); ?><span class="brand__sub"><?php esc_html_e( 'Volantinaggio e distribuzione', 'gfa' ); ?></span></span>
+			<span class="brand__text"><?php echo esc_html( gfa_opt( 'brand' ) ); ?><span class="brand__sub"><?php esc_html_e( 'Volantinaggio e distribuzione', 'gfa' ); ?></span></span>
 		</a>
-		<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><?php esc_html_e( 'Menu', 'gfa' ); ?></button>
+		<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-label-closed="<?php esc_attr_e( 'Menu', 'gfa' ); ?>" data-label-open="<?php esc_attr_e( 'Chiudi', 'gfa' ); ?>"><?php esc_html_e( 'Menu', 'gfa' ); ?></button>
 		<nav class="nav" id="site-nav" aria-label="<?php esc_attr_e( 'Principale', 'gfa' ); ?>">
 			<?php
 			wp_nav_menu(
@@ -47,7 +48,8 @@
 			<?php if ( gfa_opt( 'telefono' ) ) : ?>
 				<a class="nav__phone" href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', gfa_opt( 'telefono' ) ) ); ?>"><?php echo esc_html( gfa_opt( 'telefono' ) ); ?></a>
 			<?php endif; ?>
-			<a class="btn btn--primary" href="<?php echo esc_url( home_url( '/#preventivo' ) ); ?>"><?php esc_html_e( 'Chiedi un preventivo', 'gfa' ); ?></a>
+			<?php // In homepage il link resta nella pagina; altrove main.js scorre al modulo se la pagina lo contiene già. ?>
+			<a class="btn btn--primary" href="<?php echo esc_url( is_front_page() ? '#preventivo' : home_url( '/#preventivo' ) ); ?>" data-gfa-local="preventivo"><?php esc_html_e( 'Chiedi un preventivo', 'gfa' ); ?></a>
 		</nav>
 	</div>
 </header>

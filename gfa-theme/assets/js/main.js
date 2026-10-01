@@ -5,9 +5,100 @@
   'use strict';
 
   var root = document.documentElement;
+  var lenis = null; // scroll morbido, creato con le animazioni
+  var HEADER_OFFSET = 90;
 
   function reduced() {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  // Esegue un pezzo di inizializzazione: se fallisce, gli altri partono lo stesso.
+  function safely(fn) {
+    try { fn(); } catch (err) { if (window.console) { window.console.error('GFA:', err); } }
+  }
+
+  /* ---------- Posizione di partenza ----------
+     Pagine nuove e ricariche partono dall'alto; un link a una sezione (#preventivo) porta alla
+     sezione; con "indietro" e "avanti" si torna dove si era. Il browser non ripristina da solo
+     (history.scrollRestoration = 'manual' in preload-head.js), perché preload e dissolvenza
+     ricalcolano la pagina: la posizione si salva quando si lascia la pagina, legata alla voce
+     della cronologia (la stessa pagina visitata due volte ha due posizioni). */
+  var SCROLL_KEY = (function () {
+    try {
+      var state = window.history.state;
+      if (!state || typeof state !== 'object' || !state.gfaEntry) {
+        var next = {};
+        if (state && typeof state === 'object') {
+          for (var k in state) { if (Object.prototype.hasOwnProperty.call(state, k)) { next[k] = state[k]; } }
+        }
+        next.gfaEntry = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+        window.history.replaceState(next, '');
+        state = next;
+      }
+      return 'gfaScroll:' + state.gfaEntry;
+    } catch (e) {
+      return 'gfaScroll:' + window.location.pathname + window.location.search;
+    }
+  })();
+
+  function navigationType() {
+    try {
+      var nav = window.performance && window.performance.getEntriesByType && window.performance.getEntriesByType('navigation')[0];
+      if (nav && nav.type) { return nav.type; }
+      if (window.performance && window.performance.navigation) {
+        return ['navigate', 'reload', 'back_forward'][window.performance.navigation.type] || 'navigate';
+      }
+    } catch (e) { /* API non disponibile */ }
+    return 'navigate';
+  }
+
+  function savedScroll() {
+    try {
+      var value = parseInt(window.sessionStorage.getItem(SCROLL_KEY), 10);
+      return isNaN(value) ? null : Math.max(0, value);
+    } catch (e) { return null; }
+  }
+
+  function saveScroll() {
+    try { window.sessionStorage.setItem(SCROLL_KEY, String(Math.round(window.scrollY))); } catch (e) { /* storage non disponibile */ }
+  }
+
+  // Numero di pixel da cui partire, oppure null quando decide il link alla sezione.
+  var startY = (function () {
+    if (navigationType() === 'back_forward') {
+      var saved = savedScroll();
+      if (saved !== null) { return saved; }
+    }
+    return window.location.hash.length > 1 ? null : 0;
+  })();
+
+  function scrollToY(y) {
+    if (lenis) { lenis.scrollTo(y, { immediate: true, force: true }); } else { window.scrollTo(0, y); }
+  }
+
+  // Applica una posizione subito e di nuovo quando arrivano font e immagini (l'altezza della
+  // pagina cambia), finché chi visita non scorre da sé.
+  function settle(go) {
+    var moved = false;
+    var stop = function () { moved = true; };
+    ['wheel', 'touchstart', 'keydown', 'mousedown'].forEach(function (type) {
+      window.addEventListener(type, stop, { passive: true, once: true });
+    });
+    var run = function () { if (!moved) { go(); } };
+    run();
+    if (document.fonts && document.fonts.ready) { document.fonts.ready.then(run); }
+    window.addEventListener('load', run);
+    setTimeout(run, 700);
+  }
+
+  // Scorre fino a una sezione lasciando spazio all'header fisso.
+  function scrollToTarget(target, immediate) {
+    if (lenis) {
+      lenis.scrollTo(target, { offset: -HEADER_OFFSET, immediate: !!immediate, force: true });
+      return;
+    }
+    var y = target.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+    window.scrollTo({ top: Math.max(0, y), behavior: immediate || reduced() ? 'auto' : 'smooth' });
   }
 
   // Mostra tutto: usato quando le animazioni non possono partire o qualcosa va storto.
@@ -25,14 +116,19 @@
     var toggle = document.querySelector('.nav-toggle');
     var nav = document.getElementById('site-nav');
     if (!toggle || !nav) { return; }
+    // Etichette tradotte da header.php.
+    var labelClosed = toggle.getAttribute('data-label-closed') || toggle.textContent;
+    var labelOpen = toggle.getAttribute('data-label-open') || 'Chiudi';
     function setOpen(open, focusToggle) {
       if (open) {
         var bottom = toggle.closest('.site-header').getBoundingClientRect().bottom;
         nav.style.setProperty('--nav-max', Math.max(200, window.innerHeight - bottom) + 'px');
       }
       nav.classList.toggle('is-open', open);
+      // Menu aperto: la rotellina scorre il menu, non la pagina sotto (Lenis lo lascia stare).
+      if (open) { nav.setAttribute('data-lenis-prevent', ''); } else { nav.removeAttribute('data-lenis-prevent'); }
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      toggle.textContent = open ? 'Chiudi' : 'Menu';
+      toggle.textContent = open ? labelOpen : labelClosed;
       if (!open && focusToggle) { toggle.focus(); }
     }
     toggle.addEventListener('click', function () { setOpen(!nav.classList.contains('is-open')); });
@@ -40,7 +136,43 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && nav.classList.contains('is-open')) { setOpen(false, true); }
     });
-    window.matchMedia('(min-width: 1181px)').addEventListener('change', function (mq) { if (mq.matches) { setOpen(false); } });
+    var wide = window.matchMedia('(min-width: 1181px)');
+    var onWide = function (mq) { if (mq.matches) { setOpen(false); } };
+    if (wide.addEventListener) { wide.addEventListener('change', onWide); } else if (wide.addListener) { wide.addListener(onWide); } // Safari prima della 14
+  }
+
+  /* ---------- Aree che scorrono di lato: raggiungibili da tastiera ----------
+     La fascia dei lavori e le tabelle larghe ricevono tabindex ed etichetta solo mentre
+     scorrono davvero; quando entrano nello spazio gli attributi aggiunti qui vengono tolti. */
+  function initScrollRegions() {
+    var regions = document.querySelectorAll('.works, .table-scroll, .wp-block-table, .prose table');
+    if (!regions.length) { return; }
+    function label(el) {
+      if (el.classList.contains('works')) { return 'Lavori svolti'; }
+      var caption = el.querySelector('figcaption, caption');
+      return caption && caption.textContent.trim() ? caption.textContent.trim() : 'Tabella';
+    }
+    function update() {
+      regions.forEach(function (el) {
+        var overflow = window.getComputedStyle(el).overflowX;
+        var scrolls = (overflow === 'auto' || overflow === 'scroll') && el.scrollWidth > el.clientWidth + 1;
+        if (scrolls && !el.hasAttribute('tabindex')) {
+          el.setAttribute('tabindex', '0');
+          el.setAttribute('data-gfa-region', '');
+          if (!el.hasAttribute('role')) { el.setAttribute('role', 'region'); el.setAttribute('data-gfa-role', ''); }
+          if (!el.hasAttribute('aria-label') && !el.hasAttribute('aria-labelledby')) { el.setAttribute('aria-label', label(el)); el.setAttribute('data-gfa-label', ''); }
+        } else if (!scrolls && el.hasAttribute('data-gfa-region')) {
+          el.removeAttribute('tabindex');
+          el.removeAttribute('data-gfa-region');
+          if (el.hasAttribute('data-gfa-role')) { el.removeAttribute('role'); el.removeAttribute('data-gfa-role'); }
+          if (el.hasAttribute('data-gfa-label')) { el.removeAttribute('aria-label'); el.removeAttribute('data-gfa-label'); }
+        }
+      });
+    }
+    var timer = null;
+    update();
+    window.addEventListener('load', update);
+    window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(update, 200); });
   }
 
   /* ---------- Header compatto ---------- */
@@ -84,6 +216,16 @@
       var error = form.querySelector('[data-step-error]');
       var current = 0;
       if (!steps.length || !back || !next || !send || !error) { return; }
+      var sendLabel = send.textContent;
+      var msgCheck = form.getAttribute('data-msg-check') || 'Controlla %s per continuare.';
+      var msgSending = form.getAttribute('data-msg-sending') || 'Invio in corso…';
+
+      // Pulsante di invio pronto: all'apertura e tornando indietro dopo un invio, quando il
+      // browser ripresenta la pagina con il pulsante ancora disattivato.
+      function ready() {
+        send.disabled = false;
+        send.textContent = sendLabel;
+      }
 
       function show(i, focus) {
         current = i;
@@ -108,7 +250,7 @@
         for (var k = 0; k < fields.length; k++) {
           if (!fields[k].checkValidity()) {
             var label = fields[k].getAttribute('data-label') || 'questo campo';
-            error.textContent = 'Controlla ' + label + ' per continuare.';
+            error.textContent = msgCheck.replace('%s', label);
             fields[k].focus();
             return false;
           }
@@ -120,6 +262,13 @@
       back.addEventListener('click', function () { show(current - 1, true); });
 
       form.addEventListener('submit', function (e) {
+        // Invio da tastiera prima dell'ultimo passo: si va al passo successivo, senza spedire
+        // una richiesta priva di nome, email e consenso.
+        if (current < steps.length - 1) {
+          e.preventDefault();
+          if (valid(current)) { show(current + 1, true); }
+          return;
+        }
         if (!valid(current)) { e.preventDefault(); return; }
         if (form.hasAttribute('data-prototype')) {
           e.preventDefault();
@@ -133,9 +282,11 @@
         }
         // Un solo invio.
         send.disabled = true;
-        send.textContent = 'Invio in corso…';
+        send.textContent = msgSending;
       });
 
+      window.addEventListener('pageshow', function (e) { if (e.persisted) { ready(); } });
+      ready();
       show(0, false);
     });
   }
@@ -143,11 +294,24 @@
   /* ---------- Posizione di partenza e passaggio tra pagine ---------- */
   var curtain = document.querySelector('.page-curtain');
   function initPageFlow() {
-    // Ogni pagina nuova parte dall'alto, salvo un link a una sezione (#preventivo...).
-    if (!window.location.hash) { window.scrollTo(0, 0); }
+    if (startY !== null) { window.scrollTo(0, startY); }
+    window.addEventListener('pagehide', saveScroll);
+
+    // "Chiedi un preventivo" dell'header punta alla homepage: se il modulo è già in questa
+    // pagina si scorre fin lì invece di cambiare pagina.
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-gfa-local]');
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { return; }
+      var target = document.getElementById(a.getAttribute('data-gfa-local'));
+      if (!target) { return; }
+      e.preventDefault();
+      scrollToTarget(target);
+    });
+
     if (reduced() || !curtain) { return; }
 
-    // Uscita: la tendina copre tutta la pagina, poi si cambia pagina.
+    // Uscita: un velo copre tutta la pagina, poi si cambia pagina.
+    var leaving = false;
     document.addEventListener('click', function (e) {
       var a = e.target.closest('a[href]');
       if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { return; }
@@ -155,36 +319,57 @@
       if (a.hasAttribute('download') || a.closest('#wpadminbar')) { return; }
       var url;
       try { url = new URL(a.href, window.location.href); } catch (err) { return; }
-      if (url.origin !== window.location.origin || /\/wp-(admin|login)|\.(pdf|zip|jpe?g|png|svg)$/i.test(url.pathname)) { return; }
+      if (url.origin !== window.location.origin || /\/wp-(admin|login)/i.test(url.pathname)) { return; }
+      // Un file (PDF, documento, foglio, immagine, video…) non sostituisce la pagina: niente velo.
+      if (/\.[a-z0-9]{2,5}$/i.test(url.pathname) && !/\.(php|html?)$/i.test(url.pathname)) { return; }
       if (url.pathname === window.location.pathname && url.search === window.location.search) { return; } // stessa pagina: ci pensa lo scroll
       if (!window.gsap) { return; }
       e.preventDefault();
+      if (leaving) { return; }
+      leaving = true;
+      saveScroll();
       try { window.sessionStorage.setItem('gfaTrans', '1'); } catch (err) { /* storage non disponibile */ }
-      var go = function () { window.location.href = url.href; };
+      var gone = false;
+      var go = function () { if (!gone) { gone = true; window.location.href = url.href; } };
       if (a.classList.contains('brand')) { go(); return; } // il logo apre con il preload
       curtain.classList.add('is-active');
       window.gsap.fromTo(curtain, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.35, ease: 'power1.inOut', onComplete: go });
       setTimeout(go, 900); // se l'animazione si interrompe, si cambia pagina comunque
+      // Rete di sicurezza: se dopo qualche secondo la pagina è ancora questa (risposta vuota,
+      // navigazione annullata, server che non risponde) il velo si toglie.
+      setTimeout(function () {
+        leaving = false;
+        curtain.classList.remove('is-active');
+        window.gsap.set(curtain, { clearProps: 'all' });
+        try { window.sessionStorage.removeItem('gfaTrans'); } catch (err) { /* storage non disponibile */ }
+      }, 4000);
     });
 
-    // Tornando indietro dalla cache del browser la tendina non deve restare chiusa.
+    // Tornando indietro dalla cache del browser il velo non deve restare chiuso.
     window.addEventListener('pageshow', function (e) {
       if (!e.persisted) { return; }
+      leaving = false;
       root.classList.remove('gfa-trans-in');
       curtain.classList.remove('is-active');
       if (window.gsap) { window.gsap.set(curtain, { clearProps: 'all' }); }
     });
   }
 
-  initPageFlow();
-  initMenu();
-  initHeader();
-  initBrand();
-  initRouteLines();
-  initForms();
+  safely(initPageFlow);
+  safely(initMenu);
+  safely(initHeader);
+  safely(initBrand);
+  safely(initRouteLines);
+  safely(initForms);
+  safely(initScrollRegions);
 
   /* ---------- Animazioni ---------- */
-  if (!window.gsap || !window.ScrollTrigger || reduced()) { revealAll(); window.gfaReady = true; return; }
+  if (!window.gsap || !window.ScrollTrigger || reduced()) {
+    revealAll();
+    window.gfaReady = true;
+    if (startY > 0) { settle(function () { scrollToY(startY); }); }
+    return;
+  }
 
   try {
     initAnimations();
@@ -192,6 +377,7 @@
   } catch (err) {
     window.gfaReady = true;
     revealAll();
+    if (startY > 0) { settle(function () { scrollToY(startY); }); }
     if (window.console) { window.console.error('GFA: animazioni disattivate', err); }
   }
 
@@ -204,10 +390,9 @@
     var preloader = document.querySelector('.preloader');
 
     // Scroll morbido collegato a ScrollTrigger
-    var lenis = null;
     if (window.Lenis) {
-      lenis = new window.Lenis({ lerp: 0.1, anchors: { offset: -90 } });
-      if (!window.location.hash) { lenis.scrollTo(0, { immediate: true, force: true }); }
+      lenis = new window.Lenis({ lerp: 0.1, anchors: { offset: -HEADER_OFFSET } });
+      if (startY !== null) { lenis.scrollTo(startY, { immediate: true, force: true }); }
       lenis.on('scroll', ST.update);
       gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
       gsap.ticker.lagSmoothing(0);
@@ -260,16 +445,18 @@
       if (lenis) { lenis.start(); }
       heroIntro();
       ST.refresh();
-      // Link a una sezione da un'altra pagina: ci si arriva quando le misure sono definitive.
-      if (window.location.hash && window.location.hash.length > 1) {
+      // Link a una sezione da un'altra pagina, o ritorno con "indietro": si arriva al punto giusto
+      // quando le misure sono definitive (font, immagini, sezioni fissate).
+      var place = null;
+      if (startY === null) {
         var target = document.getElementById(decodeURIComponent(window.location.hash.slice(1)));
-        if (target) {
-          var go = function () { if (lenis) { lenis.scrollTo(target, { offset: -90, immediate: true, force: true }); } else { target.scrollIntoView(); } };
-          go();
-          if (document.fonts && document.fonts.ready) { document.fonts.ready.then(go); }
-          window.addEventListener('load', function () { ST.refresh(); go(); });
-          setTimeout(go, 700);
-        }
+        if (target) { place = function () { scrollToTarget(target, true); }; }
+      } else if (startY > 0) {
+        place = function () { scrollToY(startY); };
+      }
+      if (place) {
+        window.addEventListener('load', function () { ST.refresh(); });
+        settle(place);
       }
     }
 
@@ -295,7 +482,7 @@
         if (opened) { return; }
         opened = true;
         ST.refresh();
-        if (!window.location.hash) { window.scrollTo(0, 0); if (lenis) { lenis.scrollTo(0, { immediate: true, force: true }); } }
+        if (startY !== null) { scrollToY(startY); }
         startSite();
         gsap.to(curtain, {
           autoAlpha: 0, duration: 0.5, ease: 'power1.out',
@@ -314,8 +501,10 @@
     gsap.utils.toArray('.section__head h2, .page-hero h1, .control__text h2, .quote-box__text h2').forEach(function (h) {
       if (h.closest('.hero')) { return; }
       var head = h.parentElement;
+      // Parte quando entra il blocco (etichetta, titolo, testo): l'etichetta sopra il titolo,
+      // nascosta in partenza, non resta mai invisibile in fondo allo schermo.
       ST.create({
-        trigger: h, start: 'top 96%', once: true,
+        trigger: head, start: 'top 96%', once: true,
         onEnter: function () {
           riseText(h);
           rise(head.querySelectorAll(':scope > .eyebrow, :scope > .lead, :scope > .wp-block-buttons'), { y: 20, delay: 0.2, duration: 0.8 });
@@ -402,7 +591,7 @@
 
     // Rete di sicurezza: dopo 5 secondi niente di visibile nello schermo può restare nascosto.
     setTimeout(function () {
-      document.querySelectorAll('.gfa-anim .hero *, .gfa-animated').forEach(function (el) {
+      document.querySelectorAll('.gfa-anim .hero *, .gfa-animated, .gfa-anim .eyebrow, .gfa-anim .lead, .gfa-anim .wp-block-buttons').forEach(function (el) {
         var r = el.getBoundingClientRect();
         if (r.bottom > 0 && r.top < window.innerHeight && window.getComputedStyle(el).opacity === '0') {
           gsap.to(el, { autoAlpha: 1, y: 0, duration: 0.3 });

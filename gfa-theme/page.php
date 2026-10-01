@@ -13,5 +13,7 @@ while ( have_posts() ) :
 	<section class="section"><div class="wrap prose"><?php the_content(); ?></div></section>
 	<?php
 endwhile;
-echo do_blocks( gfa_pattern( 'preventivo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+if ( gfa_show_quote_form() ) {
+	echo do_blocks( gfa_pattern( 'preventivo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+}
 get_footer();

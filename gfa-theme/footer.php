@@ -14,16 +14,30 @@
 				<p><?php esc_html_e( 'Volantinaggio, stampa e promozione sul territorio.', 'gfa' ); ?> <?php if ( gfa_opt( 'anno' ) ) { printf( esc_html__( 'Dal %s.', 'gfa' ), esc_html( gfa_opt( 'anno' ) ) ); } ?></p>
 			</div>
 			<div>
-				<h3><?php esc_html_e( 'Servizi', 'gfa' ); ?></h3>
-				<ul>
-					<li><a href="<?php echo esc_url( home_url( '/volantinaggio/' ) ); ?>">Volantinaggio</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/stampa-e-grafica/' ) ); ?>">Stampa e grafica</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/promozione-eventi/' ) ); ?>">Promozione eventi</a></li>
-					<li><a href="<?php echo esc_url( home_url( '/lavori/' ) ); ?>">Lavori svolti</a></li>
-				</ul>
+				<h2><?php esc_html_e( 'Servizi', 'gfa' ); ?></h2>
+				<?php if ( has_nav_menu( 'footer' ) ) : ?>
+					<?php
+					// Aspetto → Menu, posizione "Menu footer": sostituisce l'elenco predefinito.
+					wp_nav_menu(
+						array(
+							'theme_location' => 'footer',
+							'container'      => false,
+							'depth'          => 1,
+							'fallback_cb'    => false,
+						)
+					);
+					?>
+				<?php else : ?>
+					<ul>
+						<li><a href="<?php echo esc_url( home_url( '/volantinaggio/' ) ); ?>">Volantinaggio</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/stampa-e-grafica/' ) ); ?>">Stampa e grafica</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/promozione-eventi/' ) ); ?>">Promozione eventi</a></li>
+						<li><a href="<?php echo esc_url( home_url( '/lavori/' ) ); ?>">Lavori svolti</a></li>
+					</ul>
+				<?php endif; ?>
 			</div>
 			<div>
-				<h3><?php esc_html_e( 'Sedi', 'gfa' ); ?></h3>
+				<h2><?php esc_html_e( 'Sedi', 'gfa' ); ?></h2>
 				<ul>
 					<?php foreach ( gfa_sedi() as $sede ) : ?>
 						<li><?php echo esc_html( $sede ); ?></li>
@@ -31,7 +45,7 @@
 				</ul>
 			</div>
 			<div>
-				<h3><?php esc_html_e( 'Contatti', 'gfa' ); ?></h3>
+				<h2><?php esc_html_e( 'Contatti', 'gfa' ); ?></h2>
 				<ul>
 					<li><?php gfa_value( 'telefono', 'telefono principale' ); ?></li>
 					<li><?php echo esc_html( gfa_opt( 'email' ) ); ?></li>
@@ -41,7 +55,7 @@
 			</div>
 		</div>
 		<div class="legal">
-			<span>© <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php gfa_value( 'ragione', 'ragione sociale' ); ?></span>
+			<span>© <?php echo esc_html( wp_date( 'Y' ) ); ?> <?php gfa_value( 'ragione', 'ragione sociale' ); ?></span>
 			<span>P.IVA <?php gfa_value( 'piva', 'P.IVA da confermare' ); ?></span>
 			<?php if ( gfa_opt( 'rea' ) ) : ?><span>REA <?php echo esc_html( gfa_opt( 'rea' ) ); ?></span><?php endif; ?>
 			<?php if ( function_exists( 'get_privacy_policy_url' ) && get_privacy_policy_url() ) : ?>

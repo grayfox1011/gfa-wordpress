@@ -142,13 +142,18 @@ function gfa_render_dati() {
  * @return string
  */
 function gfa_pattern( $slug ) {
+	static $cache = array();
+	if ( isset( $cache[ $slug ] ) ) {
+		return $cache[ $slug ];
+	}
 	$file = get_template_directory() . '/patterns/' . $slug . '.php';
 	if ( ! file_exists( $file ) ) {
 		return '';
 	}
 	ob_start();
 	include $file;
-	return trim( (string) ob_get_clean() );
+	$cache[ $slug ] = trim( (string) ob_get_clean() );
+	return $cache[ $slug ];
 }
 
 /**
@@ -184,31 +189,38 @@ function gfa_page_content( $page ) {
 
 /**
  * Registra anche le pagine intere come modelli, per ricominciare da capo una pagina.
+ *
+ * Servono solo all'editor: si registrano nelle richieste dell'amministrazione e della REST API
+ * (da cui l'editor legge i modelli), non a ogni pagina del sito, perché comporle include tutte
+ * le sezioni.
  */
-add_action(
-	'init',
-	function () {
-		$titles = array(
-			'home'              => 'Homepage',
-			'volantinaggio'     => 'Volantinaggio',
-			'stampa-e-grafica'  => 'Stampa e grafica',
-			'promozione-eventi' => 'Promozione eventi',
-			'chi-siamo'         => 'Chi siamo',
-			'franchising'       => 'Franchising',
-			'contatti'          => 'Contatti',
+function gfa_register_page_patterns() {
+	static $done = false;
+	if ( $done ) {
+		return;
+	}
+	$done = true;
+	$titles = array(
+		'home'              => 'Homepage',
+		'volantinaggio'     => 'Volantinaggio',
+		'stampa-e-grafica'  => 'Stampa e grafica',
+		'promozione-eventi' => 'Promozione eventi',
+		'chi-siamo'         => 'Chi siamo',
+		'franchising'       => 'Franchising',
+		'contatti'          => 'Contatti',
+	);
+	foreach ( $titles as $slug => $title ) {
+		register_block_pattern(
+			'gfa/pagina-' . $slug,
+			array(
+				'title'      => 'Pagina ' . $title,
+				'categories' => array( 'gfa-pagine' ),
+				'blockTypes' => array( 'core/post-content' ),
+				'postTypes'  => array( 'page' ),
+				'content'    => gfa_page_content( $slug ),
+			)
 		);
-		foreach ( $titles as $slug => $title ) {
-			register_block_pattern(
-				'gfa/pagina-' . $slug,
-				array(
-					'title'      => 'Pagina ' . $title,
-					'categories' => array( 'gfa-pagine' ),
-					'blockTypes' => array( 'core/post-content' ),
-					'postTypes'  => array( 'page' ),
-					'content'    => gfa_page_content( $slug ),
-				)
-			);
-		}
-	},
-	20
-);
+	}
+}
+add_action( 'admin_init', 'gfa_register_page_patterns' );
+add_action( 'rest_api_init', 'gfa_register_page_patterns' );

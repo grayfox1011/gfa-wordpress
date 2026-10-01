@@ -14,13 +14,13 @@ get_header();
 			<?php
 			while ( have_posts() ) :
 				the_post();
-				get_template_part( 'parts/work-card' );
+				get_template_part( 'parts/work-card', null, array( 'heading' => 'h2' ) );
 			endwhile;
 			?>
 		</div>
 	<?php else : ?>
 		<p class="lead"><mark class="todo">Nessun lavoro pubblicato: aggiungili da Lavori svolti → Aggiungi lavoro. Intanto si vedono gli esempi da completare.</mark></p>
-		<?php get_template_part( 'parts/lavori' ); ?>
+		<?php get_template_part( 'parts/lavori', null, array( 'heading' => 'h2' ) ); ?>
 	<?php endif; ?>
 	<?php the_posts_pagination(); ?>
 </div></section>

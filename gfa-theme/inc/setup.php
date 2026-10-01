@@ -47,12 +47,14 @@ add_action(
 );
 
 // Preload: la classe va messa prima che la pagina compaia, quindi lo script è in linea nell'head.
+// wp_print_inline_script_tag() permette ai plugin di sicurezza di aggiungere il nonce CSP.
 add_action(
 	'wp_head',
 	function () {
-		echo '<script>' . file_get_contents( get_template_directory() . '/assets/js/preload-head.js' ) . '</script>' . "\n"; // phpcs:ignore
-		// Font principali precaricati: meno salti del testo tra una pagina e l'altra.
-		foreach ( array( 'Archivo-500-800-latin.woff2', 'PublicSans-400-latin.woff2' ) as $font ) {
+		wp_print_inline_script_tag( (string) file_get_contents( get_template_directory() . '/assets/js/preload-head.js' ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- file del tema.
+		// Font usati sopra la piega in ogni pagina (titoli, testo e menu, marchio ed etichette):
+		// precaricati, il testo non cambia forma quando arrivano.
+		foreach ( array( 'Archivo-500-800-latin.woff2', 'PublicSans-400-600-latin.woff2', 'JetBrainsMono-500-latin.woff2' ) as $font ) {
 			echo '<link rel="preload" href="' . esc_url( get_template_directory_uri() . '/assets/fonts/' . $font ) . '" as="font" type="font/woff2" crossorigin>' . "\n";
 		}
 	},
@@ -69,7 +71,7 @@ add_action(
 	}
 );
 
-// Via l'articolo di esempio dal feed e gli emoji di WordPress (peso inutile).
+// Via gli emoji di WordPress (peso inutile).
 remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 remove_action( 'wp_print_styles', 'print_emoji_styles' );
 

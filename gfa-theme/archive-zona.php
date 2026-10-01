@@ -11,7 +11,18 @@ get_header();
 	<div class="wrap stack">
 		<p class="eyebrow"><?php esc_html_e( 'Zone servite', 'gfa' ); ?></p>
 		<h1><?php esc_html_e( 'Volantinaggio nelle nostre zone', 'gfa' ); ?></h1>
-		<p class="lead"><?php esc_html_e( 'Otto sedi nel Nord Italia, ognuna con squadre che conoscono le proprie vie. Scegli la tua zona per vedere comuni coperti, modalità e referente.', 'gfa' ); ?></p>
+		<p class="lead">
+			<?php
+			// Il numero segue le sedi di Dati GFA invece di restare "Otto" scritto a mano.
+			$gfa_count = count( gfa_sedi() );
+			$gfa_words = array( 1 => 'Una', 'Due', 'Tre', 'Quattro', 'Cinque', 'Sei', 'Sette', 'Otto', 'Nove', 'Dieci', 'Undici', 'Dodici' );
+			printf(
+				/* translators: %s: numero delle sedi, in lettere fino a dodici. */
+				esc_html( _n( '%s sede nel Nord Italia, con una squadra che conosce le proprie vie. Scegli la tua zona per vedere comuni coperti, modalità e referente.', '%s sedi nel Nord Italia, ognuna con squadre che conoscono le proprie vie. Scegli la tua zona per vedere comuni coperti, modalità e referente.', $gfa_count, 'gfa' ) ),
+				esc_html( isset( $gfa_words[ $gfa_count ] ) ? $gfa_words[ $gfa_count ] : (string) $gfa_count )
+			);
+			?>
+		</p>
 		<div class="wp-block-buttons"><div class="wp-block-button is-style-gfa-primary"><a class="wp-block-button__link wp-element-button" href="#preventivo"><?php esc_html_e( 'Chiedi un preventivo per la tua zona', 'gfa' ); ?></a></div></div>
 	</div>
 </section>

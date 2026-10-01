@@ -25,7 +25,7 @@ while ( have_posts() ) :
 			);
 			foreach ( $gfa_rows as $gfa_label => $gfa_key ) :
 				?>
-				<div><h3><?php echo esc_html( $gfa_label ); ?></h3><p><?php echo esc_html( get_post_meta( $gfa_id, $gfa_key, true ) ); ?></p></div>
+				<div><h2 class="is-h3"><?php echo esc_html( $gfa_label ); ?></h2><p><?php echo esc_html( get_post_meta( $gfa_id, $gfa_key, true ) ); ?></p></div>
 			<?php endforeach; ?>
 			<div class="prose"><?php the_content(); ?></div>
 		</div>
@@ -33,5 +33,7 @@ while ( have_posts() ) :
 	</div></section>
 	<?php
 endwhile;
-echo do_blocks( gfa_pattern( 'preventivo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+if ( gfa_show_quote_form() ) {
+	echo do_blocks( gfa_pattern( 'preventivo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
+}
 get_footer();
