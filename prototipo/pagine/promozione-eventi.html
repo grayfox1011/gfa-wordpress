@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 </head>
 <body>
-<script>(function () { var d = document.documentElement; try { if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } var r = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if (!r) { d.classList.add('gfa-anim'); if (!window.sessionStorage.getItem('gfaSeen')) { d.classList.add('gfa-preload'); } else { d.classList.add('gfa-enter'); } } } catch (e) {} setTimeout(function () { if (!window.gfaReady) { d.classList.remove('gfa-anim', 'gfa-preload', 'gfa-enter'); } }, 4000); })();</script>
+<script>(function () { var d = document.documentElement; try { if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; } var r = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; var s = window.sessionStorage; if (!r) { d.classList.add('gfa-anim'); if (!s.getItem('gfaSeen')) { d.classList.add('gfa-preload'); } else if (s.getItem('gfaTrans') === '1') { d.classList.add('gfa-trans-in'); } } s.removeItem('gfaTrans'); } catch (e) {} setTimeout(function () { if (!window.gfaReady) { d.classList.remove('gfa-anim', 'gfa-preload', 'gfa-trans-in'); } }, 4000); })();</script>
 <title>Promozione eventi &#8211; GFA</title>
 <style>
 /* Font self-hosted (GDPR): Archivo, Public Sans, JetBrains Mono - SIL Open Font License */
@@ -526,11 +526,18 @@ mark.todo { background: var(--todo-bg); color: var(--todo); }
 .split-line { padding-bottom: .08em; margin-bottom: -.08em; }
 mark.hl { background-repeat: no-repeat; background-size: 100% 100%; }
 
-/* ---- Passaggio tra pagine: fade leggero in uscita e in entrata ----
-   L'header resta fermo, sfumano contenuto e footer. */
-.gfa-enter main, .gfa-enter .site-footer { opacity: 0; }
-.gfa-fade main, .gfa-fade .site-footer { transition: opacity .4s ease; }
-.gfa-leaving main, .gfa-leaving .site-footer { opacity: 0; transition: opacity .25s ease; }
+/* ---- Passaggio tra pagine: tendina GSAP che copre tutto, header compreso ---- */
+.page-curtain {
+  display: none; position: fixed; inset: 0; z-index: 190; place-items: center;
+  background: #1f3fae; pointer-events: none;
+}
+.gfa-trans-in .page-curtain, .page-curtain.is-active { display: grid; }
+.gfa-trans-in .page-curtain { animation: gfa-curtain-failsafe .3s ease 4s forwards; }
+@keyframes gfa-curtain-failsafe { to { opacity: 0; visibility: hidden; } }
+.page-curtain__mark {
+  padding: .15em .3em; border-radius: 8px; background: #f5c518; color: #1f3fae;
+  font-family: var(--f-display); font-weight: 800; font-stretch: 118%; font-size: 2rem; line-height: 1;
+}
 
 /* ---- Stato iniziale delle animazioni (solo se JavaScript e animazioni sono attivi) ----
    Evita che il contenuto compaia e poi sparisca un attimo prima di animarsi.
@@ -560,6 +567,7 @@ mark.hl { background-repeat: no-repeat; background-size: 100% 100%; }
 </style>
 <div class="proto-bar" id="top">Prototipo del nuovo sito GFA · i riquadri arancioni sono dati e foto che GFA deve fornire o confermare</div>
 <a class="skip" href="#main">Vai al contenuto</a>
+<div class="page-curtain" aria-hidden="true"><span class="page-curtain__mark">GFA</span></div>
 <div class="preloader" aria-hidden="true">
 	<div class="preloader__inner">
 		<div class="preloader__box"><span class="preloader__letter">G</span><span class="preloader__letter">F</span><span class="preloader__letter">A</span></div>
@@ -880,7 +888,7 @@ function t(t,e,i){return Math.max(t,Math.min(e,i))}var e=class{isRunning=!1;valu
 
   // Mostra tutto: usato quando le animazioni non possono partire o qualcosa va storto.
   function revealAll() {
-    root.classList.remove('gfa-anim', 'gfa-preload', 'gfa-enter');
+    root.classList.remove('gfa-anim', 'gfa-preload', 'gfa-trans-in');
     var pre = document.querySelector('.preloader');
     if (pre) { pre.remove(); }
     if (window.gsap) {
@@ -1009,18 +1017,13 @@ function t(t,e,i){return Math.max(t,Math.min(e,i))}var e=class{isRunning=!1;valu
   }
 
   /* ---------- Posizione di partenza e passaggio tra pagine ---------- */
+  var curtain = document.querySelector('.page-curtain');
   function initPageFlow() {
     // Ogni pagina nuova parte dall'alto, salvo un link a una sezione (#preventivo...).
     if (!window.location.hash) { window.scrollTo(0, 0); }
+    if (reduced() || !curtain) { return; }
 
-    // Ingresso: il contenuto compare con un fade leggero.
-    if (root.classList.contains('gfa-enter')) {
-      root.classList.add('gfa-fade');
-      requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove('gfa-enter'); }); });
-    }
-
-    // Uscita: sfuma prima di cambiare pagina (solo link interni a un'altra pagina).
-    if (reduced()) { return; }
+    // Uscita: la tendina copre tutta la pagina, poi si cambia pagina.
     document.addEventListener('click', function (e) {
       var a = e.target.closest('a[href]');
       if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { return; }
@@ -1028,15 +1031,25 @@ function t(t,e,i){return Math.max(t,Math.min(e,i))}var e=class{isRunning=!1;valu
       if (a.hasAttribute('download') || a.closest('#wpadminbar')) { return; }
       var url;
       try { url = new URL(a.href, window.location.href); } catch (err) { return; }
-      if (url.origin !== window.location.origin || /\/wp-(admin|login)/.test(url.pathname)) { return; }
+      if (url.origin !== window.location.origin || /\/wp-(admin|login)|\.(pdf|zip|jpe?g|png|svg)$/i.test(url.pathname)) { return; }
       if (url.pathname === window.location.pathname && url.search === window.location.search) { return; } // stessa pagina: ci pensa lo scroll
+      if (!window.gsap) { return; }
       e.preventDefault();
-      root.classList.add('gfa-fade', 'gfa-leaving');
-      setTimeout(function () { window.location.href = url.href; }, 260);
+      try { window.sessionStorage.setItem('gfaTrans', '1'); } catch (err) { /* storage non disponibile */ }
+      var go = function () { window.location.href = url.href; };
+      if (a.classList.contains('brand')) { go(); return; } // il logo apre con il preload
+      curtain.classList.add('is-active');
+      window.gsap.fromTo(curtain, { yPercent: 100 }, { yPercent: 0, duration: 0.55, ease: 'power3.inOut', onComplete: go });
+      window.gsap.fromTo('.page-curtain__mark', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, delay: 0.25, ease: 'power3.out' });
+      setTimeout(go, 1200); // se l'animazione si interrompe, si cambia pagina comunque
     });
-    // Tornando indietro dalla cache del browser la pagina non deve restare sfumata.
+
+    // Tornando indietro dalla cache del browser la tendina non deve restare chiusa.
     window.addEventListener('pageshow', function (e) {
-      if (e.persisted) { root.classList.remove('gfa-leaving', 'gfa-enter'); }
+      if (!e.persisted) { return; }
+      root.classList.remove('gfa-trans-in');
+      curtain.classList.remove('is-active');
+      if (window.gsap) { window.gsap.set(curtain, { clearProps: 'all' }); }
     });
   }
 
@@ -1148,8 +1161,27 @@ function t(t,e,i){return Math.max(t,Math.min(e,i))}var e=class{isRunning=!1;valu
         .from('.preloader__claim', { y: 12, autoAlpha: 0, duration: 0.45 }, 0.7)
         .to('.preloader__inner', { y: -24, autoAlpha: 0, duration: 0.4, ease: 'power2.in' }, '+=0.3')
         .to(preloader, { yPercent: -100, duration: 0.85, ease: 'expo.inOut', onStart: startSite }, '-=0.1');
-    } else {
+    } else if (curtain && root.classList.contains('gfa-trans-in')) {
+      // Ingresso da un'altra pagina: la tendina si apre quando la pagina è pronta e in posizione.
       root.classList.remove('gfa-preload');
+      if (preloader) { preloader.remove(); }
+      if (lenis) { lenis.stop(); }
+      gsap.set(curtain, { yPercent: 0 });
+      var opened = false;
+      var open = function () {
+        if (opened) { return; }
+        opened = true;
+        ST.refresh();
+        if (!window.location.hash) { window.scrollTo(0, 0); if (lenis) { lenis.scrollTo(0, { immediate: true, force: true }); } }
+        gsap.to(curtain, {
+          yPercent: -100, duration: 0.75, ease: 'expo.inOut', onStart: startSite,
+          onComplete: function () { root.classList.remove('gfa-trans-in'); gsap.set(curtain, { clearProps: 'all' }); }
+        });
+      };
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(open); }
+      setTimeout(open, 600);
+    } else {
+      root.classList.remove('gfa-preload', 'gfa-trans-in');
       if (preloader) { preloader.remove(); }
       startSite();
     }

@@ -12,7 +12,7 @@
 
   // Mostra tutto: usato quando le animazioni non possono partire o qualcosa va storto.
   function revealAll() {
-    root.classList.remove('gfa-anim', 'gfa-preload', 'gfa-enter');
+    root.classList.remove('gfa-anim', 'gfa-preload', 'gfa-trans-in');
     var pre = document.querySelector('.preloader');
     if (pre) { pre.remove(); }
     if (window.gsap) {
@@ -141,18 +141,13 @@
   }
 
   /* ---------- Posizione di partenza e passaggio tra pagine ---------- */
+  var curtain = document.querySelector('.page-curtain');
   function initPageFlow() {
     // Ogni pagina nuova parte dall'alto, salvo un link a una sezione (#preventivo...).
     if (!window.location.hash) { window.scrollTo(0, 0); }
+    if (reduced() || !curtain) { return; }
 
-    // Ingresso: il contenuto compare con un fade leggero.
-    if (root.classList.contains('gfa-enter')) {
-      root.classList.add('gfa-fade');
-      requestAnimationFrame(function () { requestAnimationFrame(function () { root.classList.remove('gfa-enter'); }); });
-    }
-
-    // Uscita: sfuma prima di cambiare pagina (solo link interni a un'altra pagina).
-    if (reduced()) { return; }
+    // Uscita: la tendina copre tutta la pagina, poi si cambia pagina.
     document.addEventListener('click', function (e) {
       var a = e.target.closest('a[href]');
       if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) { return; }
@@ -160,15 +155,25 @@
       if (a.hasAttribute('download') || a.closest('#wpadminbar')) { return; }
       var url;
       try { url = new URL(a.href, window.location.href); } catch (err) { return; }
-      if (url.origin !== window.location.origin || /\/wp-(admin|login)/.test(url.pathname)) { return; }
+      if (url.origin !== window.location.origin || /\/wp-(admin|login)|\.(pdf|zip|jpe?g|png|svg)$/i.test(url.pathname)) { return; }
       if (url.pathname === window.location.pathname && url.search === window.location.search) { return; } // stessa pagina: ci pensa lo scroll
+      if (!window.gsap) { return; }
       e.preventDefault();
-      root.classList.add('gfa-fade', 'gfa-leaving');
-      setTimeout(function () { window.location.href = url.href; }, 260);
+      try { window.sessionStorage.setItem('gfaTrans', '1'); } catch (err) { /* storage non disponibile */ }
+      var go = function () { window.location.href = url.href; };
+      if (a.classList.contains('brand')) { go(); return; } // il logo apre con il preload
+      curtain.classList.add('is-active');
+      window.gsap.fromTo(curtain, { yPercent: 100 }, { yPercent: 0, duration: 0.55, ease: 'power3.inOut', onComplete: go });
+      window.gsap.fromTo('.page-curtain__mark', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: 0.4, delay: 0.25, ease: 'power3.out' });
+      setTimeout(go, 1200); // se l'animazione si interrompe, si cambia pagina comunque
     });
-    // Tornando indietro dalla cache del browser la pagina non deve restare sfumata.
+
+    // Tornando indietro dalla cache del browser la tendina non deve restare chiusa.
     window.addEventListener('pageshow', function (e) {
-      if (e.persisted) { root.classList.remove('gfa-leaving', 'gfa-enter'); }
+      if (!e.persisted) { return; }
+      root.classList.remove('gfa-trans-in');
+      curtain.classList.remove('is-active');
+      if (window.gsap) { window.gsap.set(curtain, { clearProps: 'all' }); }
     });
   }
 
@@ -280,8 +285,27 @@
         .from('.preloader__claim', { y: 12, autoAlpha: 0, duration: 0.45 }, 0.7)
         .to('.preloader__inner', { y: -24, autoAlpha: 0, duration: 0.4, ease: 'power2.in' }, '+=0.3')
         .to(preloader, { yPercent: -100, duration: 0.85, ease: 'expo.inOut', onStart: startSite }, '-=0.1');
-    } else {
+    } else if (curtain && root.classList.contains('gfa-trans-in')) {
+      // Ingresso da un'altra pagina: la tendina si apre quando la pagina è pronta e in posizione.
       root.classList.remove('gfa-preload');
+      if (preloader) { preloader.remove(); }
+      if (lenis) { lenis.stop(); }
+      gsap.set(curtain, { yPercent: 0 });
+      var opened = false;
+      var open = function () {
+        if (opened) { return; }
+        opened = true;
+        ST.refresh();
+        if (!window.location.hash) { window.scrollTo(0, 0); if (lenis) { lenis.scrollTo(0, { immediate: true, force: true }); } }
+        gsap.to(curtain, {
+          yPercent: -100, duration: 0.75, ease: 'expo.inOut', onStart: startSite,
+          onComplete: function () { root.classList.remove('gfa-trans-in'); gsap.set(curtain, { clearProps: 'all' }); }
+        });
+      };
+      if (document.fonts && document.fonts.ready) { document.fonts.ready.then(open); }
+      setTimeout(open, 600);
+    } else {
+      root.classList.remove('gfa-preload', 'gfa-trans-in');
       if (preloader) { preloader.remove(); }
       startSite();
     }

@@ -415,11 +415,18 @@ mark.todo { background: var(--todo-bg); color: var(--todo); }
 .split-line { padding-bottom: .08em; margin-bottom: -.08em; }
 mark.hl { background-repeat: no-repeat; background-size: 100% 100%; }
 
-/* ---- Passaggio tra pagine: fade leggero in uscita e in entrata ----
-   L'header resta fermo, sfumano contenuto e footer. */
-.gfa-enter main, .gfa-enter .site-footer { opacity: 0; }
-.gfa-fade main, .gfa-fade .site-footer { transition: opacity .4s ease; }
-.gfa-leaving main, .gfa-leaving .site-footer { opacity: 0; transition: opacity .25s ease; }
+/* ---- Passaggio tra pagine: tendina GSAP che copre tutto, header compreso ---- */
+.page-curtain {
+  display: none; position: fixed; inset: 0; z-index: 190; place-items: center;
+  background: #1f3fae; pointer-events: none;
+}
+.gfa-trans-in .page-curtain, .page-curtain.is-active { display: grid; }
+.gfa-trans-in .page-curtain { animation: gfa-curtain-failsafe .3s ease 4s forwards; }
+@keyframes gfa-curtain-failsafe { to { opacity: 0; visibility: hidden; } }
+.page-curtain__mark {
+  padding: .15em .3em; border-radius: 8px; background: #f5c518; color: #1f3fae;
+  font-family: var(--f-display); font-weight: 800; font-stretch: 118%; font-size: 2rem; line-height: 1;
+}
 
 /* ---- Stato iniziale delle animazioni (solo se JavaScript e animazioni sono attivi) ----
    Evita che il contenuto compaia e poi sparisca un attimo prima di animarsi.
