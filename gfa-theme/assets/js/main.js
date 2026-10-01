@@ -1,6 +1,7 @@
 /* GFA — interazioni e animazioni (GSAP + ScrollTrigger, se presenti) */
 (function () {
   'use strict';
+  window.gfaReady = true;
 
   // Menu mobile
   var toggle = document.querySelector('.nav-toggle');
@@ -101,7 +102,7 @@
   }
 
   // Senza GSAP o con "riduci animazioni": nessun movimento, tutto subito visibile.
-  if (!window.gsap || reduced()) { endPreload(); return; }
+  if (!window.gsap || reduced()) { endPreload(); root.classList.remove('gfa-anim'); return; }
   var gsap = window.gsap;
   var ST = window.ScrollTrigger;
   if (ST) { gsap.registerPlugin(ST); }
@@ -131,17 +132,20 @@
     var h1 = hero.querySelector('h1');
     var hl = hero.querySelectorAll('mark.hl');
     gsap.set(hl, { backgroundSize: '0% 100%' });
-    if (window.SplitText && h1) {
-      splitLines(h1, { onSplit: function (self) {
-        return tl.from(self.words, { yPercent: 115, duration: 1.3, stagger: 0.07 }, 0);
-      } });
-    } else if (h1) {
-      tl.from(h1, { y: 40, autoAlpha: 0, duration: 1 }, 0);
+    if (h1) {
+      gsap.set(h1, { visibility: 'visible' });
+      if (window.SplitText) {
+        splitLines(h1, { onSplit: function (self) {
+          return tl.from(self.words, { yPercent: 115, duration: 1.3, stagger: 0.07 }, 0);
+        } });
+      } else {
+        tl.from(h1, { y: 40, autoAlpha: 0, duration: 1 }, 0);
+      }
     }
     tl.to(hl, { backgroundSize: '100% 100%', duration: 0.9, ease: 'power2.inOut' }, 0.8)
-      .from(hero.querySelectorAll('.eyebrow, .lead, .hero__cta .wp-block-button, .hero__proof li'), { y: 24, autoAlpha: 0, duration: 1, stagger: 0.08 }, 0.35)
-      .from(hero.querySelectorAll('.hero__visual img'), { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.15, duration: 1.6, ease: 'expo.inOut' }, 0.1)
-      .from(hero.querySelectorAll('.ticket'), { y: 60, rotate: -4, autoAlpha: 0, duration: 1.1 }, 0.9);
+      .fromTo(hero.querySelectorAll('.eyebrow, .lead, .hero__cta .wp-block-button, .hero__proof li'), { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 1, stagger: 0.08 }, 0.35)
+      .fromTo(hero.querySelectorAll('.hero__visual img'), { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.15 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1.6, ease: 'expo.inOut' }, 0.1)
+      .fromTo(hero.querySelectorAll('.ticket'), { y: 60, rotate: -4, autoAlpha: 0 }, { y: 0, rotate: 0, autoAlpha: 1, duration: 1.1 }, 0.9);
   }
 
   // 2. Preload: logo, percorso che si disegna, poi la tenda sale
@@ -186,6 +190,7 @@
   document.querySelectorAll('.section__head h2, .page-hero h1, .control__text h2, .quote-box__text h2').forEach(function (h) {
     if (h.closest('.hero')) { return; }
     var head = h.parentElement;
+    gsap.set(h, { visibility: 'visible' });
     var tl = gsap.timeline({ scrollTrigger: { trigger: h, start: 'top 85%', once: true } });
     splitLines(h, { onSplit: function (self) {
       return tl.from(self.words, { yPercent: 115, duration: 1.1, stagger: 0.05, ease: 'expo.out' }, 0);
@@ -196,12 +201,11 @@
 
   // 5. Card e blocchi: entrano a gruppi, uno dopo l'altro
   var cards = '.path, .mode, .quote, .person, .zone-list li, .work, .route-step, .checks li, .faq details, .facts-list li, .price-table tr';
-  gsap.set(cards, { y: 50, autoAlpha: 0 });
   ST.batch(cards, {
     start: 'top 88%',
     once: true,
     onEnter: function (els) {
-      gsap.to(els, { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.12, ease: 'power3.out', overwrite: true });
+      gsap.fromTo(els, { y: 50, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.12, ease: 'power3.out', overwrite: true });
     }
   });
 

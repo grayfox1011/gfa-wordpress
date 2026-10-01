@@ -26,6 +26,12 @@ Blocchi automatici (categoria *GFA*), che leggono i dati invece di scriverli a m
 Numeri, Lavori svolti, Elenco sedi, Mappa sedi, Modulo preventivo, Recapiti, Dati societari.
 Header e footer leggono i dati da Aspetto → Personalizza → Dati GFA.
 
+### Configurazione del sito (Aspetto → Configura sito GFA)
+Un pulsante crea le pagine mancanti, riempie quelle vuote, imposta la homepage statica, il menu,
+le zone in bozza e i permalink. Serve soprattutto quando si sostituisce il tema caricando lo zip
+(WordPress non lo conta come nuova attivazione). Finché la homepage non è impostata, la bacheca
+mostra un avviso con il link.
+
 ### Creazione automatica all'attivazione
 Il tema crea le pagine mancanti già riempite con i modelli, con il template *Pagina a sezioni GFA*,
 imposta la homepage statica, crea il menu principale e una zona in bozza per ogni sede.
@@ -78,4 +84,6 @@ Animazioni (GSAP 3.13 + ScrollTrigger + SplitText, Lenis 1.3 per lo scroll morbi
 - titolo della homepage che sale riga per riga e evidenziatore giallo che si disegna;
 - titoli di sezione divisi in righe, card che entrano a gruppi, percorso GPS che si disegna,
   linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
+- passaggio morbido tra le pagine (View Transitions: Chrome, Edge, Safari 18; altrove cambio normale);
+- gli elementi animati partono già nascosti, così non compaiono e spariscono prima di animarsi;
 - tutto si spegne con "riduci animazioni" del sistema operativo: la pagina resta completa e ferma.

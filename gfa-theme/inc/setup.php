@@ -51,6 +51,10 @@ add_action(
 	'wp_head',
 	function () {
 		echo '<script>' . file_get_contents( get_template_directory() . '/assets/js/preload-head.js' ) . '</script>' . "\n"; // phpcs:ignore
+		// Font principali precaricati: meno salti del testo tra una pagina e l'altra.
+		foreach ( array( 'Archivo-500-800-latin.woff2', 'PublicSans-400-latin.woff2' ) as $font ) {
+			echo '<link rel="preload" href="' . esc_url( get_template_directory_uri() . '/assets/fonts/' . $font ) . '" as="font" type="font/woff2" crossorigin>' . "\n";
+		}
 	},
 	1
 );

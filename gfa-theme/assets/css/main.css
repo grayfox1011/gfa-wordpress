@@ -400,3 +400,26 @@ mark.todo { background: var(--todo-bg); color: var(--todo); }
 /* SplitText: le righe mascherate non tagliano le lettere discendenti */
 .split-line { padding-bottom: .08em; margin-bottom: -.08em; }
 mark.hl { background-repeat: no-repeat; background-size: 100% 100%; }
+
+/* ---- Passaggio tra pagine ---- */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: gfa-vt-out .22s cubic-bezier(.4, 0, 1, 1) both; }
+::view-transition-new(root) { animation: gfa-vt-in .4s cubic-bezier(0, 0, .2, 1) .2s both; }
+@keyframes gfa-vt-out { to { opacity: 0; transform: translateY(-12px); } }
+@keyframes gfa-vt-in { from { opacity: 0; transform: translateY(16px); } }
+.site-header { view-transition-name: gfa-header; }
+::view-transition-group(gfa-header) { animation: none; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+}
+
+/* ---- Stato iniziale delle animazioni (solo se JavaScript e animazioni sono attivi) ----
+   Evita che il contenuto compaia e poi sparisca un attimo prima di animarsi. */
+.gfa-anim .path, .gfa-anim .mode, .gfa-anim .quote, .gfa-anim .person, .gfa-anim .zone-list li,
+.gfa-anim .work, .gfa-anim .route-step, .gfa-anim .checks li, .gfa-anim .faq details,
+.gfa-anim .facts-list li, .gfa-anim .price-table tr { opacity: 0; transform: translateY(50px); }
+.gfa-anim .hero h1, .gfa-anim .section__head h2, .gfa-anim .page-hero h1,
+.gfa-anim .control__text h2, .gfa-anim .quote-box__text h2 { visibility: hidden; }
+.gfa-anim .hero .eyebrow, .gfa-anim .hero .lead, .gfa-anim .hero__cta .wp-block-button,
+.gfa-anim .hero__proof li, .gfa-anim .ticket { opacity: 0; }
+.gfa-anim .hero__visual img { clip-path: inset(100% 0% 0% 0%); }
