@@ -14,6 +14,13 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 <a class="skip" href="#main"><?php esc_html_e( 'Vai al contenuto', 'gfa' ); ?></a>
+<div class="preloader" aria-hidden="true">
+	<div class="preloader__inner">
+		<div class="preloader__box"><span class="preloader__letter">G</span><span class="preloader__letter">F</span><span class="preloader__letter">A</span></div>
+		<svg class="preloader__route" viewBox="0 0 240 24" focusable="false"><path d="M6 12 H226"/><circle cx="230" cy="12" r="6"/></svg>
+		<p class="preloader__claim"><?php esc_html_e( 'Volantinaggio che si può verificare', 'gfa' ); ?></p>
+	</div>
+</div>
 <header class="site-header">
 	<div class="wrap">
 		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'GFA, torna alla homepage', 'gfa' ); ?>">

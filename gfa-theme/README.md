@@ -72,5 +72,10 @@ parts/    markup dei blocchi dinamici (lavori, sedi, modulo, recapiti)
 theme.json palette GFA e impostazioni editor
 assets/   css/main.css, css/editor.css, js/main.js, js/editor.js, img/foto-da-fornire.svg, js/vendor (GSAP 3.12.5 + ScrollTrigger), fonts (OFL)
 ```
-Animazioni: tutto è visibile senza JavaScript; GSAP aggiunge solo movimento e si spegne con
-"riduci animazioni" del sistema operativo.
+Animazioni (GSAP 3.13 + ScrollTrigger + SplitText, Lenis 1.3 per lo scroll morbido, tutto incluso nel tema):
+- schermata di caricamento con il logo GFA, solo alla prima pagina visitata in una sessione;
+  se JavaScript non parte sparisce comunque dopo 6 secondi;
+- titolo della homepage che sale riga per riga e evidenziatore giallo che si disegna;
+- titoli di sezione divisi in righe, card che entrano a gruppi, percorso GPS che si disegna,
+  linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
+- tutto si spegne con "riduci animazioni" del sistema operativo: la pagina resta completa e ferma.

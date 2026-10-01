@@ -27,6 +27,8 @@ fonts = open(os.path.join(THEME, 'assets/fonts/fonts.css')).read()
 fonts = re.sub(r'url\(([^)]+\.woff2)\)', lambda m: 'url(%s)' % data_uri(os.path.join(THEME, 'assets/fonts', m.group(1)), 'font/woff2'), fonts)
 css = open(os.path.join(THEME, 'assets/css/main.css')).read()
 js = open(os.path.join(THEME, 'assets/js/main.js')).read()
+head_js = open(os.path.join(THEME, 'assets/js/preload-head.js')).read().strip()
+vendor = [open(os.path.join(THEME, 'assets/js/vendor', f)).read() for f in ('gsap.min.js', 'ScrollTrigger.min.js', 'SplitText.min.js', 'lenis.min.js')]
 placeholder = data_uri(os.path.join(THEME, 'assets/img/foto-da-fornire.svg'), 'image/svg+xml')
 
 def link(m):
@@ -51,7 +53,8 @@ for path, slug in PAGES.items():
     body = re.sub(r'href="(%s[^"]*)"' % re.escape(BASE), link, body)
     body = body.replace('action="%s/wp-admin/admin-post.php"' % BASE, 'action="#preventivo"').replace('data-quote-form ', 'data-quote-form data-prototype ')
     inner = '<title>%s</title>\n<style>\n%s\n%s\n%s\n</style>\n%s\n%s\n' % (title, fonts, block_css, css, BAR, body)
-    inner += '<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>\n<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>\n<script>\n%s\n</script>\n' % js
+    inner = '<script>%s</script>\n' % head_js + inner
+    inner += ''.join('<script>\n%s\n</script>\n' % v for v in vendor) + '<script>\n%s\n</script>\n' % js
     full = '<!doctype html>\n<html lang="it">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n</head>\n<body>\n%s</body>\n</html>\n' % inner
     open(os.path.join(OUT, 'pagine', slug + '.html'), 'w').write(full)
     if slug == 'home':

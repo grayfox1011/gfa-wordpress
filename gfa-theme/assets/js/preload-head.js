@@ -1,0 +1,1 @@
+(function () { try { var r = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; if (!r && !window.sessionStorage.getItem('gfaSeen')) { document.documentElement.classList.add('gfa-preload'); } } catch (e) {} })();

@@ -48,6 +48,10 @@
 *, *::before, *::after { box-sizing: border-box; }
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
+html.lenis, html.lenis body { height: auto; scroll-behavior: auto; }
+.lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
+.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-smooth iframe { pointer-events: none; }
 body {
   margin: 0; background: var(--paper); color: var(--ink);
   font-family: var(--f-body); font-size: var(--step-0); line-height: 1.6;
@@ -373,3 +377,26 @@ mark.todo { background: var(--todo-bg); color: var(--todo); }
 .hint { color: var(--ink-2); font-size: .85rem; }
 .person .quote__cite { margin-top: -.6rem; }
 @media (max-width: 860px) { .quote-box { grid-template-columns: 1fr; } }
+
+/* ---- Preload ---- */
+.preloader { display: none; }
+.gfa-preload .preloader {
+  display: grid; place-items: center; position: fixed; inset: 0; z-index: 200;
+  background: #1f3fae; color: #fff;
+  animation: gfa-preloader-failsafe .4s ease 6s forwards;
+}
+@keyframes gfa-preloader-failsafe { to { opacity: 0; visibility: hidden; } }
+.preloader__inner { display: grid; justify-items: center; gap: 1.2rem; }
+.preloader__box {
+  display: flex; gap: .04em; padding: .18em .32em; border-radius: 10px; background: #f5c518; color: #1f3fae; overflow: hidden;
+  font-family: var(--f-display); font-weight: 800; font-stretch: 118%; font-size: clamp(3.5rem, 10vw, 6rem); line-height: 1;
+}
+.preloader__letter { display: inline-block; }
+.preloader__route { width: min(240px, 60vw); height: auto; }
+.preloader__route path { fill: none; stroke: #f5c518; stroke-width: 3; stroke-dasharray: 10 10; stroke-linecap: round; }
+.preloader__route circle { fill: #f5c518; }
+.preloader__claim { font-family: var(--f-data); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; opacity: .85; }
+
+/* SplitText: le righe mascherate non tagliano le lettere discendenti */
+.split-line { padding-bottom: .08em; margin-bottom: -.08em; }
+mark.hl { background-repeat: no-repeat; background-size: 100% 100%; }

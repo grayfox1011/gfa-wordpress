@@ -30,14 +30,6 @@
     }
   });
 
-  // Titolo hero: ogni riga (separata da un a capo) diventa animabile
-  document.querySelectorAll('.hero h1').forEach(function (h1) {
-    if (h1.querySelector('.line')) { return; }
-    var parts = h1.innerHTML.split(/<br\s*\/?>/i);
-    if (parts.length < 2) { return; }
-    h1.innerHTML = parts.map(function (part) { return '<span class="line">' + part + '</span>'; }).join('');
-  });
-
   // Modulo preventivo a passi
   document.querySelectorAll('[data-quote-form]').forEach(function (form) {
     var steps = Array.prototype.slice.call(form.querySelectorAll('fieldset[data-step]'));
@@ -101,57 +93,141 @@
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
-  // Animazioni: tutto è già visibile a riposo, GSAP aggiunge solo movimento.
-  if (!window.gsap || reduced()) { return; }
+  var root = document.documentElement;
+  var preloader = document.querySelector('.preloader');
+  function endPreload() {
+    root.classList.remove('gfa-preload');
+    if (preloader) { preloader.remove(); }
+  }
+
+  // Senza GSAP o con "riduci animazioni": nessun movimento, tutto subito visibile.
+  if (!window.gsap || reduced()) { endPreload(); return; }
   var gsap = window.gsap;
-  if (window.ScrollTrigger) { gsap.registerPlugin(window.ScrollTrigger); }
+  var ST = window.ScrollTrigger;
+  if (ST) { gsap.registerPlugin(ST); }
+  if (window.SplitText) { gsap.registerPlugin(window.SplitText); }
 
-  // Hero: le righe del titolo salgono in sequenza
-  gsap.from('.hero h1 .line', { yPercent: 35, duration: 0.8, ease: 'power3.out', stagger: 0.12 });
-  if (document.querySelector('.ticket')) { gsap.from('.ticket', { y: 30, rotate: -3, duration: 0.9, ease: 'power3.out', delay: 0.35 }); }
+  // Scroll morbido (Lenis) collegato a ScrollTrigger
+  var lenis = null;
+  if (window.Lenis) {
+    lenis = new window.Lenis({ lerp: 0.1, wheelMultiplier: 1, anchors: { offset: -90 } });
+    if (ST) { lenis.on('scroll', ST.update); }
+    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+    lenis.stop();
+  }
 
-  // Percorso GPS nel report: il tracciato si disegna come un giro reale
+  // Testo diviso in righe con maschera: le righe salgono dal basso
+  function splitLines(el, opts) {
+    if (!window.SplitText || !el) { return null; }
+    return window.SplitText.create(el, { type: 'lines,words', mask: 'lines', linesClass: 'split-line', autoSplit: true, onSplit: opts && opts.onSplit });
+  }
+
+  // 1. Hero, dopo il preload
+  function heroIntro() {
+    var hero = document.querySelector('.hero');
+    if (!hero) { return; }
+    var tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+    var h1 = hero.querySelector('h1');
+    var hl = hero.querySelectorAll('mark.hl');
+    gsap.set(hl, { backgroundSize: '0% 100%' });
+    if (window.SplitText && h1) {
+      splitLines(h1, { onSplit: function (self) {
+        return tl.from(self.words, { yPercent: 115, duration: 1.3, stagger: 0.07 }, 0);
+      } });
+    } else if (h1) {
+      tl.from(h1, { y: 40, autoAlpha: 0, duration: 1 }, 0);
+    }
+    tl.to(hl, { backgroundSize: '100% 100%', duration: 0.9, ease: 'power2.inOut' }, 0.8)
+      .from(hero.querySelectorAll('.eyebrow, .lead, .hero__cta .wp-block-button, .hero__proof li'), { y: 24, autoAlpha: 0, duration: 1, stagger: 0.08 }, 0.35)
+      .from(hero.querySelectorAll('.hero__visual img'), { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.15, duration: 1.6, ease: 'expo.inOut' }, 0.1)
+      .from(hero.querySelectorAll('.ticket'), { y: 60, rotate: -4, autoAlpha: 0, duration: 1.1 }, 0.9);
+  }
+
+  // 2. Preload: logo, percorso che si disegna, poi la tenda sale
+  function startSite() {
+    if (lenis) { lenis.start(); }
+    heroIntro();
+    if (ST) { ST.refresh(); }
+  }
+  if (preloader && root.classList.contains('gfa-preload')) {
+    try { sessionStorage.setItem('gfaSeen', '1'); } catch (e) { /* storage non disponibile */ }
+    var path = preloader.querySelector('.preloader__route path');
+    var len = path ? path.getTotalLength() : 0;
+    if (path) { gsap.set(path, { strokeDasharray: '10 10', strokeDashoffset: 0 }); }
+    gsap.timeline({ onComplete: function () { endPreload(); } })
+      .from('.preloader__box', { scale: 0.7, rotate: -6, autoAlpha: 0, duration: 0.5, ease: 'back.out(1.6)' })
+      .from('.preloader__letter', { yPercent: 110, duration: 0.55, stagger: 0.07, ease: 'expo.out' }, 0.15)
+      .fromTo('.preloader__route', { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'power2.inOut' }, 0.45)
+      .from('.preloader__claim', { y: 12, autoAlpha: 0, duration: 0.45 }, 0.7)
+      .to('.preloader__inner', { y: -24, autoAlpha: 0, duration: 0.4, ease: 'power2.in' }, '+=0.3')
+      .to(preloader, { yPercent: -100, duration: 0.85, ease: 'expo.inOut', onStart: startSite }, '-=0.1');
+    void len;
+  } else {
+    endPreload();
+    startSite();
+  }
+
+  // 3. Percorso GPS nel report: il tracciato si disegna come un giro reale
   var route = document.querySelector('.report__map .route-draw');
-  if (route && route.getTotalLength) {
-    var len = route.getTotalLength();
-    route.style.strokeDasharray = len;
-    route.style.strokeDashoffset = 0;
-    gsap.from(route, {
-      strokeDashoffset: len, duration: 2.4, ease: 'none',
-      scrollTrigger: window.ScrollTrigger ? { trigger: '.report', start: 'top 75%' } : undefined
-    });
-    gsap.from('.report__map .stop', {
-      scale: 0.4, transformOrigin: 'center', duration: 0.4, stagger: 0.35, ease: 'back.out(2)',
-      scrollTrigger: window.ScrollTrigger ? { trigger: '.report', start: 'top 75%' } : undefined
-    });
+  if (route && route.getTotalLength && ST) {
+    var rlen = route.getTotalLength();
+    gsap.set(route, { strokeDasharray: rlen, strokeDashoffset: rlen });
+    var rtl = gsap.timeline({ scrollTrigger: { trigger: '.report', start: 'top 70%', once: true } });
+    rtl.to(route, { strokeDashoffset: 0, duration: 2.6, ease: 'power1.inOut' })
+      .from('.report__map .stop', { scale: 0, transformOrigin: 'center', duration: 0.45, stagger: 0.55, ease: 'back.out(2.5)' }, 0)
+      .from('.report__rows li', { x: -20, autoAlpha: 0, duration: 0.5, stagger: 0.25 }, 0.6)
+      .set(route, { strokeDasharray: '9 7', strokeDashoffset: 0 });
   }
 
-  if (!window.ScrollTrigger) { return; }
+  if (!ST) { return; }
 
-  // Metodo: la linea blu avanza con lo scroll
-  var progress = document.querySelector('.route-progress');
-  if (progress) {
-    gsap.fromTo(progress, { scaleX: 0.08 }, {
+  // 4. Titoli di sezione: righe che salgono quando la sezione entra
+  document.querySelectorAll('.section__head h2, .page-hero h1, .control__text h2, .quote-box__text h2').forEach(function (h) {
+    if (h.closest('.hero')) { return; }
+    var head = h.parentElement;
+    var tl = gsap.timeline({ scrollTrigger: { trigger: h, start: 'top 85%', once: true } });
+    splitLines(h, { onSplit: function (self) {
+      return tl.from(self.words, { yPercent: 115, duration: 1.1, stagger: 0.05, ease: 'expo.out' }, 0);
+    } });
+    if (!window.SplitText) { tl.from(h, { y: 30, autoAlpha: 0, duration: 0.9 }, 0); }
+    tl.from(head.querySelectorAll(':scope > .eyebrow, :scope > .lead, :scope > .wp-block-buttons'), { y: 20, autoAlpha: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out' }, 0.2);
+  });
+
+  // 5. Card e blocchi: entrano a gruppi, uno dopo l'altro
+  var cards = '.path, .mode, .quote, .person, .zone-list li, .work, .route-step, .checks li, .faq details, .facts-list li, .price-table tr';
+  gsap.set(cards, { y: 50, autoAlpha: 0 });
+  ST.batch(cards, {
+    start: 'top 88%',
+    once: true,
+    onEnter: function (els) {
+      gsap.to(els, { y: 0, autoAlpha: 1, duration: 0.9, stagger: 0.12, ease: 'power3.out', overwrite: true });
+    }
+  });
+
+  // 6. Metodo: la linea blu avanza con lo scroll
+  document.querySelectorAll('.route-progress').forEach(function (bar) {
+    gsap.fromTo(bar, { scaleX: 0 }, {
       scaleX: 1, ease: 'none',
-      scrollTrigger: { trigger: '.route-line', start: 'top 80%', end: 'bottom 55%', scrub: true }
+      scrollTrigger: { trigger: bar.parentElement, start: 'top 75%', end: 'bottom 50%', scrub: 0.6 }
     });
+  });
+
+  // 7. Mappa sedi: i punti compaiono uno alla volta
+  if (document.querySelector('.north-map')) {
+    gsap.timeline({ scrollTrigger: { trigger: '.north-map', start: 'top 80%', once: true } })
+      .from('.north-map .land', { autoAlpha: 0, scale: 0.96, transformOrigin: 'center', duration: 0.8 })
+      .from('.north-map .dot', { scale: 0, transformOrigin: 'center', duration: 0.4, stagger: 0.12, ease: 'back.out(2.5)' }, 0.3)
+      .from('.north-map text', { autoAlpha: 0, duration: 0.4, stagger: 0.12 }, 0.45);
   }
 
-  // Card e blocchi: salgono di poco quando entrano (niente dissolvenze da zero)
-  gsap.utils.toArray('.path, .mode, .quote, .person, .zone-list li').forEach(function (el, i) {
-    gsap.from(el, {
-      y: 24, duration: 0.6, ease: 'power2.out', delay: (i % 3) * 0.08,
-      scrollTrigger: { trigger: el, start: 'top 90%' }
-    });
+  // 8. Foto: si scoprono dal basso
+  gsap.utils.toArray('.photo-todo img, .wp-block-image img').forEach(function (img) {
+    if (img.closest('.hero')) { return; }
+    gsap.from(img, { clipPath: 'inset(100% 0% 0% 0%)', duration: 1.3, ease: 'expo.inOut', scrollTrigger: { trigger: img, start: 'top 85%', once: true } });
   });
 
-  // Mappa sedi: i punti compaiono uno alla volta
-  gsap.from('.north-map .dot', {
-    scale: 0, transformOrigin: 'center', duration: 0.35, stagger: 0.1, ease: 'back.out(2)',
-    scrollTrigger: { trigger: '.north-map', start: 'top 80%' }
-  });
-
-  // Lavori: scorrimento orizzontale fissato, solo su schermi larghi
+  // 9. Lavori: scorrimento orizzontale fissato, solo su schermi larghi
   var mm = gsap.matchMedia();
   mm.add('(min-width: 1024px)', function () {
     var track = document.querySelector('.works');
@@ -161,8 +237,11 @@
     track.style.overflowX = 'visible';
     var tween = gsap.to(track, {
       x: function () { return -distance(); }, ease: 'none',
-      scrollTrigger: { trigger: '.works-pin', start: 'top 12%', end: function () { return '+=' + distance(); }, scrub: true, pin: true, invalidateOnRefresh: true }
+      scrollTrigger: { trigger: '.works-pin', start: 'top 12%', end: function () { return '+=' + distance(); }, scrub: 0.8, pin: true, invalidateOnRefresh: true }
     });
     return function () { tween.scrollTrigger && tween.scrollTrigger.kill(); tween.kill(); track.style.overflowX = ''; gsap.set(track, { x: 0 }); };
   });
+
+  // Le misure cambiano quando arrivano font e immagini
+  window.addEventListener('load', function () { ST.refresh(); });
 })();

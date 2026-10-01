@@ -38,9 +38,30 @@ add_action(
 		wp_enqueue_style( 'gfa-main', $uri . '/assets/css/main.css', array( 'gfa-fonts' ), GFA_VERSION );
 
 		// GSAP self-hosted: nessun dato inviato a CDN esterne.
-		wp_enqueue_script( 'gsap', $uri . '/assets/js/vendor/gsap.min.js', array(), '3.12.5', true );
-		wp_enqueue_script( 'gsap-scrolltrigger', $uri . '/assets/js/vendor/ScrollTrigger.min.js', array( 'gsap' ), '3.12.5', true );
-		wp_enqueue_script( 'gfa-main', $uri . '/assets/js/main.js', array( 'gsap', 'gsap-scrolltrigger' ), GFA_VERSION, true );
+		wp_enqueue_script( 'gsap', $uri . '/assets/js/vendor/gsap.min.js', array(), '3.13.0', true );
+		wp_enqueue_script( 'gsap-scrolltrigger', $uri . '/assets/js/vendor/ScrollTrigger.min.js', array( 'gsap' ), '3.13.0', true );
+		wp_enqueue_script( 'gsap-splittext', $uri . '/assets/js/vendor/SplitText.min.js', array( 'gsap' ), '3.13.0', true );
+		wp_enqueue_script( 'lenis', $uri . '/assets/js/vendor/lenis.min.js', array(), '1.3.11', true );
+		wp_enqueue_script( 'gfa-main', $uri . '/assets/js/main.js', array( 'gsap', 'gsap-scrolltrigger', 'gsap-splittext', 'lenis' ), GFA_VERSION, true );
+	}
+);
+
+// Preload: la classe va messa prima che la pagina compaia, quindi lo script è in linea nell'head.
+add_action(
+	'wp_head',
+	function () {
+		echo '<script>' . file_get_contents( get_template_directory() . '/assets/js/preload-head.js' ) . '</script>' . "\n"; // phpcs:ignore
+	},
+	1
+);
+
+// Icona del sito di riserva finché GFA non carica la sua (Personalizza → Identità del sito).
+add_action(
+	'wp_head',
+	function () {
+		if ( ! has_site_icon() ) {
+			echo '<link rel="icon" type="image/svg+xml" href="' . esc_url( get_template_directory_uri() . '/assets/img/favicon.svg' ) . '">' . "\n";
+		}
 	}
 );
 
