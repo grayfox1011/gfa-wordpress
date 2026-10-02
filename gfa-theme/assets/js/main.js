@@ -586,8 +586,11 @@
     });
 
     // 4. Card e blocchi: a gruppi
-    var cards = '.path, .mode, .quote, .person, .zone-list li, .work, .route-step, .checks li, .faq details, .facts-list li, .price-table tr';
+    var cards = '.path, .mode, .quote, .person, .zone-list li, .work, .route-step, .checks li, .faq details, .facts-list li';
     ST.batch(cards, { start: 'top 97%', once: true, onEnter: function (els) { rise(els, { y: 50, stagger: 0.12 }); } });
+    // Righe delle tabelle: compaiono senza spostarsi. Una riga spostata usciva dal riquadro della
+    // tabella, che scorre di lato, e faceva comparire per un attimo la sua barra di scorrimento.
+    ST.batch('.price-table tr', { start: 'top 97%', once: true, onEnter: function (els) { rise(els, { y: 0, stagger: 0.08 }); } });
 
     // 5. Report GPS
     var route = document.querySelector('.report__map .route-draw');

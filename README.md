@@ -39,6 +39,10 @@ aggiunte in autonomia (zona in bozza creata salvando Personalizza, mappa con 54 
 nomi confrontati senza maiuscole e accenti), provato aggiungendo e togliendo una sede da
 Personalizza; stesse prove della 0.6.2.
 
+Versione 0.6.4 (2 ottobre 2026): le righe delle tabelle (prezzi, dati societari) compaiono con
+una dissolvenza invece di salire, e fascia dei lavori e tabelle scorrono solo di lato: durante
+l'animazione non compare più per un attimo una barra di scorrimento. Stesse prove della 0.6.3.
+
 Il prototipo statico non è stato rigenerato: mostra ancora la 0.5.
 
 Tutti i dati aziendali non confermati compaiono come segnaposto arancioni "da fornire".
