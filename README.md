@@ -27,6 +27,13 @@ Versione 0.6.1 (scritte e Gutenberg, 2 ottobre 2026), stesse prove più:
   corsivo finto, nessun testo fuori dal suo riquadro; marchio e menu nella larghezza del contenuto
   da 1181 px in su.
 
+Versione 0.6.2 (telefono e pagina Lavori svolti, 2 ottobre 2026), stesse prove più:
+- slider dei lavori con gesti touch veri su telefono (contatore, frecce, spinta iniziale, fine
+  corsa), con movimento ridotto, e fascia fissata da GSAP solo dove entra nello schermo;
+- pagina Lavori svolti con 13 lavori di prova: griglia, numeri di pagina, scheda con "Altri
+  lavori"; nessuna violazione axe-core; nell'editor 9 pagine e 40 modelli validi e un clic sui
+  blocchi automatici seleziona il blocco senza aprire il sito.
+
 Il prototipo statico non è stato rigenerato: mostra ancora la 0.5.
 
 Tutti i dati aziendali non confermati compaiono come segnaposto arancioni "da fornire".

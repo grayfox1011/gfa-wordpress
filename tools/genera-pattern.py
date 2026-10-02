@@ -277,6 +277,22 @@ P['franchising-candidatura'] = ('Franchising: candidatura', section('section sec
 
 P['contatti-intro'] = ('Contatti: apertura', page_intro('Contatti', 'Parla con la sede più vicina', 'Per un preventivo usa il modulo qui sotto: ti ricontatta il referente della tua zona.', cta=False))
 
+# Lavori svolti (pagina /lavori/)
+P['lavori-intro'] = ('Lavori svolti: apertura', section('page-hero',
+    p('Lavori svolti', 'eyebrow'), h('Cosa abbiamo fatto, e come lo dimostriamo', 1),
+    p("Ogni scheda racconta l'esigenza del cliente, la zona e il periodo, cosa abbiamo fatto e quale prova esiste: report del giro, foto a campione, copie consegnate.", 'lead'),
+    buttons(('Chiedi un preventivo', '#preventivo', 'gfa-primary'), ('Come leggere una scheda', '#scheda', 'gfa-ghost')),
+    wrap='wrap stack'))
+P['lavori-elenco'] = ('Lavori svolti: tutti i lavori', section('section',
+    head('Archivio', 'Tutti i lavori'), dyn('lavori-elenco'), anchor='elenco'))
+P['lavori-scheda'] = ('Lavori svolti: come leggere una scheda', section('section section--alt',
+    head('Ogni scheda', 'Quattro domande, sempre le stesse.', 'Così i lavori si possono confrontare e si vede cosa abbiamo fatto davvero, non solo il risultato.'),
+    steps(('Esigenza', "Cosa serviva al cliente: far conoscere un'apertura, riempire un evento, farsi trovare in un quartiere."),
+          ('Zona e periodo', 'Dove e quando: comuni, vie e settimane di distribuzione.'),
+          ('Attività', 'Cosa abbiamo fatto: grafica, stampa, distribuzione, quante copie e con quale modalità.'),
+          ('Prova', 'Cosa possiamo mostrarti: report del giro, foto a campione, copie consegnate per zona.')),
+    anchor='scheda'))
+
 os.makedirs(OUT, exist_ok=True)
 for slug, (title, content) in P.items():
     with open(os.path.join(OUT, slug + '.php'), 'w') as f:

@@ -14,13 +14,17 @@ font e GSAP sono inclusi nel tema (niente invio di dati a Google Fonts o CDN).
 Ogni pagina è fatta di **modelli a blocchi** (Sezioni GFA): testi, titoli, pulsanti, elenchi, tabelle
 prezzi, domande frequenti e foto si modificano direttamente nell'editor, come in qualsiasi pagina.
 
-- **Aggiungere una sezione:** "+" → Modelli → categoria *Sezioni GFA* (29 sezioni).
+- **Aggiungere una sezione:** "+" → Modelli → categoria *Sezioni GFA* (32 sezioni).
 - **Ricominciare una pagina da capo:** "+" → Modelli → *Pagine GFA*.
 - **Sostituire una foto segnaposto:** clic sull'immagine → *Sostituisci*; poi cancella la didascalia "Da fornire".
 - **Segnare un dato da confermare:** seleziona il testo → menu formato → *Da fornire* (evidenziazione arancione).
 - **Evidenziatore giallo** (come "verificare." in homepage): menu formato → *Evidenziatore giallo*.
 - **Pulsanti:** stili *Giallo GFA*, *Blu GFA*, *Bordo* nel pannello del pulsante.
 - **A capo nei titoli** (Maiusc+Invio): in homepage ogni riga del titolo entra con la sua animazione.
+- **Pagina Lavori svolti** (`/lavori/`): è la pagina *Lavori svolti* in Pagine, fatta di sezioni
+  (apertura, tutti i lavori, come leggere una scheda, controllo, preventivo) e modificabile come le
+  altre; il blocco *GFA · Tutti i lavori* mette al suo posto le schede, 12 per pagina con i numeri
+  di pagina. Le schede si aggiungono da Lavori svolti → Aggiungi lavoro.
 - **Pagina nuova:** Pagine → Aggiungi propone i modelli *Pagine GFA*. Una pagina che comincia con una
   sezione GFA si vede a tutta larghezza anche con il template predefinito; il titolo scritto
   nell'editor serve al menu e alla scheda del browser e nelle pagine a sezioni non compare sul sito.
@@ -30,7 +34,9 @@ prezzi, domande frequenti e foto si modificano direttamente nell'editor, come in
   la mappa nelle pagine salvate quando il filtro la toglieva lasciando solo le scritte.
 
 Blocchi automatici (categoria *GFA*), che leggono i dati invece di scriverli a mano:
-Numeri, Lavori svolti, Elenco sedi, Mappa sedi, Modulo preventivo, Recapiti, Dati societari.
+Numeri, Lavori svolti, Tutti i lavori, Elenco sedi, Mappa sedi, Modulo preventivo, Recapiti,
+Dati societari. Nell'editor l'anteprima di questi blocchi non è cliccabile: un clic seleziona il
+blocco invece di aprire i link delle schede o scrivere nel modulo.
 Header e footer leggono i dati da Aspetto → Personalizza → Dati GFA.
 - **Logo:** Personalizza → Identità del sito. Nell'header è alto 38 px al posto del riquadro giallo
   "GFA"; un logo largo (almeno il doppio dell'altezza) contiene già il nome, quindi il testo
@@ -49,11 +55,11 @@ Queste parti stanno nel tema o leggono dati inseriti altrove:
   per cambiarne i testi in una pagina, inserisci lì la sezione *Preventivo* e modificala.
 - **Blocchi automatici:** si spostano e si tolgono come gli altri blocchi, i testi vengono dai dati.
   *Numeri*: anno, sedi e copie da Dati GFA, "3 servizi" fisso; *Elenco sedi* e *Mappa sedi*: Dati
-  GFA → Sedi, posizioni sulla mappa nel tema; *Lavori svolti*: i lavori pubblicati, e finché non ce
-  n'è nessuno quattro esempi scritti nel tema; *Recapiti* e *Dati societari*: Dati GFA.
+  GFA → Sedi, posizioni sulla mappa nel tema; *Lavori svolti* e *Tutti i lavori*: i lavori
+  pubblicati, e finché non ce n'è nessuno quattro esempi scritti nel tema; *Recapiti* e *Dati
+  societari*: Dati GFA.
   La nota "Confermare per ogni sede" sotto l'elenco sparisce quando ogni sede ha la sua zona pubblicata.
-- **Pagine create dal tema:** archivi Zone servite (`/zone/`) e Lavori svolti (`/lavori/`),
-  pagina 404 e risultati della ricerca.
+- **Pagine create dal tema:** archivio Zone servite (`/zone/`), pagina 404 e risultati della ricerca.
 - **Zone e lavori:** testo, riassunto e immagine in evidenza dall'editor; indirizzo, telefono,
   comuni e campi della scheda nei riquadri sotto l'editor; etichette ("Sede", "Comuni serviti",
   "Esigenza"…) nel tema.
@@ -85,10 +91,12 @@ aprila e inserisci il modello *Pagina Contatti* (si vede a tutta larghezza anche
 | Chi siamo | `chi-siamo` |
 | Franchising | `franchising` |
 | Contatti | `contatti` |
+| Lavori svolti (mostrata in `/lavori/`) | `lavori` |
 | Cookie policy | `cookie-policy` |
 
 Contenuti dedicati nel menu di amministrazione:
 - **Lavori svolti** → `/lavori/`: campi servizio, esigenza, zona e periodo, attività, prova.
+  La scheda di un lavoro mostra solo i campi compilati, il link a tutti i lavori e gli altri lavori.
 - **Zone servite** → `/zone/` e `/volantinaggio/<città>/`: campi indirizzo, telefono, comuni.
   Il titolo della zona deve coincidere con il nome della sede (es. "Rapallo"). Nell'elenco sedi
   una sede compare con il link solo quando la sua zona è pubblicata: le zone in bozza darebbero
@@ -119,8 +127,8 @@ Già inclusi nel tema (301, solo se il vecchio indirizzo non esiste più): tutte
 ```
 style.css, functions.php
 inc/      helpers, setup, customizer, post-types, quote-form, blocks (blocchi dinamici), redirects, starter-content
-patterns/ 29 sezioni a blocchi (generate da tools/genera-pattern.py)
-parts/    markup dei blocchi dinamici (lavori, sedi, modulo, recapiti)
+patterns/ 32 sezioni a blocchi (generate da tools/genera-pattern.py)
+parts/    markup dei blocchi dinamici (lavori, tutti i lavori, sedi, modulo, recapiti)
 theme.json palette GFA e impostazioni editor
 assets/   css/main.css, css/editor.css, js/main.js, js/editor.js, img/foto-da-fornire.svg,
           js/vendor (GSAP 3.13 con ScrollTrigger e SplitText, Lenis 1.3.11), fonts (OFL; Public Sans
@@ -132,6 +140,9 @@ Animazioni (GSAP 3.13 + ScrollTrigger + SplitText, Lenis 1.3 per lo scroll morbi
 - titolo della homepage che sale riga per riga e evidenziatore giallo che si disegna;
 - titoli di sezione divisi in righe, card che entrano a gruppi, percorso GPS che si disegna,
   linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
+- lavori svolti: sul computer la fascia si fissa e scorre di lato con la pagina; dove non si fissa
+  (telefono, tablet, schermi bassi) è uno slider da trascinare col dito, con contatore, barra e
+  frecce, e la prima volta che compare si sposta un poco di lato per far vedere che scorre;
 - passaggio tra le pagine con GSAP: una dissolvenza a schermo intero (header compreso) copre la pagina,
   si cambia pagina e il velo si toglie quando la nuova pagina è pronta; i link a file (PDF, documenti,
   immagini…) aprono il file senza dissolvenza e, se una pagina non arriva, dopo 4 secondi il velo si

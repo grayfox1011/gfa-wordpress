@@ -25,6 +25,7 @@ function gfa_starter_pages() {
 		'chi-siamo'         => 'Chi siamo',
 		'franchising'       => 'Franchising',
 		'contatti'          => 'Contatti',
+		'lavori'            => 'Lavori svolti',
 		'cookie-policy'     => 'Cookie policy',
 	);
 }
@@ -209,7 +210,7 @@ function gfa_setup_page() {
 	echo '<p>Homepage: <strong>' . ( gfa_home_ok() ? esc_html__( 'impostata', 'gfa' ) : esc_html__( 'non impostata', 'gfa' ) ) . '</strong></p>';
 	echo '<form method="post">';
 	wp_nonce_field( 'gfa_setup', 'gfa_setup_nonce' );
-	echo '<p><label><input type="checkbox" name="gfa_reset" value="1"> Riporta anche le pagine GFA già scritte ai modelli più recenti del tema (Home, Volantinaggio, Stampa e grafica, Promozione eventi, Chi siamo, Franchising, Contatti). I testi modificati a mano si perdono, ma restano recuperabili dalle revisioni di ogni pagina.</label></p>';
+	echo '<p><label><input type="checkbox" name="gfa_reset" value="1"> Riporta anche le pagine GFA già scritte ai modelli più recenti del tema (Home, Volantinaggio, Stampa e grafica, Promozione eventi, Chi siamo, Franchising, Contatti, Lavori svolti). I testi modificati a mano si perdono, ma restano recuperabili dalle revisioni di ogni pagina.</label></p>';
 	submit_button( __( 'Configura il sito', 'gfa' ) );
 	echo '</form></div>';
 }

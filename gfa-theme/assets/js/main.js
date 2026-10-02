@@ -175,6 +175,60 @@
     window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(update, 200); });
   }
 
+  /* ---------- Slider dei lavori ----------
+     Dove la fascia scorre di lato (telefono, tablet, schermi bassi) contatore, barra e frecce
+     dicono quanti lavori ci sono e dove si è; con la fascia fissata da GSAP restano nascosti. */
+  function initWorksSliders() {
+    document.querySelectorAll('[data-works-slider]').forEach(function (box) {
+      var track = box.querySelector('.works');
+      var nav = box.querySelector('[data-works-nav]');
+      var cards = track ? track.querySelectorAll(':scope > .work') : [];
+      if (!nav || cards.length < 2) { return; }
+      var prev = nav.querySelector('[data-works-prev]');
+      var next = nav.querySelector('[data-works-next]');
+      var count = nav.querySelector('[data-works-count]');
+      var bar = nav.querySelector('[data-works-bar]');
+      var frame = null;
+      var offset = function (card) { return card.offsetLeft - cards[0].offsetLeft; };
+      function current() {
+        var x = track.scrollLeft;
+        if (x >= track.scrollWidth - track.clientWidth - 2) { return cards.length - 1; }
+        var best = 0;
+        for (var i = 1; i < cards.length; i++) {
+          if (Math.abs(offset(cards[i]) - x) < Math.abs(offset(cards[best]) - x)) { best = i; }
+        }
+        return best;
+      }
+      function update() {
+        frame = null;
+        var max = track.scrollWidth - track.clientWidth;
+        var active = max > 1 && !track.classList.contains('is-pinned') && /auto|scroll/.test(window.getComputedStyle(track).overflowX);
+        nav.hidden = !active;
+        box.classList.toggle('has-nav', active);
+        if (!active) { return; }
+        var text = (current() + 1) + ' / ' + cards.length;
+        if (count.textContent !== text) { count.textContent = text; }
+        prev.disabled = track.scrollLeft <= 2;
+        next.disabled = track.scrollLeft >= max - 2;
+        bar.style.width = (100 * track.clientWidth / track.scrollWidth) + '%';
+        bar.style.transform = 'translateX(' + (100 * track.scrollLeft / track.clientWidth) + '%)';
+      }
+      function schedule() { if (!frame) { frame = window.requestAnimationFrame(update); } }
+      function go(step) {
+        var i = Math.max(0, Math.min(cards.length - 1, current() + step));
+        track.scrollTo({ left: offset(cards[i]), behavior: reduced() ? 'auto' : 'smooth' });
+      }
+      prev.addEventListener('click', function () { go(-1); });
+      next.addEventListener('click', function () { go(1); });
+      track.addEventListener('scroll', schedule, { passive: true });
+      window.addEventListener('resize', schedule);
+      window.addEventListener('load', schedule);
+      // La fascia fissata o liberata da GSAP cambia classe: il contatore compare o sparisce.
+      if (window.MutationObserver) { new MutationObserver(schedule).observe(track, { attributes: true, attributeFilter: ['class'] }); }
+      update();
+    });
+  }
+
   /* ---------- Header compatto ---------- */
   function initHeader() {
     var header = document.querySelector('.site-header');
@@ -362,6 +416,7 @@
   safely(initRouteLines);
   safely(initForms);
   safely(initScrollRegions);
+  safely(initWorksSliders);
 
   /* ---------- Animazioni ---------- */
   if (!window.gsap || !window.ScrollTrigger || reduced()) {
@@ -566,7 +621,7 @@
 
     // 9. Lavori: scorrimento orizzontale fissato solo se l'intero blocco sta nello schermo
     var pin = document.querySelector('.works-pin');
-    var track = document.querySelector('.works');
+    var track = pin ? pin.querySelector('.works') : null;
     var pinTween = null;
     function setupPin() {
       if (pinTween) {
@@ -580,7 +635,10 @@
       var header = document.querySelector('.site-header');
       var top = (header ? header.offsetHeight : 0) + 12;
       var distance = function () { return Math.max(0, track.scrollWidth - track.clientWidth); };
-      if (pin.offsetHeight > window.innerHeight - top - 12 || distance() < 40) { return; }
+      // Contatore e frecce dello slider servono solo se la fascia non è fissata: non contano nella misura.
+      var nav = pin.querySelector('[data-works-nav]');
+      var navHeight = nav && !nav.hidden ? nav.offsetHeight + parseFloat(window.getComputedStyle(nav).marginTop) : 0;
+      if (pin.offsetHeight - navHeight > window.innerHeight - top - 12 || distance() < 40) { return; }
       track.classList.add('is-pinned');
       pinTween = gsap.to(track, {
         x: function () { return -distance(); }, ease: 'none',
@@ -602,6 +660,28 @@
         }, 250);
       });
     }
+
+    // 10. Slider dei lavori: la prima volta che compare la fascia si sposta un poco di lato e torna,
+    // così si vede che si può trascinare. Si ferma appena la si tocca.
+    document.querySelectorAll('[data-works-slider]').forEach(function (box) {
+      var strip = box.querySelector('.works');
+      if (!strip) { return; }
+      ST.create({
+        trigger: strip, start: 'top 75%', once: true,
+        onEnter: function () {
+          if (!box.classList.contains('has-nav') || strip.scrollLeft > 0) { return; }
+          var restore = function () { strip.style.scrollSnapType = ''; };
+          strip.style.scrollSnapType = 'none';
+          var nudge = gsap.to(strip, {
+            scrollLeft: Math.min(72, strip.scrollWidth - strip.clientWidth), duration: 0.5, delay: 0.5, ease: 'power2.out',
+            yoyo: true, repeat: 1, repeatDelay: 0.25, onComplete: restore
+          });
+          ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach(function (type) {
+            strip.addEventListener(type, function () { nudge.kill(); restore(); }, { passive: true, once: true });
+          });
+        }
+      });
+    });
 
     // Misure da ricalcolare quando arrivano font e immagini
     if (document.fonts && document.fonts.ready) { document.fonts.ready.then(function () { ST.refresh(); }); }

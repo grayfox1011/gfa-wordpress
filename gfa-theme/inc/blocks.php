@@ -30,7 +30,8 @@ function gfa_part_html( $part ) {
 function gfa_dynamic_blocks() {
 	return array(
 		'numeri'         => array( 'GFA · Numeri', 'Anni, sedi e copie dal pannello Dati GFA.', 'chart-bar', 'gfa_render_numeri' ),
-		'lavori'         => array( 'GFA · Lavori svolti', 'Gli ultimi lavori pubblicati.', 'portfolio', function () { return gfa_part_html( 'lavori' ); } ),
+		'lavori'         => array( 'GFA · Lavori svolti', 'Gli ultimi lavori pubblicati, in una fascia che scorre di lato.', 'portfolio', function () { return gfa_part_html( 'lavori' ); } ),
+		'lavori-elenco'  => array( 'GFA · Tutti i lavori', 'Tutti i lavori pubblicati in griglia, con i numeri di pagina.', 'grid-view', function () { return gfa_part_html( 'lavori-elenco' ); } ),
 		'zone-elenco'    => array( 'GFA · Elenco sedi', 'Le sedi con il link alla pagina di ogni zona.', 'location', function () { return gfa_part_html( 'zone-elenco' ); } ),
 		'zone-mappa'     => array( 'GFA · Mappa sedi', 'Mappa schematica delle sedi.', 'location-alt', function () { return gfa_part_html( 'zone-mappa' ); } ),
 		'preventivo'     => array( 'GFA · Modulo preventivo', 'Modulo in tre passi, invia un\'email a GFA.', 'feedback', function () { return gfa_part_html( 'preventivo' ); } ),
@@ -86,7 +87,7 @@ add_action(
 		wp_enqueue_script(
 			'gfa-editor',
 			get_template_directory_uri() . '/assets/js/editor.js',
-			array( 'wp-blocks', 'wp-element', 'wp-server-side-render', 'wp-rich-text', 'wp-block-editor', 'wp-i18n' ),
+			array( 'wp-blocks', 'wp-element', 'wp-components', 'wp-server-side-render', 'wp-rich-text', 'wp-block-editor', 'wp-i18n' ),
 			GFA_VERSION,
 			true
 		);
@@ -218,6 +219,7 @@ function gfa_page_layouts() {
 		'chi-siamo'         => array( 'chi-intro', 'chi-storia', 'chi-persone', 'chi-impegni', 'zone', 'chi-dati', 'preventivo' ),
 		'franchising'       => array( 'franchising-intro', 'franchising-offerta', 'franchising-percorso', 'zone', 'franchising-candidatura' ),
 		'contatti'          => array( 'contatti-intro', 'preventivo', 'zone' ),
+		'lavori'            => array( 'lavori-intro', 'lavori-elenco', 'lavori-scheda', 'controllo', 'preventivo' ),
 	);
 }
 
@@ -256,6 +258,7 @@ function gfa_register_page_patterns() {
 		'chi-siamo'         => 'Chi siamo',
 		'franchising'       => 'Franchising',
 		'contatti'          => 'Contatti',
+		'lavori'            => 'Lavori svolti',
 	);
 	foreach ( $titles as $slug => $title ) {
 		register_block_pattern(

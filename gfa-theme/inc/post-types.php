@@ -154,3 +154,13 @@ add_action(
 		flush_rewrite_rules();
 	}
 );
+
+// Pagina Lavori svolti: 12 schede per pagina, righe piene nella griglia a 3 e a 2 colonne.
+add_action(
+	'pre_get_posts',
+	function ( $query ) {
+		if ( ! is_admin() && $query->is_main_query() && $query->is_post_type_archive( 'lavoro' ) ) {
+			$query->set( 'posts_per_page', 12 );
+		}
+	}
+);

@@ -13,8 +13,10 @@
       icon: b.icon,
       category: 'gfa',
       supports: { html: false },
+      // Anteprima inerte: un clic seleziona il blocco invece di seguire i link delle schede
+      // o di scrivere nel modulo, che dentro l'editor aprirebbero il sito.
       edit: function () {
-        return el('div', useBlockProps(), el(ServerSideRender, { block: b.name }));
+        return el('div', useBlockProps(), el(wp.components.Disabled, null, el(ServerSideRender, { block: b.name })));
       },
       save: function () { return null; }
     });

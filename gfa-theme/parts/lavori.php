@@ -1,24 +1,35 @@
 <?php
 /**
- * Elenco lavori: dal contenuto "Lavoro" se esiste, altrimenti i casi già noti come segnaposto.
+ * Fascia dei lavori: dal contenuto "Lavoro" se esiste, altrimenti i casi già noti come segnaposto.
  *
- * $args['heading'] = 'h2' quando l'elenco viene subito dopo l'h1 (archivio dei lavori).
+ * Dove la fascia scorre di lato (telefono, tablet, schermi bassi) frecce, contatore e barra dicono
+ * che ci sono altri lavori; sul computer, con la fascia fissata da GSAP, restano nascosti.
+ *
+ * $args['heading'] = 'h2' quando l'elenco viene subito dopo l'h1.
+ * $args['layout']  = 'grid' per la griglia della pagina Lavori svolti, senza slider.
+ * $args['exclude'] = lavoro da non ripetere (scheda di un lavoro).
  *
  * @package gfa
  */
 $gfa_args  = array( 'heading' => isset( $args['heading'] ) && 'h2' === $args['heading'] ? 'h2' : 'h3' );
 $gfa_open  = 'h2' === $gfa_args['heading'] ? '<h2 class="is-h3">' : '<h3>';
 $gfa_close = 'h2' === $gfa_args['heading'] ? '</h2>' : '</h3>';
+$gfa_grid  = isset( $args['layout'] ) && 'grid' === $args['layout'];
+$gfa_track = wp_unique_id( 'gfa-lavori-' );
 $gfa_works = new WP_Query(
 	array(
 		'post_type'      => 'lavoro',
 		'posts_per_page' => 6,
+		'post__not_in'   => empty( $args['exclude'] ) ? array() : array( (int) $args['exclude'] ),
 		'no_found_rows'  => true,
 	)
 );
 ?>
 
-<div class="works">
+<?php if ( ! $gfa_grid ) : ?>
+<div class="works-slider" data-works-slider>
+<?php endif; ?>
+<div class="works<?php echo $gfa_grid ? ' works--grid' : ''; ?>" id="<?php echo esc_attr( $gfa_track ); ?>">
 	<?php if ( $gfa_works->have_posts() ) : ?>
 		<?php
 		while ( $gfa_works->have_posts() ) :
@@ -54,3 +65,12 @@ $gfa_works = new WP_Query(
 		</article>
 	<?php endif; ?>
 </div>
+<?php if ( ! $gfa_grid ) : ?>
+	<div class="works-nav" data-works-nav hidden>
+		<p class="works-nav__count" aria-live="polite"><span class="screen-reader-text"><?php esc_html_e( 'Lavoro', 'gfa' ); ?> </span><span data-works-count></span></p>
+		<span class="works-nav__bar" aria-hidden="true"><span data-works-bar></span></span>
+		<button class="works-nav__btn" type="button" data-works-prev aria-controls="<?php echo esc_attr( $gfa_track ); ?>" aria-label="<?php esc_attr_e( 'Lavoro precedente', 'gfa' ); ?>"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg></button>
+		<button class="works-nav__btn" type="button" data-works-next aria-controls="<?php echo esc_attr( $gfa_track ); ?>" aria-label="<?php esc_attr_e( 'Lavoro successivo', 'gfa' ); ?>"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7"/></svg></button>
+	</div>
+</div>
+<?php endif; ?>
