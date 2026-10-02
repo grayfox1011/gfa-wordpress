@@ -34,6 +34,11 @@ Versione 0.6.2 (telefono e pagina Lavori svolti, 2 ottobre 2026), stesse prove p
   lavori"; nessuna violazione axe-core; nell'editor 9 pagine e 40 modelli validi e un clic sui
   blocchi automatici seleziona il blocco senza aprire il sito.
 
+Versione 0.6.3 (2 ottobre 2026): slider anche nella pagina Lavori svolti sotto i 1024 px; sedi
+aggiunte in autonomia (zona in bozza creata salvando Personalizza, mappa con 54 città del Nord,
+nomi confrontati senza maiuscole e accenti), provato aggiungendo e togliendo una sede da
+Personalizza; stesse prove della 0.6.2.
+
 Il prototipo statico non è stato rigenerato: mostra ancora la 0.5.
 
 Tutti i dati aziendali non confermati compaiono come segnaposto arancioni "da fornire".

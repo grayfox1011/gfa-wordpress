@@ -6,7 +6,7 @@
  * che ci sono altri lavori; sul computer, con la fascia fissata da GSAP, restano nascosti.
  *
  * $args['heading'] = 'h2' quando l'elenco viene subito dopo l'h1.
- * $args['layout']  = 'grid' per la griglia della pagina Lavori svolti, senza slider.
+ * $args['layout']  = 'grid' per la pagina Lavori svolti: griglia sul computer, slider sul telefono.
  * $args['exclude'] = lavoro da non ripetere (scheda di un lavoro).
  *
  * @package gfa
@@ -26,9 +26,7 @@ $gfa_works = new WP_Query(
 );
 ?>
 
-<?php if ( ! $gfa_grid ) : ?>
 <div class="works-slider" data-works-slider>
-<?php endif; ?>
 <div class="works<?php echo $gfa_grid ? ' works--grid' : ''; ?>" id="<?php echo esc_attr( $gfa_track ); ?>">
 	<?php if ( $gfa_works->have_posts() ) : ?>
 		<?php
@@ -65,12 +63,5 @@ $gfa_works = new WP_Query(
 		</article>
 	<?php endif; ?>
 </div>
-<?php if ( ! $gfa_grid ) : ?>
-	<div class="works-nav" data-works-nav hidden>
-		<p class="works-nav__count" aria-live="polite"><span class="screen-reader-text"><?php esc_html_e( 'Lavoro', 'gfa' ); ?> </span><span data-works-count></span></p>
-		<span class="works-nav__bar" aria-hidden="true"><span data-works-bar></span></span>
-		<button class="works-nav__btn" type="button" data-works-prev aria-controls="<?php echo esc_attr( $gfa_track ); ?>" aria-label="<?php esc_attr_e( 'Lavoro precedente', 'gfa' ); ?>"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7"/></svg></button>
-		<button class="works-nav__btn" type="button" data-works-next aria-controls="<?php echo esc_attr( $gfa_track ); ?>" aria-label="<?php esc_attr_e( 'Lavoro successivo', 'gfa' ); ?>"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7"/></svg></button>
-	</div>
+<?php get_template_part( 'parts/works-nav', null, array( 'track' => $gfa_track ) ); ?>
 </div>
-<?php endif; ?>

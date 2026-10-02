@@ -272,7 +272,7 @@ mark.hl { color: inherit; background: linear-gradient(transparent 62%, var(--yel
 .zone-list a:hover { border-color: var(--blue); color: var(--blue); }
 .zone-list small { font-family: var(--f-data); font-weight: 500; color: var(--ink-2); font-size: .7rem; text-transform: uppercase; }
 .north-map { width: 100%; height: auto; }
-.north-map .land { fill: var(--paper-2); stroke: var(--line); stroke-width: 1.5; }
+.north-map .land { fill: #fff; stroke: var(--line); stroke-width: 1.5; } /* chiara sia sulle sezioni bianche sia su quelle grigie */
 .north-map .dot { fill: var(--blue); }
 .north-map .dot--home { fill: var(--yellow); stroke: var(--ink); stroke-width: 2; }
 .north-map text { font-family: var(--f-data); font-size: 12px; fill: var(--ink); }
@@ -467,8 +467,12 @@ mark.hl { background-repeat: no-repeat; background-size: 100% 100%; }
   .wp-block-table.price-table td:nth-child(2), .wp-block-table.price-table td:nth-child(3) { grid-column: 1 / -1; color: var(--ink-2); font-size: .92rem; }
 }
 
-.works--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: 2.2rem 1.5rem; overflow: visible; scroll-snap-type: none; padding-bottom: 0; }
-.works--grid .work { flex: none; }
+/* Pagina Lavori svolti: griglia sul computer; sotto i 1024 px resta la fascia con lo slider, così
+   con molti lavori la pagina non diventa lunghissima sul telefono. */
+@media (min-width: 1024px) {
+  .works--grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2.2rem 1.5rem; overflow: visible; scroll-snap-type: none; padding-bottom: 0; }
+  .works--grid .work { flex: none; }
+}
 .works-empty { margin-bottom: 1.5rem; }
 
 /* Numeri di pagina (lavori, ricerca, notizie) */

@@ -118,6 +118,25 @@ function gfa_run_setup( $reset = false ) {
 	}
 
 	// Una zona in bozza per ogni sede: si pubblica quando i dati sono confermati.
+	gfa_create_missing_zones();
+
+	// Permalink "nome articolo": senza, lavori e pagine città non funzionano.
+	if ( '' === (string) get_option( 'permalink_structure' ) ) {
+		update_option( 'permalink_structure', '/%postname%/' );
+	}
+
+	update_option( 'gfa_starter_done', 1 );
+	flush_rewrite_rules();
+	return $done;
+}
+
+/**
+ * Una zona in bozza per ogni sede di Dati GFA → Sedi che non ne ha ancora una.
+ *
+ * Gira con la configurazione del sito e ogni volta che si salva Personalizza: una sede aggiunta
+ * all'elenco trova la sua pagina zona pronta da completare in Zone servite.
+ */
+function gfa_create_missing_zones() {
 	foreach ( gfa_sedi() as $sede ) {
 		if ( get_page_by_path( sanitize_title( $sede ), OBJECT, 'zona' ) ) {
 			continue;
@@ -132,16 +151,8 @@ function gfa_run_setup( $reset = false ) {
 			)
 		);
 	}
-
-	// Permalink "nome articolo": senza, lavori e pagine città non funzionano.
-	if ( '' === (string) get_option( 'permalink_structure' ) ) {
-		update_option( 'permalink_structure', '/%postname%/' );
-	}
-
-	update_option( 'gfa_starter_done', 1 );
-	flush_rewrite_rules();
-	return $done;
 }
+add_action( 'customize_save_after', 'gfa_create_missing_zones' );
 
 // All'attivazione del tema: sempre (non sovrascrive nulla di già scritto).
 add_action(

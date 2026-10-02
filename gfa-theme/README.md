@@ -24,7 +24,8 @@ prezzi, domande frequenti e foto si modificano direttamente nell'editor, come in
 - **Pagina Lavori svolti** (`/lavori/`): è la pagina *Lavori svolti* in Pagine, fatta di sezioni
   (apertura, tutti i lavori, come leggere una scheda, controllo, preventivo) e modificabile come le
   altre; il blocco *GFA · Tutti i lavori* mette al suo posto le schede, 12 per pagina con i numeri
-  di pagina. Le schede si aggiungono da Lavori svolti → Aggiungi lavoro.
+  di pagina: griglia sul computer, slider con le frecce sotto i 1024 px, così con molti lavori la
+  pagina non diventa lunghissima sul telefono. Le schede si aggiungono da Lavori svolti → Aggiungi lavoro.
 - **Pagina nuova:** Pagine → Aggiungi propone i modelli *Pagine GFA*. Una pagina che comincia con una
   sezione GFA si vede a tutta larghezza anche con il template predefinito; il titolo scritto
   nell'editor serve al menu e alla scheda del browser e nelle pagine a sezioni non compare sul sito.
@@ -98,9 +99,25 @@ Contenuti dedicati nel menu di amministrazione:
 - **Lavori svolti** → `/lavori/`: campi servizio, esigenza, zona e periodo, attività, prova.
   La scheda di un lavoro mostra solo i campi compilati, il link a tutti i lavori e gli altri lavori.
 - **Zone servite** → `/zone/` e `/volantinaggio/<città>/`: campi indirizzo, telefono, comuni.
-  Il titolo della zona deve coincidere con il nome della sede (es. "Rapallo"). Nell'elenco sedi
-  una sede compare con il link solo quando la sua zona è pubblicata: le zone in bozza darebbero
-  "pagina non trovata".
+  Il titolo della zona è il nome della sede (es. "Rapallo"; maiuscole e accenti non contano).
+  Nell'elenco sedi una sede compare con il link solo quando la sua zona è pubblicata: le zone in
+  bozza darebbero "pagina non trovata".
+
+### Aggiungere una sede
+1. Personalizza → Dati GFA → *Sedi*: aggiungi il nome in fondo all'elenco, separato da una virgola,
+   e pubblica. Subito la sede compare nel footer, nell'elenco sedi (senza link), nel numero delle
+   sedi (blocco Numeri e pagina Zone servite) e sulla mappa; in Zone servite nasce la sua zona in
+   bozza.
+2. Zone servite → apri la nuova zona: testo, riassunto, indirizzo, telefono e comuni, poi
+   *Pubblica*. Da quel momento l'elenco sedi porta alla sua pagina.
+3. A mano, perché sono testi scritti: il titolo "Otto sedi, dal Ponente alla pianura." nelle pagine
+   con la sezione Zone servite (Home, Chi siamo, Franchising, Contatti) e l'elenco delle città
+   nell'apertura della pagina Volantinaggio.
+
+La mappa conosce i capoluoghi di provincia del Nord e i centri liguri vicini alle sedi (54 città,
+in `inc/map.php`): una sede in un'altra città resta nell'elenco ma non compare sulla mappa finché
+non si aggiunge una riga con le sue coordinate. Le etichette si spostano da sole per non
+sovrapporsi.
 
 ### Redirect dai vecchi indirizzi
 Già inclusi nel tema (301, solo se il vecchio indirizzo non esiste più): tutte le pagine
@@ -126,7 +143,7 @@ Già inclusi nel tema (301, solo se il vecchio indirizzo non esiste più): tutte
 ## Struttura
 ```
 style.css, functions.php
-inc/      helpers, setup, customizer, post-types, quote-form, blocks (blocchi dinamici), redirects, starter-content
+inc/      helpers, setup, customizer, post-types, quote-form, blocks (blocchi dinamici), map (mappa sedi), redirects, starter-content
 patterns/ 32 sezioni a blocchi (generate da tools/genera-pattern.py)
 parts/    markup dei blocchi dinamici (lavori, tutti i lavori, sedi, modulo, recapiti)
 theme.json palette GFA e impostazioni editor
@@ -142,7 +159,8 @@ Animazioni (GSAP 3.13 + ScrollTrigger + SplitText, Lenis 1.3 per lo scroll morbi
   linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
 - lavori svolti: sul computer la fascia si fissa e scorre di lato con la pagina; dove non si fissa
   (telefono, tablet, schermi bassi) è uno slider da trascinare col dito, con contatore, barra e
-  frecce, e la prima volta che compare si sposta un poco di lato per far vedere che scorre;
+  frecce, e la prima volta che compare si sposta un poco di lato per far vedere che scorre; lo
+  stesso slider sostituisce la griglia della pagina Lavori svolti sotto i 1024 px;
 - passaggio tra le pagine con GSAP: una dissolvenza a schermo intero (header compreso) copre la pagina,
   si cambia pagina e il velo si toglie quando la nuova pagina è pronta; i link a file (PDF, documenti,
   immagini…) aprono il file senza dissolvenza e, se una pagina non arriva, dopo 4 secondi il velo si
