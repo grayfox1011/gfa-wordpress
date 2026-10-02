@@ -17,6 +17,16 @@ Verificato su WordPress 7.1.2 (versione 0.4.0), seguendo i criteri del report di
 Versione 0.6.0 (frontend, dal report del 1 ottobre 2026) provata su WordPress 7.1.2 in locale:
 40 controlli nel browser su computer e telefono (modulo, scroll con "indietro", dissolvenza, logo,
 zone, menu, focus, modalità scura), nessuna violazione axe-core su 16 pagine da telefono e da
-computer, nessun errore JavaScript. Il prototipo statico non è stato rigenerato: mostra ancora la 0.5.
+computer, nessun errore JavaScript.
+
+Versione 0.6.1 (scritte e Gutenberg, 2 ottobre 2026), stesse prove più:
+- editor a blocchi: le 9 pagine si aprono senza blocchi non validi, i 36 modelli inseriti come
+  dall'inseritore sono validi, una modifica scritta nell'editor e salvata compare sul sito;
+- mappa del report conservata salvando con `DISALLOW_UNFILTERED_HTML` (prima restavano solo le scritte);
+- 12 pagine a 360, 390, 768, 1024, 1280 e 1440 px: nessuna parola spezzata, nessun grassetto o
+  corsivo finto, nessun testo fuori dal suo riquadro; marchio e menu nella larghezza del contenuto
+  da 1181 px in su.
+
+Il prototipo statico non è stato rigenerato: mostra ancora la 0.5.
 
 Tutti i dati aziendali non confermati compaiono come segnaposto arancioni "da fornire".

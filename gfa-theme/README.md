@@ -21,6 +21,13 @@ prezzi, domande frequenti e foto si modificano direttamente nell'editor, come in
 - **Evidenziatore giallo** (come "verificare." in homepage): menu formato → *Evidenziatore giallo*.
 - **Pulsanti:** stili *Giallo GFA*, *Blu GFA*, *Bordo* nel pannello del pulsante.
 - **A capo nei titoli** (Maiusc+Invio): in homepage ogni riga del titolo entra con la sua animazione.
+- **Pagina nuova:** Pagine → Aggiungi propone i modelli *Pagine GFA*. Una pagina che comincia con una
+  sezione GFA si vede a tutta larghezza anche con il template predefinito; il titolo scritto
+  nell'editor serve al menu e alla scheda del browser e nelle pagine a sezioni non compare sul sito.
+- **Mappa d'esempio del report** (sezione *Controllo*): è un blocco HTML e si modifica solo come
+  codice; per il report vero sostituiscila con un blocco Immagine. Il tema conserva i disegni SVG
+  semplici anche dove WordPress filtra l'HTML (multisito, `DISALLOW_UNFILTERED_HTML`), e rimette
+  la mappa nelle pagine salvate quando il filtro la toglieva lasciando solo le scritte.
 
 Blocchi automatici (categoria *GFA*), che leggono i dati invece di scriverli a mano:
 Numeri, Lavori svolti, Elenco sedi, Mappa sedi, Modulo preventivo, Recapiti, Dati societari.
@@ -30,6 +37,26 @@ Header e footer leggono i dati da Aspetto → Personalizza → Dati GFA.
   "GFA · Volantinaggio e distribuzione" accanto non compare.
 - **Menu del footer:** la colonna "Servizi" usa il menu assegnato alla posizione *Menu footer*
   (Aspetto → Menu); senza menu mostra l'elenco predefinito.
+
+### Cosa non si modifica dall'editor a blocchi
+Queste parti stanno nel tema o leggono dati inseriti altrove:
+- **Header:** sottotitolo "Volantinaggio e distribuzione" e pulsante "Chiedi un preventivo" (tema);
+  voci dal menu principale, logo da Identità del sito, nome da Dati GFA.
+- **Footer:** frase "Volantinaggio, stampa e promozione sul territorio.", titoli delle colonne e link
+  "Apri una sede GFA" (tema); sedi, recapiti e dati societari da Dati GFA.
+- **Modulo preventivo:** domande, scelte e messaggi (tema); destinatario da Dati GFA. In fondo a
+  pagine standard, articoli, lavori e zone il tema aggiunge la sezione *Preventivo* com'è nel tema:
+  per cambiarne i testi in una pagina, inserisci lì la sezione *Preventivo* e modificala.
+- **Blocchi automatici:** si spostano e si tolgono come gli altri blocchi, i testi vengono dai dati.
+  *Numeri*: anno, sedi e copie da Dati GFA, "3 servizi" fisso; *Elenco sedi* e *Mappa sedi*: Dati
+  GFA → Sedi, posizioni sulla mappa nel tema; *Lavori svolti*: i lavori pubblicati, e finché non ce
+  n'è nessuno quattro esempi scritti nel tema; *Recapiti* e *Dati societari*: Dati GFA.
+  La nota "Confermare per ogni sede" sotto l'elenco sparisce quando ogni sede ha la sua zona pubblicata.
+- **Pagine create dal tema:** archivi Zone servite (`/zone/`) e Lavori svolti (`/lavori/`),
+  pagina 404 e risultati della ricerca.
+- **Zone e lavori:** testo, riassunto e immagine in evidenza dall'editor; indirizzo, telefono,
+  comuni e campi della scheda nei riquadri sotto l'editor; etichette ("Sede", "Comuni serviti",
+  "Esigenza"…) nel tema.
 
 ### Configurazione del sito (Aspetto → Configura sito GFA)
 La configurazione (pagine mancanti, pagine vuote riempite, homepage statica sulla pagina "Home",
@@ -47,7 +74,7 @@ finché la homepage non è impostata, la bacheca mostra un avviso con il link.
 Il tema crea le pagine mancanti già riempite con i modelli, con il template *Pagina a sezioni GFA*,
 imposta la homepage statica, crea il menu principale e una zona in bozza per ogni sede.
 Non tocca pagine o menu che esistono già: se una pagina con lo stesso slug c'è già (es. `contatti`),
-aprila, scegli il template *Pagina a sezioni GFA* e inserisci il modello *Pagina Contatti*.
+aprila e inserisci il modello *Pagina Contatti* (si vede a tutta larghezza anche senza cambiare template).
 
 | Pagina | Slug |
 | --- | --- |

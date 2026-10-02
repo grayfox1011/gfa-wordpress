@@ -105,6 +105,27 @@ function gfa_show_quote_form() {
 }
 
 /**
+ * La pagina è composta con le sezioni GFA (modelli "Sezioni GFA" o "Pagine GFA")?
+ *
+ * Succede quando una pagina nuova parte da un modello "Pagina …" e resta sul template
+ * predefinito: page.php la mostra allora come "Pagina a sezioni GFA", senza un secondo titolo e
+ * senza la colonna di testo stretta, dove i titoli grandi si spezzavano a metà parola.
+ *
+ * @param int|WP_Post|null $post Pagina (predefinita: quella corrente).
+ * @return bool
+ */
+function gfa_has_sections( $post = null ) {
+	foreach ( parse_blocks( (string) get_post_field( 'post_content', $post ) ) as $block ) {
+		if ( empty( $block['blockName'] ) ) {
+			continue; // spazi tra un blocco e l'altro
+		}
+		$class = isset( $block['attrs']['className'] ) ? (string) $block['attrs']['className'] : '';
+		return 'core/group' === $block['blockName'] && (bool) preg_match( '/(^| )(hero|page-hero|section|facts)( |$)/', $class );
+	}
+	return false;
+}
+
+/**
  * Logo caricato da Personalizza → Identità del sito, alto quanto il marchio GFA (38 px).
  *
  * La misura "medium" non ritaglia il logo; sizes dice al browser la larghezza reale, così su uno

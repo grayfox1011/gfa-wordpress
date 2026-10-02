@@ -400,18 +400,36 @@
 
     // Righe di testo che salgono: divise solo durante l'animazione, poi il testo torna normale.
     // Così un ridimensionamento della finestra non può lasciare parole fuori dalla maschera.
+    // Si dividono con il font del titolo già caricato: con quello di riserva, di larghezza diversa,
+    // le righe cambierebbero a metà animazione. Il titolo resta nascosto al massimo 0,8 secondi.
     function riseText(el, opts) {
       opts = opts || {};
-      el.classList.add('gfa-animated');
-      gsap.set(el, { visibility: 'visible' });
-      if (!hasSplit) {
-        return gsap.from(el, { y: 30, autoAlpha: 0, duration: 0.9, ease: 'power3.out', delay: opts.delay || 0 });
+      var started = false;
+      var start = function () {
+        if (started) { return; }
+        started = true;
+        el.classList.add('gfa-animated');
+        gsap.set(el, { visibility: 'visible' });
+        if (!hasSplit) {
+          gsap.from(el, { y: 30, autoAlpha: 0, duration: 0.9, ease: 'power3.out', delay: opts.delay || 0 });
+          return;
+        }
+        var split = window.SplitText.create(el, { type: 'lines,words', mask: 'lines', linesClass: 'split-line', aria: 'none' });
+        gsap.from(split.words, {
+          yPercent: 115, duration: opts.duration || 1.1, stagger: opts.stagger || 0.05, ease: 'expo.out', delay: opts.delay || 0,
+          onComplete: function () { split.revert(); }
+        });
+      };
+      var ready = true;
+      try {
+        var style = window.getComputedStyle(el);
+        var font = style.fontWeight + ' 1em ' + style.fontFamily;
+        ready = !document.fonts || document.fonts.check(font);
+        if (!ready) { document.fonts.load(font).then(start, start); }
+      } catch (e) {
+        ready = true;
       }
-      var split = window.SplitText.create(el, { type: 'lines,words', mask: 'lines', linesClass: 'split-line', aria: 'none' });
-      return gsap.from(split.words, {
-        yPercent: 115, duration: opts.duration || 1.1, stagger: opts.stagger || 0.05, ease: 'expo.out', delay: opts.delay || 0,
-        onComplete: function () { split.revert(); }
-      });
+      if (ready) { start(); } else { setTimeout(start, 800); }
     }
 
     // Elementi che salgono e compaiono

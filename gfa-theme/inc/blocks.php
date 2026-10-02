@@ -157,6 +157,54 @@ function gfa_pattern( $slug ) {
 }
 
 /**
+ * Disegni SVG semplici nei contenuti, come la mappa d'esempio della sezione "Controllo".
+ *
+ * WordPress filtra l'HTML salvato senza il permesso di HTML libero (multisito,
+ * DISALLOW_UNFILTERED_HTML, configurazione del tema partita durante una visita senza accesso):
+ * senza queste regole toglie il disegno e lascia solo le scritte, ammassate in una riga. Solo
+ * forme e testo con classi e coordinate: niente script, link, stili o eventi.
+ *
+ * @param array  $tags    Tag consentiti.
+ * @param string $context Contesto del filtro.
+ * @return array
+ */
+function gfa_kses_svg( $tags, $context ) {
+	if ( 'post' !== $context ) {
+		return $tags;
+	}
+	$shape          = array( 'class' => true );
+	$tags['svg']    = $shape + array( 'viewbox' => true, 'role' => true, 'aria-label' => true, 'aria-hidden' => true, 'focusable' => true, 'xmlns' => true, 'width' => true, 'height' => true, 'preserveaspectratio' => true );
+	$tags['g']      = $shape;
+	$tags['rect']   = $shape + array( 'x' => true, 'y' => true, 'width' => true, 'height' => true, 'rx' => true, 'ry' => true );
+	$tags['circle'] = $shape + array( 'cx' => true, 'cy' => true, 'r' => true );
+	$tags['path']   = $shape + array( 'd' => true );
+	$tags['text']   = $shape + array( 'x' => true, 'y' => true, 'text-anchor' => true );
+	return $tags;
+}
+add_filter( 'wp_kses_allowed_html', 'gfa_kses_svg', 10, 2 );
+
+/**
+ * Pagine salvate quando il filtro toglieva la mappa d'esempio: il disegno torna al suo posto.
+ *
+ * Riconosce solo la riga che il filtro lasciava con le scritte del modello del tema; un report
+ * vero inserito al posto dell'esempio non viene toccato.
+ *
+ * @param string $html HTML del blocco.
+ * @return string
+ */
+function gfa_repair_report_map( $html ) {
+	$left = '08:02 partenzaVia Mameli09:4012:12 fine';
+	if ( false === strpos( $html, $left ) || false !== strpos( $html, '<svg' ) ) {
+		return $html;
+	}
+	if ( ! preg_match( '#<svg class="report__map".*?</svg>#s', gfa_pattern( 'controllo' ), $map ) ) {
+		return $html;
+	}
+	return str_replace( $left, $map[0], $html );
+}
+add_filter( 'render_block_core/html', 'gfa_repair_report_map' );
+
+/**
  * Pagine intere: elenco delle sezioni che le compongono.
  *
  * @return array<string,string[]>

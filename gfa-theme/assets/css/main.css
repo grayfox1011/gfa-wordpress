@@ -45,6 +45,7 @@ html.lenis, html.lenis body { height: auto; scroll-behavior: auto; }
 .lenis.lenis-smooth iframe { pointer-events: none; }
 body {
   margin: 0; background: var(--paper); color: var(--ink);
+  font-synthesis: style; /* niente grassetto finto: JetBrains Mono c'è solo nel peso 500 */
   font-family: var(--f-body); font-size: var(--step-0); line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -55,7 +56,7 @@ a { color: inherit; }
 .section--blue .form :focus-visible { outline-color: var(--blue); }
 :target { scroll-margin-top: 6rem; } /* l'header fisso non copre la sezione raggiunta da un link */
 
-h1, h2, h3 { font-family: var(--f-display); font-stretch: 112%; line-height: 1.02; margin: 0; text-wrap: balance; letter-spacing: -0.01em; overflow-wrap: break-word; hyphens: auto; }
+h1, h2, h3 { font-family: var(--f-display); font-stretch: 112%; line-height: 1.02; margin: 0; text-wrap: balance; letter-spacing: -0.01em; overflow-wrap: break-word; hyphens: manual; }
 .stack > * { min-width: 0; }
 h1 { font-size: var(--step-4); font-weight: 800; }
 h2 { font-size: var(--step-3); font-weight: 800; }
@@ -114,13 +115,13 @@ p { margin: 0; max-width: 62ch; }
 .site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .9rem; transition: padding .25s ease; }
 .site-header.is-compact .wrap { padding-block: .45rem; }
 .brand { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; font-family: var(--f-display); font-weight: 800; font-size: 1.35rem; font-stretch: 118%; }
-.brand__mark { width: 38px; height: 38px; border-radius: 5px; background: var(--yellow); color: #1f3fae; display: grid; place-items: center; font-size: .95rem; letter-spacing: -.02em; }
+.brand__mark { flex: none; width: 38px; height: 38px; border-radius: 5px; background: var(--yellow); color: #1f3fae; display: grid; place-items: center; font-size: .95rem; font-stretch: 100%; letter-spacing: -.02em; } /* quadrato fisso anche quando il menu toglie spazio; sigla senza la larghezza 118% del nome */
 .brand__logo { display: block; height: 38px; width: auto; max-width: min(40vw, 200px); object-fit: contain; object-position: left center; }
 .brand--logo-wide .brand__text { display: none; }
 .brand__sub { font-family: var(--f-data); font-weight: 500; font-size: .68rem; color: var(--ink-2); letter-spacing: .06em; text-transform: uppercase; display: block; font-stretch: 100%; }
-.nav { display: flex; align-items: center; gap: .3rem; }
-.nav ul { display: flex; gap: .2rem; list-style: none; margin: 0; padding: 0; }
-.nav a { white-space: nowrap; text-decoration: none; font-weight: 600; font-size: .95rem; padding: .5rem .7rem; border-radius: 4px; }
+.nav { display: flex; align-items: center; gap: .6rem; }
+.nav ul { display: flex; gap: 0; list-style: none; margin: 0; padding: 0; }
+.nav a { white-space: nowrap; text-decoration: none; font-weight: 600; font-size: .9rem; padding: .5rem .55rem; border-radius: 4px; } /* marchio e menu nei 1100 px del contenuto */
 .nav a:hover, .nav .current-menu-item > a { background: var(--paper-2); }
 .nav__phone { font-family: var(--f-data); font-size: .85rem; white-space: nowrap; }
 .nav-toggle { display: none; background: none; border: 2px solid var(--ink); border-radius: 4px; color: var(--ink); min-height: 44px; padding: 0 .8rem; font-weight: 700; font-family: var(--f-body); }
@@ -345,7 +346,7 @@ legend { font-family: var(--f-display); font-weight: 700; font-size: var(--step-
 .site-footer a { color: var(--paper); }
 .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 2rem; }
 .footer-grid > * { min-width: 0; }
-.footer-grid h2 { font-size: 1rem; font-stretch: 100%; line-height: 1.2; margin-bottom: .8rem; }
+.footer-grid h2 { font-size: 1rem; font-weight: 700; font-stretch: 100%; line-height: 1.2; margin-bottom: .8rem; }
 .footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; }
 .site-footer .todo { color: #ffb48f; background: transparent; border-color: #ffb48f; }
 .legal { margin-top: 2.5rem; padding-top: 1.2rem; border-top: 1px solid rgba(251, 250, 246, .2); border-top: 1px solid color-mix(in srgb, var(--paper) 20%, transparent); display: flex; flex-wrap: wrap; gap: .6rem 1.5rem; font-family: var(--f-data); font-size: .76rem; opacity: .85; }

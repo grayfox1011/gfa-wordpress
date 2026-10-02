@@ -4,11 +4,13 @@
  *
  * Una sede senza zona pubblicata compare senza link: la zona in bozza darebbe "pagina non trovata".
  * Il titolo della zona deve coincidere con il nome della sede (Dati GFA → Sedi).
+ * La nota "da confermare" sparisce quando ogni sede ha la sua zona pubblicata.
  *
  * @package gfa
  */
 
 $gfa_links = array();
+$gfa_sedi  = gfa_sedi();
 $gfa_zones = get_posts(
 	array(
 		'post_type'   => 'zona',
@@ -24,7 +26,7 @@ foreach ( $gfa_zones as $gfa_zone ) {
 ?>
 
 			<ul class="zone-list">
-				<?php foreach ( gfa_sedi() as $gfa_sede ) : ?>
+				<?php foreach ( $gfa_sedi as $gfa_sede ) : ?>
 					<?php if ( isset( $gfa_links[ $gfa_sede ] ) ) : ?>
 						<li><a href="<?php echo esc_url( $gfa_links[ $gfa_sede ] ); ?>"><?php echo esc_html( $gfa_sede ); ?> <small>volantinaggio →</small></a></li>
 					<?php else : ?>
@@ -32,4 +34,6 @@ foreach ( $gfa_zones as $gfa_zone ) {
 					<?php endif; ?>
 				<?php endforeach; ?>
 			</ul>
-			<p class="zone-note"><span class="todo">Confermare per ogni sede: attiva, diretta o in franchising, indirizzo</span></p>
+			<?php if ( array_diff( $gfa_sedi, array_keys( $gfa_links ) ) ) : ?>
+				<p class="zone-note"><span class="todo">Confermare per ogni sede: attiva, diretta o in franchising, indirizzo</span></p>
+			<?php endif; ?>

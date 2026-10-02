@@ -31,7 +31,8 @@
 			<?php else : ?>
 				<span class="brand__mark" aria-hidden="true">GFA</span>
 			<?php endif; ?>
-			<span class="brand__text"><?php echo esc_html( gfa_opt( 'brand' ) ); ?><span class="brand__sub"><?php esc_html_e( 'Volantinaggio e distribuzione', 'gfa' ); ?></span></span>
+			<?php // «e» resta attaccata alla parola dopo: su due righe il sottotitolo non lascia la «e» da sola. ?>
+			<span class="brand__text"><?php echo esc_html( gfa_opt( 'brand' ) ); ?><span class="brand__sub"><?php echo esc_html( str_replace( ' e ', " e\u{a0}", __( 'Volantinaggio e distribuzione', 'gfa' ) ) ); ?></span></span>
 		</a>
 		<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-label-closed="<?php esc_attr_e( 'Menu', 'gfa' ); ?>" data-label-open="<?php esc_attr_e( 'Chiudi', 'gfa' ); ?>"><?php esc_html_e( 'Menu', 'gfa' ); ?></button>
 		<nav class="nav" id="site-nav" aria-label="<?php esc_attr_e( 'Principale', 'gfa' ); ?>">
