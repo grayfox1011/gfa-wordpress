@@ -340,7 +340,7 @@ legend { font-family: var(--f-display); font-weight: 700; font-size: var(--step-
 .price-table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
 .price-table th, .price-table td { text-align: left; padding: .8rem .6rem; border-bottom: 1px solid var(--line); }
 .price-table th { font-family: var(--f-data); font-size: .75rem; text-transform: uppercase; letter-spacing: .06em; color: var(--ink-2); font-weight: 500; }
-.table-scroll { overflow-x: auto; overflow-y: hidden; }
+.table-scroll { overflow: visible; }
 .faq details { border-bottom: 1px solid var(--line); padding-block: 1rem; }
 .faq summary { cursor: pointer; font-weight: 700; font-family: var(--f-display); font-size: var(--step-0); }
 .faq details p { margin-top: .6rem; color: var(--ink-2); }
@@ -402,7 +402,10 @@ mark.todo { background: var(--todo-bg); color: var(--todo); }
 .wp-block-image img { border-radius: var(--radius); width: 100%; }
 .wp-block-image.photo-todo figcaption { font-family: var(--f-data); font-size: .76rem; color: var(--todo); margin-top: .5rem; }
 .section--blue .wp-block-image.photo-todo figcaption { color: inherit; }
-.wp-block-table.price-table { margin: 0; overflow-x: auto; overflow-y: hidden; }
+/* Tabelle dei prezzi e dei dati societari: nessun riquadro scorrevole (con 4 e 2 colonne entrano sempre,
+   le parole lunghe vanno a capo), quindi nessuna barra di scorrimento in nessun browser. */
+.wp-block-table.price-table { margin: 0; overflow: visible; }
+.price-table td { overflow-wrap: break-word; }
 .wp-block-table.price-table table { width: 100%; border-collapse: collapse; }
 .wp-block-table.price-table thead { border-bottom: 0; }
 .price-table th, .price-table td { border: 0; border-bottom: 1px solid var(--line); }

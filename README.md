@@ -43,6 +43,11 @@ Versione 0.6.4 (2 ottobre 2026): le righe delle tabelle (prezzi, dati societari)
 una dissolvenza invece di salire, e fascia dei lavori e tabelle scorrono solo di lato: durante
 l'animazione non compare più per un attimo una barra di scorrimento. Stesse prove della 0.6.3.
 
+Versione 0.6.5 (2 ottobre 2026): tabelle dei prezzi e dei dati societari senza riquadro
+scorrevole (entrano a tutte le larghezze, da 320 px in su), quindi nessuna barra di scorrimento
+in nessun browser anche con file vecchi in cache. Confronto 0.6.3/0.6.4/0.6.5 con le barre di
+scorrimento visibili come su Windows e campioni ogni 50 ms durante l'animazione.
+
 Il prototipo statico non è stato rigenerato: mostra ancora la 0.5.
 
 Tutti i dati aziendali non confermati compaiono come segnaposto arancioni "da fornire".
