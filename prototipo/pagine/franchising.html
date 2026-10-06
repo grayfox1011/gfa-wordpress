@@ -119,6 +119,7 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
    Colori: il giallo e il blu del marchio storico GFA, ripuliti. */
 
 :root {
+  color-scheme: light;
   --paper: #fbfaf6;
   --paper-2: #f1efe6;
   --ink: #141a2e;
@@ -145,19 +146,6 @@ ol,ul{box-sizing:border-box}:root :where(.wp-block-list.has-background){padding:
   --wrap: 1180px;
   --gutter: clamp(16px, 4vw, 40px);
   --radius: 6px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #10131f; --paper-2: #181c2c; --ink: #eef0f6; --ink-2: #a9aec2; --line: #2c3148;
-    --blue: #6f8cff; --blue-ink: #0c1020; --yellow: #f5c518; --yellow-ink: #141a2e;
-    --todo: #ff9a6b; --todo-bg: #2a1b14; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #10131f; --paper-2: #181c2c; --ink: #eef0f6; --ink-2: #a9aec2; --line: #2c3148;
-  --blue: #6f8cff; --blue-ink: #0c1020; --yellow: #f5c518; --yellow-ink: #141a2e;
-  --todo: #ff9a6b; --todo-bg: #2a1b14; color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }

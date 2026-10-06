@@ -107,6 +107,7 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
    Colori: il giallo e il blu del marchio storico GFA, ripuliti. */
 
 :root {
+  color-scheme: light;
   --paper: #fbfaf6;
   --paper-2: #f1efe6;
   --ink: #141a2e;
@@ -133,19 +134,6 @@ h1:where(.wp-block-heading).has-background,h2:where(.wp-block-heading).has-backg
   --wrap: 1180px;
   --gutter: clamp(16px, 4vw, 40px);
   --radius: 6px;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --paper: #10131f; --paper-2: #181c2c; --ink: #eef0f6; --ink-2: #a9aec2; --line: #2c3148;
-    --blue: #6f8cff; --blue-ink: #0c1020; --yellow: #f5c518; --yellow-ink: #141a2e;
-    --todo: #ff9a6b; --todo-bg: #2a1b14; color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --paper: #10131f; --paper-2: #181c2c; --ink: #eef0f6; --ink-2: #a9aec2; --line: #2c3148;
-  --blue: #6f8cff; --blue-ink: #0c1020; --yellow: #f5c518; --yellow-ink: #141a2e;
-  --todo: #ff9a6b; --todo-bg: #2a1b14; color-scheme: dark;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -618,7 +606,7 @@ mark.hl { background-repeat: no-repeat; background-size: 100% 100%; }
 
 		<form class="form" data-quote-form data-prototype  method="post" action="#preventivo" novalidate>
 			<input type="hidden" name="action" value="gfa_preventivo">
-			<input type="hidden" id="gfa_quote_nonce" name="gfa_quote_nonce" value="15007e9a60" /><input type="hidden" name="_wp_http_referer" value="/contatti/" />			<div class="hp" aria-hidden="true"><label for="gfa_website">Sito web</label><input type="text" id="gfa_website" name="gfa_website" tabindex="-1" autocomplete="off"></div>
+			<input type="hidden" id="gfa_quote_nonce" name="gfa_quote_nonce" value="7afaf6ac40" /><input type="hidden" name="_wp_http_referer" value="/contatti/" />			<div class="hp" aria-hidden="true"><label for="gfa_website">Sito web</label><input type="text" id="gfa_website" name="gfa_website" tabindex="-1" autocomplete="off"></div>
 
 			
 			<ol class="form__steps" aria-label="Passi del modulo"><li>1 · Servizio</li><li>2 · Zona e quantità</li><li>3 · Contatti</li></ol>
