@@ -126,6 +126,9 @@ function gfa_render_dati() {
 	ob_start();
 	echo '<div class="table-scroll"><table class="price-table"><tbody>';
 	foreach ( $rows as $label => $row ) {
+		if ( 'ragione' === $row[0] && '' === trim( gfa_opt( 'ragione' ) ) ) {
+			continue;
+		}
 		echo '<tr><th scope="row">' . esc_html( $label ) . '</th><td>';
 		gfa_value( $row[0], $row[1] );
 		echo '</td></tr>';

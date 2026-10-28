@@ -43,7 +43,7 @@
 			</div>
 		</div>
 		<div class="legal">
-			<span>© <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php gfa_value( 'ragione', 'ragione sociale' ); ?></span>
+			<span>© <?php echo esc_html( gmdate( 'Y' ) ); ?><?php if ( '' !== trim( gfa_opt( 'ragione' ) ) ) { echo ' ' . esc_html( gfa_opt( 'ragione' ) ); } ?></span>
 			<span>P.IVA <?php gfa_value( 'piva', 'P.IVA da confermare' ); ?></span>
 			<?php if ( gfa_opt( 'rea' ) ) : ?><span>REA <?php echo esc_html( gfa_opt( 'rea' ) ); ?></span><?php endif; ?>
 			<?php if ( function_exists( 'get_privacy_policy_url' ) && get_privacy_policy_url() ) : ?>
