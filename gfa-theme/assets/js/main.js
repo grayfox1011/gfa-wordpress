@@ -279,9 +279,13 @@
     if (preloader && root.classList.contains('gfa-preload')) {
       try { window.sessionStorage.setItem('gfaSeen', '1'); } catch (e) { /* storage non disponibile */ }
       if (lenis) { lenis.stop(); }
-      gsap.timeline({ onComplete: function () { root.classList.remove('gfa-preload'); preloader.remove(); } })
-        .from('.preloader__box', { scale: 0.7, rotate: -6, autoAlpha: 0, duration: 0.5, ease: 'back.out(1.6)' })
-        .from('.preloader__letter', { yPercent: 110, duration: 0.55, stagger: 0.07, ease: 'expo.out' }, 0.15)
+      var preloadTimeline = gsap.timeline({ onComplete: function () { root.classList.remove('gfa-preload'); preloader.remove(); } })
+        .from('.preloader__box', { scale: 0.7, rotate: -6, autoAlpha: 0, duration: 0.5, ease: 'back.out(1.6)' });
+      var preloadLetters = preloader.querySelectorAll('.preloader__letter');
+      if (preloadLetters.length) {
+        preloadTimeline.from(preloadLetters, { yPercent: 110, duration: 0.55, stagger: 0.07, ease: 'expo.out' }, 0.15);
+      }
+      preloadTimeline
         .fromTo('.preloader__route', { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'power2.inOut' }, 0.45)
         .from('.preloader__claim', { y: 12, autoAlpha: 0, duration: 0.45 }, 0.7)
         .to('.preloader__inner', { y: -24, autoAlpha: 0, duration: 0.4, ease: 'power2.in' }, '+=0.3')

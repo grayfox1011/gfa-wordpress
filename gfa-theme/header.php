@@ -4,6 +4,8 @@
  *
  * @package gfa
  */
+$gfa_has_logo = has_custom_logo();
+$gfa_logo_id  = (int) get_theme_mod( 'custom_logo' );
 ?><!doctype html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -18,7 +20,13 @@
 <div class="page-curtain" aria-hidden="true"></div>
 <div class="preloader" aria-hidden="true">
 	<div class="preloader__inner">
-		<div class="preloader__box"><span class="preloader__letter">G</span><span class="preloader__letter">F</span><span class="preloader__letter">A</span></div>
+		<div class="preloader__box<?php echo $gfa_has_logo ? ' preloader__box--logo' : ''; ?>">
+			<?php if ( $gfa_has_logo ) : ?>
+				<?php echo wp_get_attachment_image( $gfa_logo_id, 'full', false, array( 'class' => 'preloader__logo', 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '(max-width: 525px) 80vw, 420px' ) ); ?>
+			<?php else : ?>
+				<span class="preloader__letter">G</span><span class="preloader__letter">F</span><span class="preloader__letter">A</span>
+			<?php endif; ?>
+		</div>
 		<svg class="preloader__route" viewBox="0 0 240 24" focusable="false"><path d="M6 12 H226"/><circle cx="230" cy="12" r="6"/></svg>
 <p class="preloader__claim"><?php esc_html_e( 'Volantinaggio che dà visibilità alla tua attività.', 'gfa' ); ?></p>
 	</div>
@@ -26,12 +34,12 @@
 <header class="site-header">
 	<div class="wrap">
 		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'GFA, torna alla homepage', 'gfa' ); ?>">
-			<?php if ( has_custom_logo() ) : ?>
-				<?php echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full', false, array( 'class' => 'brand__logo', 'alt' => '' ) ); ?>
+			<?php if ( $gfa_has_logo ) : ?>
+				<?php echo wp_get_attachment_image( $gfa_logo_id, 'full', false, array( 'class' => 'brand__logo', 'alt' => '', 'loading' => 'eager', 'sizes' => '(max-width: 600px) 150px, 180px' ) ); ?>
 			<?php else : ?>
 				<span class="brand__mark" aria-hidden="true">GFA</span>
+				<span><?php echo esc_html( gfa_opt( 'brand' ) ); ?><span class="brand__sub"><?php esc_html_e( 'Volantinaggio e distribuzione', 'gfa' ); ?></span></span>
 			<?php endif; ?>
-			<span><?php echo esc_html( gfa_opt( 'brand' ) ); ?><span class="brand__sub"><?php esc_html_e( 'Volantinaggio e distribuzione', 'gfa' ); ?></span></span>
 		</a>
 		<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><?php esc_html_e( 'Menu', 'gfa' ); ?></button>
 		<nav class="nav" id="site-nav" aria-label="<?php esc_attr_e( 'Principale', 'gfa' ); ?>">

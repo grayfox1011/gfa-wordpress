@@ -13,7 +13,7 @@ add_action(
 		load_theme_textdomain( 'gfa', get_template_directory() . '/languages' );
 		add_theme_support( 'title-tag' );
 		add_theme_support( 'post-thumbnails' );
-		add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 80, 'flex-width' => true ) );
+		add_theme_support( 'custom-logo', array( 'height' => 505, 'width' => 1200, 'flex-width' => true, 'flex-height' => true ) );
 		add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
 		add_theme_support( 'responsive-embeds' );
 		add_theme_support( 'editor-styles' );
@@ -116,3 +116,4 @@ add_action(
 		echo '<script type="application/ld+json">' . wp_json_encode( array_filter( $data ) ) . '</script>' . "\n";
 	}
 );
+
