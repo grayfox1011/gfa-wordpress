@@ -118,7 +118,7 @@ P['percorsi'] = ('Tre percorsi', section('section',
 
 P['metodo'] = ('Come lavoriamo', section('section section--alt',
     head('Come lavoriamo', 'Quattro tappe, un solo referente.', 'Non devi sapere quante copie ti servono: lo decidiamo insieme partendo da cosa vuoi promuovere e da chi vuoi raggiungere.'),
-    steps(('Brief', 'Ci racconti cosa promuovi, dove e quando. Ti ricontattiamo entro ' + todo('tempo di risposta da confermare') + '.'),
+    steps(('Brief', 'Ci racconti cosa promuovi, dove e quando. Ti ricontattiamo per definire i dettagli.'),
           ('Piano zone', 'Scegliamo vie, comuni e modalità, e ti diciamo quante copie servono e perché.'),
           ('Distribuzione', 'Personale riconoscibile, in divisa, con un capo squadra che segue il giro.'),
           ('Report', 'A fine lavoro ricevi foto a campione e copie consegnate per zona.')),
