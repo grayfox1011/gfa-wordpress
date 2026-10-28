@@ -14,7 +14,7 @@ foreach ( $gfa_zone_posts as $gfa_zone ) {
 
 			<ul class="zone-list">
 				<?php foreach ( gfa_sedi() as $gfa_sede ) : ?>
-					<?php $gfa_url = isset( $gfa_links[ $gfa_sede ] ) ? $gfa_links[ $gfa_sede ] : home_url( '/volantinaggio/' . sanitize_title( $gfa_sede ) . '/' ); ?>
+					<?php $gfa_url = isset( $gfa_links[ $gfa_sede ] ) ? $gfa_links[ $gfa_sede ] : home_url( '/contatti/' ); ?>
 					<li><a href="<?php echo esc_url( $gfa_url ); ?>"><?php echo esc_html( $gfa_sede ); ?> <small>volantinaggio →</small></a></li>
 				<?php endforeach; ?>
 			</ul>
