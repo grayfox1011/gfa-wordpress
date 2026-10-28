@@ -99,7 +99,7 @@ P['hero'] = ('Hero homepage', section('hero',
     grp('hero__text',
         p('Volantinaggio · Stampa · Eventi', 'eyebrow'),
         h('Volantinaggio<br>che si può<br><mark class="hl">verificare.</mark>', 1),
-        p('Distribuiamo volantini in cassetta, nei negozi e agli eventi. Pianifichiamo zone e quantità con te e ti mostriamo dove è passato ogni distributore.', 'lead'),
+        p('Distribuiamo volantini in cassetta, nei negozi e agli eventi. Pianifichiamo zone e quantità con te e ti documentiamo il lavoro svolto.', 'lead'),
         buttons(('Chiedi un preventivo', '#preventivo', 'gfa-primary'), ('Come lavoriamo', '#metodo', 'gfa-ghost'), cls='hero__cta'),
         ul(['Zone e quantità pianificate con te', 'Report a fine giro', 'Stampa inclusa, se serve'], 'hero__proof')),
     grp('hero__visual',
@@ -109,7 +109,7 @@ P['hero'] = ('Hero homepage', section('hero',
             p('Cassette <strong>1.240</strong>', 'ticket__row'),
             p('Negozi <strong>38</strong>', 'ticket__row'),
             p("Durata <strong>4 h 10'</strong>", 'ticket__row'),
-            p('Report <strong>mappa + foto</strong>', 'ticket__row'))),
+            p('Report <strong>foto + copie</strong>', 'ticket__row'))),
     wrap='wrap hero__grid'))
 
 P['numeri'] = ('Numeri', grp('facts', grp('wrap', dyn('numeri')), tag='section'))
@@ -130,36 +130,17 @@ P['metodo'] = ('Come lavoriamo', section('section section--alt',
     steps(('Brief', 'Ci racconti cosa promuovi, dove e quando. Ti ricontattiamo entro ' + todo('tempo di risposta da confermare') + '.'),
           ('Piano zone', 'Scegliamo vie, comuni e modalità, e ti diciamo quante copie servono e perché.'),
           ('Distribuzione', 'Personale riconoscibile, in divisa, con un capo squadra che segue il giro.'),
-          ('Report', 'A fine lavoro ricevi mappa del percorso, foto a campione e copie consegnate per zona.')),
+          ('Report', 'A fine lavoro ricevi foto a campione e copie consegnate per zona.')),
     anchor='metodo'))
-
-REPORT = '''<figure class="report">
-<div class="report__bar"><span>REPORT · GIRO 0417</span><span>Rapallo · zona Centro</span><span>esempio</span></div>
-<svg class="report__map" viewBox="0 0 560 300" role="img" aria-label="Mappa di esempio con il percorso del distributore e quattro tappe">
-<rect class="block" x="40" y="30" width="150" height="90" rx="4"/><rect class="block" x="230" y="30" width="130" height="90" rx="4"/><rect class="block" x="400" y="30" width="120" height="90" rx="4"/>
-<rect class="block" x="40" y="170" width="150" height="100" rx="4"/><rect class="block" x="230" y="170" width="130" height="100" rx="4"/><rect class="block" x="400" y="170" width="120" height="100" rx="4"/>
-<path class="street" d="M20 145 H540 M210 15 V285 M380 15 V285"/>
-<path class="route route-draw" d="M30 145 H200 V40 H372 V145 H200 V262 H390 V180 H530"/>
-<circle class="stop" cx="30" cy="145" r="8"/><circle class="stop" cx="200" cy="40" r="8"/><circle class="stop" cx="372" cy="145" r="8"/><circle class="stop" cx="530" cy="180" r="8"/>
-<text class="label" x="44" y="136">08:02 partenza</text><text class="label" x="214" y="58">Via Mameli</text><text class="label" x="386" y="136">09:40</text><text class="label" x="436" y="200">12:12 fine</text>
-</svg>
-<ol class="report__rows">
-<li><b>08:02</b><span>Corso Italia</span><b>312 cassette</b></li>
-<li><b>09:40</b><span>Via Mameli, via Venezia</span><b>418 cassette</b></li>
-<li><b>11:05</b><span>Negozi del centro</span><b>38 punti</b></li>
-</ol>
-<figcaption class="report__note">Esempio illustrativo: sostituire con un report reale anonimizzato.</figcaption>
-</figure>'''
 
 P['controllo'] = ('Controllo e report', section('section section--blue',
     grp('control__text',
         p('Controllo', 'eyebrow'),
         h('Sai dove sono finiti i tuoi volantini.'),
-        p('Ogni giro lascia una traccia: percorso, orari e foto. Te la mandiamo senza che tu debba chiederla.', 'lead'),
-        ul(['<strong>Percorso registrato</strong>: il tragitto del distributore su mappa. ' + todo('GPS: da confermare con GFA'),
-            '<strong>Foto a campione</strong>: cassette e punti di consegna, senza nomi dei residenti.',
+        p('A fine distribuzione ricevi foto a campione e un riepilogo delle copie consegnate per zona.', 'lead'),
+        ul(['<strong>Foto a campione</strong>: cassette e punti di consegna, senza nomi dei residenti.',
             '<strong>Copie per zona</strong>: quante ne abbiamo consegnate, via per via.'], 'checks')),
-    html(REPORT), anchor='controllo', wrap='wrap control'))
+    anchor='controllo'))
 
 P['lavori'] = ('Lavori svolti', grp('section',
     grp('works-pin', grp('wrap',
@@ -196,7 +177,7 @@ P['volantinaggio-faq'] = ('Volantinaggio: domande', section('section section--al
     head('Domande frequenti', 'Prima di chiedere un preventivo'),
     grp('faq',
         details('Quante copie mi servono?', 'Dipende da zona e obiettivo. Partiamo dal numero di cassette delle vie che ti interessano e ti proponiamo una quantità, con il perché.'),
-        details('Come faccio a sapere che i volantini sono stati consegnati?', 'A fine giro ricevi il report con percorso, orari, foto a campione e copie per zona. ' + todo('Descrivere i controlli reali di GFA')),
+        details('Come faccio a sapere che i volantini sono stati consegnati?', 'A fine giro ricevi il report con foto a campione e copie per zona. ' + todo('Descrivere i controlli reali di GFA')),
         details('Serve un permesso del Comune?', 'Per la distribuzione in cassetta di norma no; per la distribuzione in strada alcuni Comuni hanno regole proprie. Le verifichiamo noi. ' + todo('Confermare con GFA')),
         details('In quanto tempo partite?', todo('Tempi medi da confermare')))))
 
@@ -249,7 +230,7 @@ P['chi-impegni'] = ('Chi siamo: impegni', section('section',
     head('Come lavoriamo', 'Tre impegni che puoi verificare'),
     grp('paths',
         grp('path', p('Personale', 'path__tag'), h('Riconoscibile', 3), p('Divise e mezzi con il marchio GFA. ' + todo('dipendenti diretti o collaboratori?'))),
-        grp('path', p('Controllo', 'path__tag'), h('Documentato', 3), p('Report di ogni giro con percorso, foto a campione e copie per zona.')),
+        grp('path', p('Controllo', 'path__tag'), h('Documentato', 3), p('Report di ogni giro con foto a campione e copie per zona.')),
         grp('path', p('Privacy', 'path__tag'), h('Rispettata', 3), p('Nessun dato personale nelle foto dei report, dati dei clienti trattati secondo il GDPR.')))))
 P['chi-dati'] = ('Chi siamo: dati societari', section('section', head('Dati societari', 'Chi eroga il servizio'), dyn('dati-societari')))
 

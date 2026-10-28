@@ -327,18 +327,6 @@
     var cards = '.path, .mode, .quote, .person, .zone-list li, .work, .route-step, .checks li, .faq details, .facts-list li, .price-table tr';
     ST.batch(cards, { start: 'top 97%', once: true, onEnter: function (els) { rise(els, { y: 50, stagger: 0.12 }); } });
 
-    // 5. Report GPS
-    var route = document.querySelector('.report__map .route-draw');
-    if (route && route.getTotalLength) {
-      var rlen = route.getTotalLength();
-      gsap.set(route, { strokeDasharray: rlen, strokeDashoffset: rlen });
-      gsap.timeline({ scrollTrigger: { trigger: '.report', start: 'top 75%', once: true } })
-        .to(route, { strokeDashoffset: 0, duration: 2.6, ease: 'power1.inOut' })
-        .from('.report__map .stop', { scale: 0, transformOrigin: 'center', duration: 0.45, stagger: 0.55, ease: 'back.out(2.5)' }, 0)
-        .from('.report__rows li', { x: -20, autoAlpha: 0, duration: 0.5, stagger: 0.25 }, 0.6)
-        .set(route, { strokeDasharray: '9 7', strokeDashoffset: 0 });
-    }
-
     // 6. Linea dei passi legata allo scroll
     document.querySelectorAll('.route-progress').forEach(function (bar) {
       gsap.fromTo(bar, { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: bar.parentElement, start: 'top 75%', end: 'bottom 50%', scrub: 0.6 } });

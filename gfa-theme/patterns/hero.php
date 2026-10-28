@@ -18,7 +18,7 @@
 <h1 class="wp-block-heading">Volantinaggio<br>che si può<br><mark class="hl">verificare.</mark></h1>
 <!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead"} -->
-<p class="lead">Distribuiamo volantini in cassetta, nei negozi e agli eventi. Pianifichiamo zone e quantità con te e ti mostriamo dove è passato ogni distributore.</p>
+<p class="lead">Distribuiamo volantini in cassetta, nei negozi e agli eventi. Pianifichiamo zone e quantità con te e ti documentiamo il lavoro svolto.</p>
 <!-- /wp:paragraph -->
 <!-- wp:buttons {"className":"hero__cta"} -->
 <div class="wp-block-buttons hero__cta"><!-- wp:button {"className":"is-style-gfa-primary"} -->
@@ -55,7 +55,7 @@
 <p class="ticket__row">Durata <strong>4 h 10'</strong></p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph {"className":"ticket__row"} -->
-<p class="ticket__row">Report <strong>mappa + foto</strong></p>
+<p class="ticket__row">Report <strong>foto + copie</strong></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>

@@ -88,8 +88,7 @@ Animazioni (GSAP 3.13 + ScrollTrigger + SplitText, Lenis 1.3 per lo scroll morbi
 - schermata di caricamento con il logo GFA, solo alla prima pagina visitata in una sessione;
   se JavaScript non parte sparisce comunque dopo 6 secondi;
 - titolo della homepage che sale riga per riga e evidenziatore giallo che si disegna;
-- titoli di sezione divisi in righe, card che entrano a gruppi, percorso GPS che si disegna,
-  linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
+- titoli di sezione divisi in righe, card che entrano a gruppi, linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
 - transizione tra le pagine con GSAP: una tendina blu GFA copre tutta la pagina (header compreso), si cambia
   pagina e la tendina si apre solo quando la nuova pagina è pronta e in cima; tutti i browser;
 - ogni pagina parte dall'alto, anche dopo ricarica o "indietro"; i link a una sezione (#preventivo)

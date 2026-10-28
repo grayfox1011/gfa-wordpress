@@ -52,7 +52,7 @@
 <h3 class="wp-block-heading">Report</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>A fine lavoro ricevi mappa del percorso, foto a campione e copie consegnate per zona.</p>
+<p>A fine lavoro ricevi foto a campione e copie consegnate per zona.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>
