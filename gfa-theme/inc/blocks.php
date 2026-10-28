@@ -157,7 +157,7 @@ function gfa_pattern( $slug ) {
  */
 function gfa_page_layouts() {
 	return array(
-		'home'              => array( 'hero', 'numeri', 'percorsi', 'metodo', 'controllo', 'lavori', 'zone', 'recensioni', 'preventivo' ),
+		'home'              => array( 'hero', 'numeri', 'percorsi', 'metodo', 'controllo', 'lavori', 'zone', 'preventivo' ),
 		'volantinaggio'     => array( 'volantinaggio-intro', 'volantinaggio-modalita', 'controllo', 'volantinaggio-prezzi', 'volantinaggio-faq', 'preventivo' ),
 		'stampa-e-grafica'  => array( 'stampa-intro', 'stampa-prodotti', 'stampa-processo', 'lavori', 'stampa-faq', 'preventivo' ),
 		'promozione-eventi' => array( 'eventi-intro', 'eventi-percorso', 'lavori', 'preventivo' ),

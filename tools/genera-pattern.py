@@ -149,11 +149,6 @@ P['zone'] = ('Zone servite', section('section section--alt',
     grp('zones__text', head('Zone servite', 'Le nostre sedi: Milano e Rapallo.', 'Ogni sede conosce le sue vie. Scegli la tua zona per vedere comuni coperti, modalità e referente.'), dyn('zone-elenco')),
     dyn('zone-mappa'), anchor='zone', wrap='wrap zones'))
 
-P['recensioni'] = ('Recensioni', section('section',
-    head('Cosa dicono i clienti', 'Parole di chi ci ha già affidato un giro.'),
-    grp('trust', *[grp('quote', p(todo('Recensione Google reale n. %d, testo integrale' % i), 'quote__text'), p(todo('Nome, attività, città'), 'quote__cite')) for i in (1, 2, 3)]),
-    anchor='recensioni'))
-
 P['preventivo'] = ('Preventivo', section('section section--blue',
     grp('quote-box__text', p('Preventivo', 'eyebrow'), h('Tre passaggi, poi ti ricontattiamo.'), p('Se non sai quante copie ti servono, va bene: lo scegliamo insieme.', 'lead'), dyn('contatti')),
     dyn('preventivo'), anchor='preventivo', wrap='wrap quote-box'))
