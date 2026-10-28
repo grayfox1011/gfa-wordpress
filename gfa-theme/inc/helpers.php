@@ -26,9 +26,8 @@ function gfa_defaults() {
 		'email'         => 'info@gfamarketing.com',
 		'indirizzo_rapallo' => 'Via Libertà 46',
 		'whatsapp'      => '',
-		'anno'          => '',
+		'anno'          => '1985',
 		'sedi'          => 'Milano, Rapallo',
-		'copie_anno'    => '',
 		'email_preventivi' => 'info@gfamarketing.com',
 	);
 }

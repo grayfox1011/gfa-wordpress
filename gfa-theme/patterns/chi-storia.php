@@ -18,7 +18,7 @@
 <h2 class="wp-block-heading">Da una sede a Milano a una rete di sedi</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p><mark class="todo">Storia da raccontare con GFA: anno e luogo di inizio, chi ha fondato l'azienda, come è cresciuta la rete, cosa è cambiato negli anni</mark></p>
+<p><mark class="todo">Storia da raccontare con GFA: luogo di inizio, chi ha fondato l'azienda, come è cresciuta la rete, cosa è cambiato negli anni</mark></p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
 <p><mark class="todo">Continuità tra GFA Comunicazione e GFA Marketing: come descriverla correttamente</mark></p>

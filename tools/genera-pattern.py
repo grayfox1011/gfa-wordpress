@@ -214,11 +214,11 @@ P['eventi-percorso'] = ('Eventi: dal volantino alla prenotazione', section('sect
           ('QR dedicato', "Porta alla pagina dell'evento: contiamo le scansioni, non le presenze."))))
 
 # Chi siamo
-P['chi-intro'] = ('Chi siamo: apertura', page_intro('Chi siamo', 'Nel volantinaggio dal ' + todo('anno'),
+P['chi-intro'] = ('Chi siamo: apertura', page_intro('Chi siamo', 'Nel volantinaggio dal 1985',
     'GFA distribuisce volantini e materiale pubblicitario con sedi operative a Milano e Rapallo e squadre che conoscono le proprie zone.', cta=False))
 P['chi-storia'] = ('Chi siamo: storia', section('section',
     grp('control__text', p('La nostra storia', 'eyebrow'), h('Da una sede a Milano a una rete di sedi'),
-        p(todo("Storia da raccontare con GFA: anno e luogo di inizio, chi ha fondato l'azienda, come è cresciuta la rete, cosa è cambiato negli anni")),
+        p(todo("Storia da raccontare con GFA: luogo di inizio, chi ha fondato l'azienda, come è cresciuta la rete, cosa è cambiato negli anni")),
         p(todo('Continuità tra GFA Comunicazione e GFA Marketing: come descriverla correttamente'))),
     image('Da fornire: foto storica o della prima sede', 'Da fornire: foto storica o della prima sede, anche vecchia, purché autentica e con autorizzazione.'),
     wrap='wrap control'))

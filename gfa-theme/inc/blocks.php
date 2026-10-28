@@ -29,7 +29,7 @@ function gfa_part_html( $part ) {
  */
 function gfa_dynamic_blocks() {
 	return array(
-		'numeri'         => array( 'GFA · Numeri', 'Anni, sedi e copie dal pannello Dati GFA.', 'chart-bar', 'gfa_render_numeri' ),
+		'numeri'         => array( 'GFA · Numeri', 'Anno di inizio, sedi e servizi GFA.', 'chart-bar', 'gfa_render_numeri' ),
 		'lavori'         => array( 'GFA · Lavori svolti', 'Gli ultimi lavori pubblicati.', 'portfolio', function () { return gfa_part_html( 'lavori' ); } ),
 		'zone-elenco'    => array( 'GFA · Elenco sedi', 'Le sedi con il link alla pagina di ogni zona.', 'location', function () { return gfa_part_html( 'zone-elenco' ); } ),
 		'zone-mappa'     => array( 'GFA · Mappa sedi', 'Mappa schematica delle sedi.', 'location-alt', function () { return gfa_part_html( 'zone-mappa' ); } ),
@@ -105,7 +105,6 @@ function gfa_render_numeri() {
 	<ul class="facts-list">
 		<li><span class="num"><?php echo gfa_opt( 'anno' ) ? esc_html( 'Dal ' . gfa_opt( 'anno' ) ) : '<span class="todo">anno di inizio</span>'; ?></span><span class="lbl"><?php esc_html_e( 'nel volantinaggio', 'gfa' ); ?></span></li>
 		<li><span class="num"><?php echo esc_html( (string) count( gfa_sedi() ) ); ?></span><span class="lbl"><?php esc_html_e( 'sedi operative al Nord', 'gfa' ); ?></span></li>
-		<li><span class="num"><?php gfa_value( 'copie_anno', 'copie/anno' ); ?></span><span class="lbl"><?php esc_html_e( 'volantini distribuiti in un anno', 'gfa' ); ?></span></li>
 		<li><span class="num">3</span><span class="lbl"><?php esc_html_e( 'servizi con un solo referente: grafica, stampa, distribuzione', 'gfa' ); ?></span></li>
 	</ul>
 	<?php

@@ -30,7 +30,6 @@ add_action(
 			'whatsapp'         => array( 'Numero WhatsApp (solo cifre, con prefisso 39)', 'text' ),
 			'anno'             => array( 'Anno di inizio attività', 'text' ),
 			'sedi'             => array( 'Sedi operative, separate da virgola', 'text' ),
-			'copie_anno'       => array( 'Copie distribuite in un anno (dato reale)', 'text' ),
 			'email_preventivi' => array( 'Email che riceve le richieste di preventivo', 'email' ),
 		);
 
