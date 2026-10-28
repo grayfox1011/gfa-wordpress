@@ -177,7 +177,7 @@ P['stampa-prodotti'] = ('Stampa: prodotti', section('section',
 P['stampa-processo'] = ('Stampa: come nasce un volantino', section('section section--alt',
     head('Studio grafico', 'Come nasce un volantino'),
     steps(('Brief', 'Cosa promuovi, a chi, con quale offerta e scadenza.'),
-          ('Bozza', 'Una prima proposta grafica. ' + todo('numero di revisioni incluse')),
+        ('Bozza', 'Una prima proposta grafica.'),
           ('File di stampa', 'Controllo di formati, margini e colori prima di stampare.'),
           ('Stampa e consegna', 'Il materiale va direttamente alla squadra di distribuzione.'))))
 P['stampa-faq'] = ('Stampa: domande', section('section section--alt',
