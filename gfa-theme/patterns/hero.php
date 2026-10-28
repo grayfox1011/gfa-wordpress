@@ -8,9 +8,9 @@
  * @package gfa
  */
 ?>
-<!-- wp:group {"tagName":"section","className":"hero","layout":{"type":"default"}} -->
-<section class="wp-block-group hero"><!-- wp:group {"className":"wrap hero__grid","layout":{"type":"default"}} -->
-<div class="wp-block-group wrap hero__grid"><!-- wp:group {"className":"hero__text","layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"section","className":"hero hero--text","layout":{"type":"default"}} -->
+<section class="wp-block-group hero hero--text"><!-- wp:group {"className":"wrap","layout":{"type":"default"}} -->
+<div class="wp-block-group wrap"><!-- wp:group {"className":"hero__text","layout":{"type":"default"}} -->
 <div class="wp-block-group hero__text"><!-- wp:paragraph {"className":"eyebrow"} -->
 <p class="eyebrow">Volantinaggio · Stampa · Eventi</p>
 <!-- /wp:paragraph -->
@@ -36,28 +36,6 @@
 <li>Stampa inclusa, se serve</li>
 <!-- /wp:list-item --></ul>
 <!-- /wp:list --></div>
-<!-- /wp:group -->
-<!-- wp:group {"className":"hero__visual","layout":{"type":"default"}} -->
-<div class="wp-block-group hero__visual"><!-- wp:image {"aspectRatio":"4/5","scale":"cover","sizeSlug":"full","linkDestination":"none","className":"photo-todo"} -->
-<figure class="wp-block-image size-full photo-todo"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/img/foto-da-fornire.svg" alt="Da fornire: la squadra GFA al lavoro" style="aspect-ratio:4/5;object-fit:cover"/><figcaption class="wp-element-caption">Da fornire: la squadra GFA al lavoro, persone reali in divisa, furgone recente, liberatoria firmata.</figcaption></figure>
-<!-- /wp:image -->
-<!-- wp:group {"className":"ticket","layout":{"type":"default"}} -->
-<div class="wp-block-group ticket"><!-- wp:paragraph {"className":"ticket__title"} -->
-<p class="ticket__title"><strong>Giro di esempio · Rapallo centro</strong></p>
-<!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"ticket__row"} -->
-<p class="ticket__row">Cassette <strong>1.240</strong></p>
-<!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"ticket__row"} -->
-<p class="ticket__row">Negozi <strong>38</strong></p>
-<!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"ticket__row"} -->
-<p class="ticket__row">Durata <strong>4 h 10'</strong></p>
-<!-- /wp:paragraph -->
-<!-- wp:paragraph {"className":"ticket__row"} -->
-<p class="ticket__row">Report <strong>foto + copie</strong></p>
-<!-- /wp:paragraph --></div>
-<!-- /wp:group --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->

@@ -95,22 +95,13 @@ def modes(*m):
 
 P = {}
 
-P['hero'] = ('Hero homepage', section('hero',
+P['hero'] = ('Hero homepage', section('hero hero--text',
     grp('hero__text',
         p('Volantinaggio · Stampa · Eventi', 'eyebrow'),
         h('Volantinaggio<br>che si può<br><mark class="hl">verificare.</mark>', 1),
         p('Distribuiamo volantini in cassetta, nei negozi e agli eventi. Pianifichiamo zone e quantità con te e ti documentiamo il lavoro svolto.', 'lead'),
         buttons(('Chiedi un preventivo', '#preventivo', 'gfa-primary'), ('Come lavoriamo', '#metodo', 'gfa-ghost'), cls='hero__cta'),
-        ul(['Zone e quantità pianificate con te', 'Report a fine giro', 'Stampa inclusa, se serve'], 'hero__proof')),
-    grp('hero__visual',
-        image('Da fornire: la squadra GFA al lavoro', 'Da fornire: la squadra GFA al lavoro, persone reali in divisa, furgone recente, liberatoria firmata.', '4/5'),
-        grp('ticket',
-            p('<strong>Giro di esempio · Rapallo centro</strong>', 'ticket__title'),
-            p('Cassette <strong>1.240</strong>', 'ticket__row'),
-            p('Negozi <strong>38</strong>', 'ticket__row'),
-            p("Durata <strong>4 h 10'</strong>", 'ticket__row'),
-            p('Report <strong>foto + copie</strong>', 'ticket__row'))),
-    wrap='wrap hero__grid'))
+        ul(['Zone e quantità pianificate con te', 'Report a fine giro', 'Stampa inclusa, se serve'], 'hero__proof'))))
 
 P['numeri'] = ('Numeri', grp('facts', grp('wrap', dyn('numeri')), tag='section'))
 

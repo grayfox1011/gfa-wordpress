@@ -251,8 +251,10 @@
       if (h1) { riseText(h1, { duration: 1.3, stagger: 0.07 }); }
       gsap.fromTo(hl, { backgroundSize: '0% 100%' }, { backgroundSize: '100% 100%', duration: 0.9, ease: 'power2.inOut', delay: 0.8 });
       rise(hero.querySelectorAll('.eyebrow, .lead, .hero__cta .wp-block-button, .hero__proof li'), { y: 24, stagger: 0.08, delay: 0.35, duration: 1 });
-      img.forEach(function (i) { i.classList.add('gfa-animated'); });
-      gsap.fromTo(img, { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.12 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1.6, ease: 'expo.inOut', delay: 0.1, clearProps: 'clipPath,transform' });
+      if (img.length) {
+        img.forEach(function (i) { i.classList.add('gfa-animated'); });
+        gsap.fromTo(img, { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.12 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1.6, ease: 'expo.inOut', delay: 0.1, clearProps: 'clipPath,transform' });
+      }
       rise(hero.querySelectorAll('.ticket'), { y: 60, delay: 0.9, duration: 1.1 });
     }
 
