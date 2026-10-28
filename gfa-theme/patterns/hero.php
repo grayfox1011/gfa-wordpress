@@ -15,7 +15,7 @@
 <p class="eyebrow">Volantinaggio · Stampa · Eventi</p>
 <!-- /wp:paragraph -->
 <!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Volantinaggio<br>che si può<br><mark class="hl">verificare.</mark></h1>
+<h1 class="wp-block-heading">Volantinaggio<br>che dà <mark class="hl">visibilità</mark><br>alla tua attività.</h1>
 <!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead"} -->
 <p class="lead">Distribuiamo volantini in cassetta, nei negozi e agli eventi. Pianifichiamo zone e quantità con te e ti documentiamo il lavoro svolto.</p>

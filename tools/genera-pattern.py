@@ -98,7 +98,7 @@ P = {}
 P['hero'] = ('Hero homepage', section('hero hero--text',
     grp('hero__text',
         p('Volantinaggio · Stampa · Eventi', 'eyebrow'),
-        h('Volantinaggio<br>che si può<br><mark class="hl">verificare.</mark>', 1),
+        h('Volantinaggio<br>che dà <mark class="hl">visibilità</mark><br>alla tua attività.', 1),
         p('Distribuiamo volantini in cassetta, nei negozi e agli eventi. Pianifichiamo zone e quantità con te e ti documentiamo il lavoro svolto.', 'lead'),
         buttons(('Chiedi un preventivo', '#preventivo', 'gfa-primary'), ('Come lavoriamo', '#metodo', 'gfa-ghost'), cls='hero__cta'),
         ul(['Zone e quantità pianificate con te', 'Report a fine giro', 'Stampa inclusa, se serve'], 'hero__proof'))))

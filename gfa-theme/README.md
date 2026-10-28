@@ -18,7 +18,7 @@ prezzi, domande frequenti e foto si modificano direttamente nell'editor, come in
 - **Ricominciare una pagina da capo:** "+" → Modelli → *Pagine GFA*.
 - **Sostituire una foto segnaposto:** clic sull'immagine → *Sostituisci*; poi cancella la didascalia "Da fornire".
 - **Segnare un dato da confermare:** seleziona il testo → menu formato → *Da fornire* (evidenziazione arancione).
-- **Evidenziatore giallo** (come "verificare." in homepage): menu formato → *Evidenziatore giallo*.
+- **Evidenziatore giallo** (come "visibilità" in homepage): menu formato → *Evidenziatore giallo*.
 - **Pulsanti:** stili *Giallo GFA*, *Blu GFA*, *Bordo* nel pannello del pulsante.
 - **A capo nei titoli** (Maiusc+Invio): in homepage ogni riga del titolo entra con la sua animazione.
 

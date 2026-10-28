@@ -20,7 +20,7 @@
 	<div class="preloader__inner">
 		<div class="preloader__box"><span class="preloader__letter">G</span><span class="preloader__letter">F</span><span class="preloader__letter">A</span></div>
 		<svg class="preloader__route" viewBox="0 0 240 24" focusable="false"><path d="M6 12 H226"/><circle cx="230" cy="12" r="6"/></svg>
-		<p class="preloader__claim"><?php esc_html_e( 'Volantinaggio che si può verificare', 'gfa' ); ?></p>
+<p class="preloader__claim"><?php esc_html_e( 'Volantinaggio che dà visibilità alla tua attività.', 'gfa' ); ?></p>
 	</div>
 </div>
 <header class="site-header">
@@ -53,3 +53,4 @@
 	</div>
 </header>
 <main id="main">
+
