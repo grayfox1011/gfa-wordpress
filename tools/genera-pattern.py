@@ -143,9 +143,7 @@ P['controllo'] = ('Controllo e report', section('section section--blue',
     anchor='controllo'))
 
 P['lavori'] = ('Lavori svolti', grp('section',
-    grp('works-pin', grp('wrap',
-        grp('works-head', head('Lavori svolti', 'Prima di chiederci un preventivo, guarda cosa abbiamo fatto.'), buttons(('Tutti i lavori', url('/lavori/'), 'gfa-ghost'))),
-        dyn('lavori'))), tag='section', anchor='lavori'))
+    grp('wrap', dyn('lavori')), tag='section', anchor='lavori'))
 
 P['zone'] = ('Zone servite', section('section section--alt',
     grp('zones__text', head('Zone servite', 'Le nostre sedi: Milano e Rapallo.', 'Ogni sede conosce le sue vie. Scegli la tua zona per vedere comuni coperti, modalità e referente.'), dyn('zone-elenco')),

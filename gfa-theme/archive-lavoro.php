@@ -6,10 +6,11 @@
  */
 
 get_header();
+$gfa_has_works = have_posts();
 ?>
-<section class="page-hero"><div class="wrap stack"><p class="eyebrow">Lavori svolti</p><h1>Cosa abbiamo fatto, e come</h1><p class="lead">Ogni scheda dice l'esigenza del cliente, la zona, cosa abbiamo fatto e quale prova esiste.</p></div></section>
+<section class="page-hero"><div class="wrap stack"><p class="eyebrow">Portfolio</p><h1><?php echo $gfa_has_works ? esc_html__( 'Lavori e referenze', 'gfa' ) : esc_html__( 'Clienti e referenze', 'gfa' ); ?></h1></div></section>
 <section class="section"><div class="wrap">
-	<?php if ( have_posts() ) : ?>
+	<?php if ( $gfa_has_works ) : ?>
 		<div class="works works--grid">
 			<?php
 			while ( have_posts() ) :
@@ -18,12 +19,10 @@ get_header();
 			endwhile;
 			?>
 		</div>
-		<?php get_template_part( 'parts/referenze' ); ?>
-	<?php else : ?>
-		<p class="lead"><mark class="todo">Nessun lavoro pubblicato: aggiungili da Lavori svolti → Aggiungi lavoro. Intanto si vedono gli esempi da completare.</mark></p>
-		<?php get_template_part( 'parts/lavori' ); ?>
+		<?php the_posts_pagination(); ?>
 	<?php endif; ?>
-	<?php the_posts_pagination(); ?>
+	<?php get_template_part( 'parts/referenze' ); ?>
 </div></section>
 <?php
 get_footer();
+
