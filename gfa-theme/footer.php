@@ -33,8 +33,9 @@
 			<div>
 				<h3><?php esc_html_e( 'Contatti', 'gfa' ); ?></h3>
 				<ul>
-					<li><?php gfa_value( 'telefono', 'telefono principale' ); ?></li>
-					<li><?php echo esc_html( gfa_opt( 'email' ) ); ?></li>
+					<li><?php if ( gfa_opt( 'telefono' ) ) : ?><a href="<?php echo esc_url( 'tel:' . preg_replace( '/[^0-9+]/', '', gfa_opt( 'telefono' ) ) ); ?>"><?php echo esc_html( gfa_opt( 'telefono' ) ); ?></a><?php else : gfa_todo( 'telefono principale' ); endif; ?></li>
+					<li><a href="<?php echo esc_url( 'mailto:' . gfa_opt( 'email' ) ); ?>"><?php echo esc_html( gfa_opt( 'email' ) ); ?></a></li>
+					<?php if ( gfa_opt( 'indirizzo_rapallo' ) ) : ?><li>Rapallo: <?php echo esc_html( gfa_opt( 'indirizzo_rapallo' ) ); ?></li><?php endif; ?>
 					<li><?php gfa_value( 'sede_legale', 'indirizzo sede' ); ?></li>
 					<li><a href="<?php echo esc_url( home_url( '/franchising/' ) ); ?>"><?php esc_html_e( 'Apri una sede GFA', 'gfa' ); ?></a></li>
 				</ul>

@@ -49,3 +49,4 @@ $gfa_works = new WP_Query(
 		</article>
 	<?php endif; ?>
 </div>
+<?php get_template_part( 'parts/referenze' ); ?>

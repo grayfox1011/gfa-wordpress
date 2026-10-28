@@ -24,6 +24,7 @@ add_action(
 			'piva'             => array( 'Partita IVA del soggetto che eroga il servizio', 'text' ),
 			'rea'              => array( 'Numero REA', 'text' ),
 			'sede_legale'      => array( 'Sede legale (indirizzo completo)', 'text' ),
+			'indirizzo_rapallo' => array( 'Indirizzo sede di Rapallo', 'text' ),
 			'telefono'         => array( 'Telefono principale', 'text' ),
 			'email'            => array( 'Email pubblica', 'email' ),
 			'whatsapp'         => array( 'Numero WhatsApp (solo cifre, con prefisso 39)', 'text' ),

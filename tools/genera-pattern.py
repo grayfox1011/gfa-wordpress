@@ -188,12 +188,9 @@ P['volantinaggio-modalita'] = ('Volantinaggio: modalità', section('section',
           ('Negozi e attività commerciali', 'Pile di volantini presso bar, edicole e negozi che accettano di esporli.', p('<strong>Conviene per</strong> eventi, corsi, iniziative culturali.', 'mode__when')),
           ('Postazioni fisse e centri commerciali', 'Distribuzione a mano in punti di passaggio, con personale in divisa.', p('<strong>Conviene per</strong> lanci di prodotto e promozioni a tempo.', 'mode__when')),
           ('Fiere, piazze ed eventi', 'Personale sul posto, anche con i pannelli indossabili WOW.', p("<strong>Conviene per</strong> farsi notare dove c'è già il pubblico giusto.", 'mode__when')))))
-P['volantinaggio-prezzi'] = ('Volantinaggio: prezzi', section('section',
-    head('Prezzi', 'Pacchetti con stampa inclusa', 'Prezzi IVA esclusa. La grafica si aggiunge solo se ti serve. ' + todo('Listino da confermare per sede')),
-    table(['Copie', 'Formato', 'Include', 'Prezzo'], [
-        ['5.000', 'A5 fronte/retro ' + todo('confermare'), 'Stampa + distribuzione in cassetta + report', '490 €'],
-        ['10.000', 'A5 fronte/retro ' + todo('confermare'), 'Stampa + distribuzione in cassetta + report', '550 € ' + todo('verificare')],
-        ['20.000', 'A5 fronte/retro ' + todo('confermare'), 'Stampa + distribuzione in cassetta + report', '920 €']]),
+P['volantinaggio-prezzi'] = ('Volantinaggio: preventivo', section('section',
+    head('Preventivo', 'Un piano su misura per la tua distribuzione', 'Raccontaci dove vuoi distribuire e cosa vuoi promuovere: prepareremo una proposta in base alle tue esigenze.'),
+    buttons(('Chiedi un preventivo', '#preventivo', 'gfa-primary')),
     anchor='prezzi'))
 P['volantinaggio-faq'] = ('Volantinaggio: domande', section('section section--alt',
     head('Domande frequenti', 'Prima di chiedere un preventivo'),

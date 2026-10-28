@@ -27,7 +27,7 @@
 	<div class="wrap">
 		<a class="brand" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'GFA, torna alla homepage', 'gfa' ); ?>">
 			<?php if ( has_custom_logo() ) : ?>
-				<?php echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'thumbnail', false, array( 'class' => 'brand__logo', 'alt' => '' ) ); ?>
+				<?php echo wp_get_attachment_image( get_theme_mod( 'custom_logo' ), 'full', false, array( 'class' => 'brand__logo', 'alt' => '' ) ); ?>
 			<?php else : ?>
 				<span class="brand__mark" aria-hidden="true">GFA</span>
 			<?php endif; ?>

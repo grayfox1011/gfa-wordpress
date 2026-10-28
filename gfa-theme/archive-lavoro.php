@@ -18,6 +18,7 @@ get_header();
 			endwhile;
 			?>
 		</div>
+		<?php get_template_part( 'parts/referenze' ); ?>
 	<?php else : ?>
 		<p class="lead"><mark class="todo">Nessun lavoro pubblicato: aggiungili da Lavori svolti → Aggiungi lavoro. Intanto si vedono gli esempi da completare.</mark></p>
 		<?php get_template_part( 'parts/lavori' ); ?>

@@ -19,16 +19,17 @@ function gfa_defaults() {
 	return array(
 		'brand'         => 'GFA',
 		'ragione'       => '',
-		'piva'          => '',
+		'piva'          => '09182350968',
 		'rea'           => '',
 		'sede_legale'   => '',
-		'telefono'      => '',
+		'telefono'      => '3471174430',
 		'email'         => 'info@gfamarketing.com',
+		'indirizzo_rapallo' => 'Via Libertà 46',
 		'whatsapp'      => '',
 		'anno'          => '',
 		'sedi'          => 'Milano, Como, Rapallo, Genova, Sanremo, Bassano del Grappa, Modena, Reggio Emilia',
 		'copie_anno'    => '',
-		'email_preventivi' => '',
+		'email_preventivi' => 'info@gfamarketing.com',
 	);
 }
 
