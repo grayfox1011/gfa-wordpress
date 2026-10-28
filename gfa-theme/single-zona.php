@@ -16,8 +16,13 @@ while ( have_posts() ) :
 	if ( 'rapallo' === get_post_field( 'post_name', $gfa_id ) && '' === $gfa_indirizzo ) {
 		$gfa_indirizzo = gfa_opt( 'indirizzo_rapallo' );
 	}
-	if ( 'milano' === get_post_field( 'post_name', $gfa_id ) && '' === $gfa_telefono ) {
-		$gfa_telefono = gfa_opt( 'telefono' );
+	if ( 'milano' === get_post_field( 'post_name', $gfa_id ) ) {
+		if ( '' === $gfa_indirizzo ) {
+			$gfa_indirizzo = gfa_opt( 'indirizzo_milano' );
+		}
+		if ( '' === $gfa_telefono ) {
+			$gfa_telefono = gfa_opt( 'telefono' );
+		}
 	}
 	?>
 	<section class="page-hero"><div class="wrap stack">
@@ -43,3 +48,4 @@ while ( have_posts() ) :
 endwhile;
 echo do_blocks( gfa_pattern( 'preventivo' ) ); // phpcs:ignore WordPress.Security.EscapeOutput
 get_footer();
+

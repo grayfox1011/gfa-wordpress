@@ -256,6 +256,7 @@ mark.hl { color: inherit; background: linear-gradient(transparent 62%, var(--yel
 .zone-list a { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .25rem .5rem; min-width: 0; overflow-wrap: anywhere; padding: .9rem 1rem; border: 1px solid var(--line); border-radius: var(--radius); text-decoration: none; font-weight: 600; background: var(--paper); }
 .zone-list a:hover { border-color: var(--blue); color: var(--blue); }
 .zone-list small { font-family: var(--f-data); font-weight: 500; color: var(--ink-2); font-size: .7rem; text-transform: uppercase; }
+.zone-list__address { flex-basis: 100%; font-weight: 400; font-size: .9rem; color: var(--ink-2); }
 .north-map { width: 100%; height: auto; }
 .north-map .land { fill: var(--paper-2); stroke: var(--line); stroke-width: 1.5; }
 .north-map .dot { fill: var(--blue); }

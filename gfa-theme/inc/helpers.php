@@ -24,6 +24,7 @@ function gfa_defaults() {
 		'sede_legale'   => '',
 		'telefono'      => '3471174430',
 		'email'         => 'info@gfamarketing.com',
+		'indirizzo_milano' => 'Viale Monte Ceneri, 62, 20155 Milano MI',
 		'indirizzo_rapallo' => 'Via Libertà 46',
 		'whatsapp'      => '',
 		'anno'          => '1985',
