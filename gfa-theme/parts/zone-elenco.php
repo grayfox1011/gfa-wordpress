@@ -5,17 +5,6 @@
  * @package gfa
  */
 
-// Posizioni approssimate delle città su una mappa schematica del Nord Italia (viewBox 520x300).
-$gfa_pos = array(
-	'Milano'             => array( 205, 95 ),
-	'Como'               => array( 188, 58 ),
-	'Bassano del Grappa' => array( 382, 62 ),
-	'Modena'             => array( 318, 168 ),
-	'Reggio Emilia'      => array( 288, 160 ),
-	'Genova'             => array( 180, 205 ),
-	'Rapallo'            => array( 208, 218 ),
-	'Sanremo'            => array( 82, 262 ),
-);
 $gfa_zone_posts = get_posts( array( 'post_type' => 'zona', 'numberposts' => 20, 'orderby' => 'title', 'order' => 'ASC' ) );
 $gfa_links      = array();
 foreach ( $gfa_zone_posts as $gfa_zone ) {
@@ -30,3 +19,4 @@ foreach ( $gfa_zone_posts as $gfa_zone ) {
 				<?php endforeach; ?>
 			</ul>
 			<p class="zone-note"><span class="todo">Confermare per ogni sede: attiva, diretta o in franchising, indirizzo</span></p>
+

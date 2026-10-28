@@ -27,7 +27,7 @@ function gfa_defaults() {
 		'indirizzo_rapallo' => 'Via Libertà 46',
 		'whatsapp'      => '',
 		'anno'          => '',
-		'sedi'          => 'Milano, Como, Rapallo, Genova, Sanremo, Bassano del Grappa, Modena, Reggio Emilia',
+		'sedi'          => 'Milano, Rapallo',
 		'copie_anno'    => '',
 		'email_preventivi' => 'info@gfamarketing.com',
 	);
@@ -89,3 +89,4 @@ function gfa_photo_slot( $title, $spec ) {
 function gfa_sedi() {
 	return array_filter( array_map( 'trim', explode( ',', gfa_opt( 'sedi' ) ) ) );
 }
+

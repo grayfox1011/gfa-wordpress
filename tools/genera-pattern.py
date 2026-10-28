@@ -148,7 +148,7 @@ P['lavori'] = ('Lavori svolti', grp('section',
         dyn('lavori'))), tag='section', anchor='lavori'))
 
 P['zone'] = ('Zone servite', section('section section--alt',
-    grp('zones__text', head('Zone servite', 'Otto sedi, dal Ponente alla pianura.', 'Ogni sede conosce le sue vie. Scegli la tua zona per vedere comuni coperti, modalità e referente.'), dyn('zone-elenco')),
+    grp('zones__text', head('Zone servite', 'Le nostre sedi: Milano e Rapallo.', 'Ogni sede conosce le sue vie. Scegli la tua zona per vedere comuni coperti, modalità e referente.'), dyn('zone-elenco')),
     dyn('zone-mappa'), anchor='zone', wrap='wrap zones'))
 
 P['recensioni'] = ('Recensioni', section('section',
@@ -162,7 +162,7 @@ P['preventivo'] = ('Preventivo', section('section section--blue',
 
 # Volantinaggio
 P['volantinaggio-intro'] = ('Volantinaggio: apertura', page_intro('Servizio principale', 'Volantinaggio e distribuzione volantini',
-    'In cassetta, nei negozi, nelle piazze e agli eventi, nelle zone di Milano, Como, Rapallo, Genova, Sanremo, Bassano del Grappa, Modena e Reggio Emilia. Ti diciamo quale modalità conviene, quante copie servono e ti mostriamo il lavoro fatto.'))
+    'In cassetta, nei negozi, nelle piazze e agli eventi, nelle zone di Milano e Rapallo. Ti diciamo quale modalità conviene, quante copie servono e ti mostriamo il lavoro fatto.'))
 P['volantinaggio-modalita'] = ('Volantinaggio: modalità', section('section',
     head('Modalità', 'Quale distribuzione ti serve?'),
     modes(('In cassetta, porta a porta', 'Un volantino in ogni cassetta delle vie scelte.', p('<strong>Conviene per</strong> offerte di negozi e servizi di quartiere, aperture, agenzie immobiliari.', 'mode__when')),
@@ -215,7 +215,7 @@ P['eventi-percorso'] = ('Eventi: dal volantino alla prenotazione', section('sect
 
 # Chi siamo
 P['chi-intro'] = ('Chi siamo: apertura', page_intro('Chi siamo', 'Nel volantinaggio dal ' + todo('anno'),
-    'GFA distribuisce volantini e materiale pubblicitario nel Nord Italia, con otto sedi operative e squadre che conoscono le proprie zone.', cta=False))
+    'GFA distribuisce volantini e materiale pubblicitario con sedi operative a Milano e Rapallo e squadre che conoscono le proprie zone.', cta=False))
 P['chi-storia'] = ('Chi siamo: storia', section('section',
     grp('control__text', p('La nostra storia', 'eyebrow'), h('Da una sede a Milano a una rete di sedi'),
         p(todo("Storia da raccontare con GFA: anno e luogo di inizio, chi ha fondato l'azienda, come è cresciuta la rete, cosa è cambiato negli anni")),
