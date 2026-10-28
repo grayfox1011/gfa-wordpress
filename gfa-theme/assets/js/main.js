@@ -40,7 +40,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && nav.classList.contains('is-open')) { setOpen(false, true); }
     });
-    window.matchMedia('(min-width: 1181px)').addEventListener('change', function (mq) { if (mq.matches) { setOpen(false); } });
+    window.matchMedia('(min-width: 1401px)').addEventListener('change', function (mq) { if (mq.matches) { setOpen(false); } });
   }
 
   /* ---------- Header compatto ---------- */

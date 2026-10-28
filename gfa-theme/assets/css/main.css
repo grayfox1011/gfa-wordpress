@@ -101,12 +101,14 @@ p { margin: 0; max-width: 62ch; }
   background: color-mix(in srgb, var(--paper) 92%, transparent);
   backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
 }
-.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding-block: .9rem; transition: padding .25s ease; }
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; max-width: 1440px; padding-block: .9rem; transition: padding .25s ease; }
 .site-header.is-compact .wrap { padding-block: .45rem; }
 .brand { display: inline-flex; align-items: center; gap: .6rem; text-decoration: none; font-family: var(--f-display); font-weight: 800; font-size: 1.35rem; font-stretch: 118%; }
 .brand__mark { width: 38px; height: 38px; border-radius: 5px; background: var(--yellow); color: #1f3fae; display: grid; place-items: center; font-size: .95rem; letter-spacing: -.02em; }
-.site-header .brand__mark { width: 48px; height: 48px; font-size: 1.1rem; }
-.site-header .brand__logo { display: block; width: auto; height: auto; max-width: 140px; max-height: 52px; object-fit: contain; }
+.site-header .brand { flex-shrink: 0; max-width: calc(100% - 90px); }
+.site-header .brand > span:last-child { min-width: 0; }
+.site-header .brand__mark { flex-shrink: 0; width: 48px; height: 48px; font-size: 1.1rem; }
+.site-header .brand__logo { flex-shrink: 0; display: block; width: auto; height: auto; max-width: 140px; max-height: 52px; object-fit: contain; }
 .brand__sub { font-family: var(--f-data); font-weight: 500; font-size: .68rem; color: var(--ink-2); letter-spacing: .06em; text-transform: uppercase; display: block; font-stretch: 100%; }
 .nav { display: flex; align-items: center; gap: .3rem; }
 .nav ul { display: flex; gap: .2rem; list-style: none; margin: 0; padding: 0; }
@@ -114,8 +116,8 @@ p { margin: 0; max-width: 62ch; }
 .nav a:hover, .nav .current-menu-item > a { background: var(--paper-2); }
 .nav__phone { font-family: var(--f-data); font-size: .85rem; white-space: nowrap; }
 .nav-toggle { display: none; background: none; border: 2px solid var(--ink); border-radius: 4px; color: var(--ink); min-height: 44px; padding: 0 .8rem; font-weight: 700; font-family: var(--f-body); }
-@media (max-width: 1180px) {
-  .nav-toggle { display: inline-flex; align-items: center; }
+@media (max-width: 1400px) {
+  .nav-toggle { display: inline-flex; align-items: center; flex-shrink: 0; }
   .nav {
     position: absolute; inset: 100% 0 auto 0; background: var(--paper); border-bottom: 1px solid var(--line);
     flex-direction: column; align-items: stretch; gap: .5rem; padding: .75rem var(--gutter) 1.25rem; display: none;
