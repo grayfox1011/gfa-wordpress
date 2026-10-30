@@ -44,9 +44,15 @@ Non classificare automaticamente le memorie per effetti grafici come strettament
 - Il preventivo usa una base precontrattuale ai sensi dell'art. 6(1)(b) **ove applicabile**, non il consenso marketing. Valutare separatamente i referenti aziendali. Allineare la checkbox e la registrazione attuali («consenso privacy») alla sola presa visione e alla finalità effettiva. **[CONFERMARE EVENTUALI NEWSLETTER O CONTATTI PROMOZIONALI, NON PREVISTI DAL MODULO ATTUALE]**.
 - Non inviare a GA4/Ads/Meta nome, email, telefono, testo libero o dati del preventivo dentro URL, eventi o parametri. Definire gli eventi ammessi prima di implementare le conversioni.
 
+## Dati confermati dal titolare - 30 ottobre 2026
+
+L'utente ha fornito la ragione sociale **GFA COMUNICAZIONE DI BATTISTONI EDOARDO**, la P.IVA **09182350968** e il VAT europeo **IT09182350968**. Alla domanda sulla sede legale ha confermato **Viale Monte Ceneri, 62, 20155 Milano MI**. I dati sono riportati in entrambe le bozze, con l'email aziendale già fornita **info@gfamarketing.com** per contatti e richieste privacy. Il codice fiscale non è stato fornito e non è stato dedotto dalla P.IVA; non è stata attribuita alcuna funzione di DPO.
+
+Le bozze WordPress 194 e 196 sono state aggiornate con questi dati, con salvataggio confermato; restano non pubblicate. Le pagine pubbliche originali, il tema e la configurazione di CMP/tag non sono stati modificati.
+
 ## Dati ancora necessari
 
-1. Identità legale e indirizzo/recapito del titolare; eventuale rappresentante e DPO, senza presumere che non esistano. Gli indirizzi Milano/Rapallo sono operativi. P.IVA nota: `09182350968`.
+1. Eventuale rappresentante e DPO, senza presumere che non esistano.
 2. Dominio finale: nel tema compare `https://gfamarketing.com/`, ma non costituisce conferma delle impostazioni di produzione.
 3. Hosting, email, eventuale CRM, plugin/log/backup: soggetti, ruoli, sedi di trattamento e tempi/criteri di conservazione effettivi.
 4. ID GA4, Google Ads e Meta, eventuale contenitore GTM, eventi e conversioni, collegamenti fra servizi e impostazioni delle piattaforme. Gli ID servono alla configurazione; non occorre esporli automaticamente nelle informative.
