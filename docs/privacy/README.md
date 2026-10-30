@@ -1,6 +1,6 @@
 # Bozze privacy e cookie — non pubblicare
 
-Preparazione: 30 ottobre 2026. Questi documenti richiedono i dati mancanti, verifica del trattamento reale e revisione del titolare/consulente prima della pubblicazione. Nessuna policy, CMP o piattaforma è stata installata durante questa attività.
+Preparazione: 30 ottobre 2026. Questi documenti richiedono i dati mancanti, verifica del trattamento reale e revisione del titolare/consulente prima della pubblicazione. Le informative sono state importate in WordPress come nuove bozze separate; nessuna policy è stata pubblicata e nessuna CMP o tag di tracking è stato attivato.
 
 ## File e uso
 
@@ -13,7 +13,16 @@ Contengono blocchi standard, senza script o modulo. Importare prima in pagine **
 
 Audit del tema 0.5.16, commit `14e275b4d68461bca2a45d742a6d46d937c8346c`. Nessun Google Analytics/Ads/GTM, Meta Pixel, CMP, `document.cookie` o `localStorage` rilevato nel codice esaminato. Font, GSAP e Lenis sono locali. Questo **non è uno scan runtime** e non esclude codice inserito da plugin, hosting o tag manager esterni al tema.
 
-Il controllo DOM riferito dal revisore sulle pagine pubbliche ha mostrato titoli e modulo, ma nessun testo di policy, iframe o banner; le risorse elencate erano locali. Non è stata effettuata una scansione delle richieste di rete. L'amministrazione richiede nuovamente il login, quindi plugin e impostazioni correnti non sono verificati.
+Il controllo DOM riferito dal revisore sulle pagine pubbliche ha mostrato titoli e modulo, ma nessun testo di policy, iframe o banner; le risorse elencate erano locali. Non è stata effettuata una scansione delle richieste di rete. L'accesso amministrativo è stato ripristinato: la schermata Plugin mostra soltanto **All-in-One WP Migration and Backup 7.113** attivo e nessuna CMP nell'elenco. Questo controllo non sostituisce la verifica di eventuali integrazioni esterne o delle impostazioni di produzione.
+
+## Importazione WordPress — 30 ottobre 2026
+
+| Pagina creata | ID | Stato | Percorso amministrativo sul sito WordPress |
+| --- | --- | --- | --- |
+| Privacy Policy — bozza da completare | 194 | Bozza salvata, non pubblicata | [Apri bozza](https://wordpress1791795513908.app.runonflux.io/wp-admin/post.php?post=194&action=edit) |
+| Cookie Policy — bozza da completare | 196 | Bozza salvata, non pubblicata | [Apri bozza](https://wordpress1791795513908.app.runonflux.io/wp-admin/post.php?post=196&action=edit) |
+
+Il salvataggio di entrambe è stato confermato dall'interfaccia. Le pagine pubbliche originali Privacy (ID 3) e Cookie (ID 14) non sono state modificate o sostituite. Nessuna CMP, tag GA4/Google Ads/Meta Pixel o nuova configurazione del consenso è stata attivata. Le bozze restano da completare e approvare. Evidenza: [schermata delle bozze WordPress](wordpress-bozze.jpg).
 
 | Elemento realmente presente nel tema | Evidenza |
 | --- | --- |
