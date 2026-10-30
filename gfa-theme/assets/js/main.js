@@ -6,6 +6,10 @@
 
   var root = document.documentElement;
 
+  function functionalStorageAllowed() {
+    return !!(window.GfaCookieConsent && window.GfaCookieConsent.allowsFunctional());
+  }
+
   function reduced() {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
@@ -56,7 +60,9 @@
   function initBrand() {
     document.querySelectorAll('a.brand').forEach(function (a) {
       a.addEventListener('click', function () {
-        try { window.sessionStorage.removeItem('gfaSeen'); } catch (e) { /* storage non disponibile */ }
+        if (functionalStorageAllowed()) {
+          try { window.sessionStorage.removeItem('gfaSeen'); } catch (e) { /* storage non disponibile */ }
+        }
       });
     });
   }
@@ -159,7 +165,9 @@
       if (url.pathname === window.location.pathname && url.search === window.location.search) { return; } // stessa pagina: ci pensa lo scroll
       if (!window.gsap) { return; }
       e.preventDefault();
-      try { window.sessionStorage.setItem('gfaTrans', '1'); } catch (err) { /* storage non disponibile */ }
+      if (functionalStorageAllowed()) {
+        try { window.sessionStorage.setItem('gfaTrans', '1'); } catch (err) { /* storage non disponibile */ }
+      }
       var go = function () { window.location.href = url.href; };
       if (a.classList.contains('brand')) { go(); return; } // il logo apre con il preload
       curtain.classList.add('is-active');
@@ -277,7 +285,9 @@
 
     // 2. Preload
     if (preloader && root.classList.contains('gfa-preload')) {
-      try { window.sessionStorage.setItem('gfaSeen', '1'); } catch (e) { /* storage non disponibile */ }
+      if (functionalStorageAllowed()) {
+        try { window.sessionStorage.setItem('gfaSeen', '1'); } catch (e) { /* storage non disponibile */ }
+      }
       if (lenis) { lenis.stop(); }
       var preloadTimeline = gsap.timeline({ onComplete: function () { root.classList.remove('gfa-preload'); preloader.remove(); } })
         .from('.preloader__box', { scale: 0.7, rotate: -6, autoAlpha: 0, duration: 0.5, ease: 'back.out(1.6)' });

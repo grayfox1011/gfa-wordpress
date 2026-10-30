@@ -7,10 +7,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GFA_VERSION', '0.5.16' );
+define( 'GFA_VERSION', '0.5.17' );
 
 require get_template_directory() . '/inc/helpers.php';
 require get_template_directory() . '/inc/setup.php';
+require get_template_directory() . '/inc/cookie-consent.php';
 require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/post-types.php';
 require get_template_directory() . '/inc/quote-form.php';

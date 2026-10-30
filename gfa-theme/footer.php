@@ -50,6 +50,7 @@
 				<a href="<?php echo esc_url( get_privacy_policy_url() ); ?>"><?php esc_html_e( 'Privacy', 'gfa' ); ?></a>
 			<?php endif; ?>
 			<a href="<?php echo esc_url( home_url( '/cookie-policy/' ) ); ?>"><?php esc_html_e( 'Cookie', 'gfa' ); ?></a>
+			<button class="gfa-cookie-reopen" type="button" data-gfa-cookie-open hidden><?php esc_html_e( 'Preferenze cookie', 'gfa' ); ?></button>
 		</div>
 	</div>
 </footer>
