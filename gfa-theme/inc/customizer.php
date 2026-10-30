@@ -24,12 +24,13 @@ add_action(
 			'piva'             => array( 'Partita IVA del soggetto che eroga il servizio', 'text' ),
 			'rea'              => array( 'Numero REA', 'text' ),
 			'sede_legale'      => array( 'Sede legale (indirizzo completo)', 'text' ),
+			'indirizzo_milano'  => array( 'Indirizzo sede di Milano', 'text' ),
+			'indirizzo_rapallo' => array( 'Indirizzo sede di Rapallo', 'text' ),
 			'telefono'         => array( 'Telefono principale', 'text' ),
 			'email'            => array( 'Email pubblica', 'email' ),
 			'whatsapp'         => array( 'Numero WhatsApp (solo cifre, con prefisso 39)', 'text' ),
 			'anno'             => array( 'Anno di inizio attività', 'text' ),
 			'sedi'             => array( 'Sedi operative, separate da virgola', 'text' ),
-			'copie_anno'       => array( 'Copie distribuite in un anno (dato reale)', 'text' ),
 			'email_preventivi' => array( 'Email che riceve le richieste di preventivo', 'email' ),
 		);
 

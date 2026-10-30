@@ -33,7 +33,7 @@
 <h3 class="wp-block-heading">Bozza</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Una prima proposta grafica. <mark class="todo">numero di revisioni incluse</mark></p>
+<p>Una prima proposta grafica.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"route-step","layout":{"type":"default"}} -->
@@ -56,3 +56,4 @@
 <!-- /wp:group --></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->
+

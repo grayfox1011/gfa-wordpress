@@ -33,24 +33,28 @@
 			<div>
 				<h3><?php esc_html_e( 'Contatti', 'gfa' ); ?></h3>
 				<ul>
-					<li><?php gfa_value( 'telefono', 'telefono principale' ); ?></li>
-					<li><?php echo esc_html( gfa_opt( 'email' ) ); ?></li>
-					<li><?php gfa_value( 'sede_legale', 'indirizzo sede' ); ?></li>
+					<li><?php if ( gfa_opt( 'telefono' ) ) : ?><a href="<?php echo esc_url( 'tel:' . preg_replace( '/[^0-9+]/', '', gfa_opt( 'telefono' ) ) ); ?>"><?php echo esc_html( gfa_opt( 'telefono' ) ); ?></a><?php else : gfa_todo( 'telefono principale' ); endif; ?></li>
+					<li><a href="<?php echo esc_url( 'mailto:' . gfa_opt( 'email' ) ); ?>"><?php echo esc_html( gfa_opt( 'email' ) ); ?></a></li>
+					<?php if ( gfa_opt( 'indirizzo_milano' ) ) : ?><li>Milano: <?php echo esc_html( gfa_opt( 'indirizzo_milano' ) ); ?></li><?php endif; ?>
+					<?php if ( gfa_opt( 'indirizzo_rapallo' ) ) : ?><li>Rapallo: <?php echo esc_html( gfa_opt( 'indirizzo_rapallo' ) ); ?></li><?php endif; ?>
+					<?php if ( gfa_opt( 'sede_legale' ) ) : ?><li><?php esc_html_e( 'Sede legale:', 'gfa' ); ?> <?php echo esc_html( gfa_opt( 'sede_legale' ) ); ?></li><?php endif; ?>
 					<li><a href="<?php echo esc_url( home_url( '/franchising/' ) ); ?>"><?php esc_html_e( 'Apri una sede GFA', 'gfa' ); ?></a></li>
 				</ul>
 			</div>
 		</div>
 		<div class="legal">
-			<span>© <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php gfa_value( 'ragione', 'ragione sociale' ); ?></span>
+			<span>© <?php echo esc_html( gmdate( 'Y' ) ); ?><?php if ( '' !== trim( gfa_opt( 'ragione' ) ) ) { echo ' ' . esc_html( gfa_opt( 'ragione' ) ); } ?></span>
 			<span>P.IVA <?php gfa_value( 'piva', 'P.IVA da confermare' ); ?></span>
 			<?php if ( gfa_opt( 'rea' ) ) : ?><span>REA <?php echo esc_html( gfa_opt( 'rea' ) ); ?></span><?php endif; ?>
 			<?php if ( function_exists( 'get_privacy_policy_url' ) && get_privacy_policy_url() ) : ?>
 				<a href="<?php echo esc_url( get_privacy_policy_url() ); ?>"><?php esc_html_e( 'Privacy', 'gfa' ); ?></a>
 			<?php endif; ?>
 			<a href="<?php echo esc_url( home_url( '/cookie-policy/' ) ); ?>"><?php esc_html_e( 'Cookie', 'gfa' ); ?></a>
+			<button class="gfa-cookie-reopen" type="button" data-gfa-cookie-open hidden><?php esc_html_e( 'Preferenze cookie', 'gfa' ); ?></button>
 		</div>
 	</div>
 </footer>
 <?php wp_footer(); ?>
 </body>
 </html>
+

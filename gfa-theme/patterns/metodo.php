@@ -28,7 +28,7 @@
 <h3 class="wp-block-heading">Brief</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Ci racconti cosa promuovi, dove e quando. Ti ricontattiamo entro <mark class="todo">tempo di risposta da confermare</mark>.</p>
+<p>Ci racconti cosa promuovi, dove e quando. Ti ricontattiamo per definire i dettagli.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"route-step","layout":{"type":"default"}} -->
@@ -52,7 +52,7 @@
 <h3 class="wp-block-heading">Report</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>A fine lavoro ricevi mappa del percorso, foto a campione e copie consegnate per zona.</p>
+<p>A fine lavoro ricevi foto a campione e copie consegnate per zona.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>

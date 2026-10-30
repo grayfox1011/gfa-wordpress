@@ -19,16 +19,17 @@ function gfa_defaults() {
 	return array(
 		'brand'         => 'GFA',
 		'ragione'       => '',
-		'piva'          => '',
+		'piva'          => '09182350968',
 		'rea'           => '',
 		'sede_legale'   => '',
-		'telefono'      => '',
+		'telefono'      => '3471174430',
 		'email'         => 'info@gfamarketing.com',
+		'indirizzo_milano' => 'Viale Monte Ceneri, 62, 20155 Milano MI',
+		'indirizzo_rapallo' => 'Via Libertà 46',
 		'whatsapp'      => '',
-		'anno'          => '',
-		'sedi'          => 'Milano, Como, Rapallo, Genova, Sanremo, Bassano del Grappa, Modena, Reggio Emilia',
-		'copie_anno'    => '',
-		'email_preventivi' => '',
+		'anno'          => '1985',
+		'sedi'          => 'Milano, Rapallo',
+		'email_preventivi' => 'info@gfamarketing.com',
 	);
 }
 
@@ -88,3 +89,4 @@ function gfa_photo_slot( $title, $spec ) {
 function gfa_sedi() {
 	return array_filter( array_map( 'trim', explode( ',', gfa_opt( 'sedi' ) ) ) );
 }
+
