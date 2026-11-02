@@ -1,5 +1,13 @@
 # Informative privacy e cookie
 
+## Stato aggiornato al 2 novembre 2026
+
+Le versioni attuali sono [Privacy Policy](privacy-policy.html) e [Cookie Policy](cookie-policy.html), aggiornate al 2 novembre 2026. Il tema è predisposto per Google Ads e Meta con categorie separate nel banner; entrambi i servizi restano **disabilitati, con identificativi vuoti**, e non raccolgono un consenso anticipato. GA4 non è incluso. Per configurazione, consenso, conversioni, memorie e verifiche prima dell'attivazione, fare riferimento alla [documentazione advertising](../advertising/README.md), che sostituisce le precedenti indicazioni sulla sola gestione delle animazioni e sui tracciamenti futuri.
+
+## Archivio storico: situazione ed evidenze del 30 ottobre 2026
+
+Il contenuto seguente conserva la cronologia delle verifiche e delle pubblicazioni precedenti. I riferimenti al banner con la sola categoria Esperienza di navigazione, a GA4 futuro e alle funzionalità non ancora implementate descrivono quello stato storico, non la predisposizione attuale. Le evidenze di test del 30 ottobre non attestano il funzionamento delle integrazioni pubblicitarie successive; per queste occorrono verifiche riferite alla nuova versione.
+
 Aggiornamento: 30 ottobre 2026. Le versioni senza segnaposti `privacy-policy.html` e `cookie-policy.html` corrispondono alle pagine WordPress esistenti Privacy (ID 3) e Cookie (ID 14). Il tema 0.5.17 introduce un banner e un pannello di preferenze per le sole memorie facoltative del tema; GA4, Google Ads e Meta Pixel restano inattivi. Le precedenti versioni `.bozza.html` restano documenti di lavoro separati, con i relativi avvisi. La pubblicazione delle informative e il banner non costituiscono certificazione di conformità né completano le verifiche tecniche e organizzative elencate sotto.
 
 ## File e uso

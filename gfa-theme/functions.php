@@ -7,12 +7,13 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'GFA_VERSION', '0.5.20' );
+define( 'GFA_VERSION', '0.5.21' );
 
 require get_template_directory() . '/inc/helpers.php';
 require get_template_directory() . '/inc/setup.php';
 require get_template_directory() . '/inc/seo.php';
 require get_template_directory() . '/inc/seo-admin.php';
+require get_template_directory() . '/inc/advertising.php';
 require get_template_directory() . '/inc/cookie-consent.php';
 require get_template_directory() . '/inc/customizer.php';
 require get_template_directory() . '/inc/post-types.php';

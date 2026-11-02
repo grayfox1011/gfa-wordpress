@@ -87,6 +87,9 @@
 .gfa-cookie-category__title > span { font-size: .85rem; white-space: nowrap; color: var(--ink-2); }
 .gfa-cookie-switch { cursor: pointer; }
 .gfa-cookie-switch input { width: 24px; height: 24px; flex: 0 0 24px; margin: 0; accent-color: var(--blue); cursor: pointer; }
+.gfa-cookie-switch input:disabled { cursor: not-allowed; }
+.gfa-cookie-category--inactive .gfa-cookie-switch { cursor: default; }
+.gfa-cookie-provider-status { color: var(--ink-2); font-size: .9rem; font-weight: 700; margin: 0 0 8px; }
 .gfa-cookie-inactive { margin-top: 18px; font-size: .9rem; color: var(--ink-2); }
 .gfa-cookie-dialog .gfa-cookie-actions { margin-top: 24px; }
 .gfa-cookie-reopen { padding: 0; border: 0; color: inherit; background: transparent; font: inherit; text-decoration: underline; cursor: pointer; }

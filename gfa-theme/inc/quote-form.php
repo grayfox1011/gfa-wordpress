@@ -12,9 +12,11 @@ defined( 'ABSPATH' ) || exit;
  */
 function gfa_handle_quote() {
 	$back = wp_get_referer() ? wp_get_referer() : home_url( '/' );
-	$back = remove_query_arg( 'preventivo', $back );
+	$back = remove_query_arg( array( 'preventivo', 'gfa_receipt' ), $back );
+	$back = strtok( $back, '#' );
+	$back = wp_validate_redirect( $back, home_url( '/' ) );
 
-	if ( ! isset( $_POST['gfa_quote_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['gfa_quote_nonce'] ), 'gfa_quote' ) ) {
+	if ( ! isset( $_POST['gfa_quote_nonce'] ) || ! is_string( $_POST['gfa_quote_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['gfa_quote_nonce'] ), 'gfa_quote' ) ) {
 		wp_safe_redirect( add_query_arg( 'preventivo', 'errore', $back ) . '#preventivo' );
 		exit;
 	}
@@ -38,13 +40,14 @@ function gfa_handle_quote() {
 	);
 	$data = array();
 	foreach ( $fields as $key => $label ) {
-		$raw          = isset( $_POST[ 'gfa_' . $key ] ) ? wp_unslash( $_POST[ 'gfa_' . $key ] ) : '';
+		$raw          = isset( $_POST[ 'gfa_' . $key ] ) && is_string( $_POST[ 'gfa_' . $key ] ) ? wp_unslash( $_POST[ 'gfa_' . $key ] ) : '';
 		$data[ $key ] = 'dettagli' === $key ? sanitize_textarea_field( $raw ) : sanitize_text_field( $raw );
 	}
 	$data['email'] = sanitize_email( $data['email'] );
 
-	$consent = ! empty( $_POST['gfa_privacy'] );
-	if ( '' === $data['nome'] || ! is_email( $data['email'] ) || '' === $data['servizio'] || ! $consent ) {
+	$consent = isset( $_POST['gfa_privacy'] ) && '1' === $_POST['gfa_privacy'];
+	$services = array( 'Volantinaggio', 'Grafica, stampa e distribuzione', 'Promozione evento', 'Stampa e grafica' );
+	if ( '' === $data['nome'] || ! is_email( $data['email'] ) || '' === $data['zona'] || ! in_array( $data['servizio'], $services, true ) || ! $consent ) {
 		wp_safe_redirect( add_query_arg( 'preventivo', 'errore', $back ) . '#preventivo' );
 		exit;
 	}
@@ -67,8 +70,17 @@ function gfa_handle_quote() {
 		array( 'Reply-To: ' . $data['nome'] . ' <' . $data['email'] . '>' )
 	);
 
-	wp_safe_redirect( add_query_arg( 'preventivo', $sent ? 'inviato' : 'errore', $back ) . '#preventivo' );
+	$return = add_query_arg( 'preventivo', $sent ? 'inviato' : 'errore', $back );
+	if ( $sent ) {
+		$token = gfa_quote_receipt_create( array(
+			'googleAds' => isset( $_POST['gfa_google_ads_consent'] ) && '1' === $_POST['gfa_google_ads_consent'],
+			'metaAds' => isset( $_POST['gfa_meta_ads_consent'] ) && '1' === $_POST['gfa_meta_ads_consent'],
+		) );
+		if ( '' !== $token ) { $return = add_query_arg( 'gfa_receipt', $token, $return ); }
+	}
+	wp_safe_redirect( $return . '#preventivo' );
 	exit;
 }
 add_action( 'admin_post_nopriv_gfa_preventivo', 'gfa_handle_quote' );
 add_action( 'admin_post_gfa_preventivo', 'gfa_handle_quote' );
+
