@@ -59,3 +59,14 @@ Google Analytics, Google Ads e Meta Pixel non sono prerequisiti per l'indicizzaz
 - [WordPress: sitemap e siti non pubblici](https://developer.wordpress.org/reference/hooks/wp_sitemaps_enabled/)
 - [Open Graph Protocol](https://ogp.me/)
 
+## Verifiche del 2 novembre 2026
+
+- Tema 0.5.20 installato correttamente; superati 18 controlli PHP del modulo SEO e il lint di 8 file PHP.
+- Controllate 12 pagine live: homepage, tre servizi, Chi siamo, Contatti, due archivi, Milano, Rapallo e le due informative. Ciascuna presenta titolo e descrizione distinti, un H1, un canonical e JSON-LD decodificabile; il `noindex` del sito di prova resta presente.
+- Verificata una URL con parametri UTM: canonical e `og:url` non includono i parametri di campagna.
+- Nessuna eccedenza orizzontale rilevata nelle pagine Milano e Rapallo a 390 × 844 pixel.
+- La sitemap XML mostra una pagina non trovata, coerentemente con l'indicizzazione disattivata sul sito di prova.
+- Per la pagina Tasche Piene (ID 91), l'opzione SEO di esclusione dall'indicizzazione è stata selezionata, salvata e verificata dopo il ricaricamento. Il JSON-LD è assente nella pagina pubblica.
+
+Questi controlli non includono una verifica HTTP da visitatore anonimo, Test dei risultati avanzati, Lighthouse o Search Console. Le verifiche sul dominio definitivo elencate sopra restano da eseguire al lancio.
+
