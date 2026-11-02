@@ -165,7 +165,6 @@ function gfa_page_layouts() {
 		'stampa-e-grafica'  => array( 'stampa-intro', 'stampa-prodotti', 'stampa-processo', 'lavori', 'stampa-faq', 'preventivo' ),
 		'promozione-eventi' => array( 'eventi-intro', 'eventi-percorso', 'lavori', 'preventivo' ),
 		'chi-siamo'         => array( 'chi-intro', 'chi-storia', 'chi-persone', 'chi-impegni', 'zone', 'chi-dati', 'preventivo' ),
-		'franchising'       => array( 'franchising-intro', 'franchising-offerta', 'franchising-percorso', 'zone', 'franchising-candidatura' ),
 		'contatti'          => array( 'contatti-intro', 'preventivo', 'zone' ),
 	);
 }
@@ -196,7 +195,6 @@ add_action(
 			'stampa-e-grafica'  => 'Stampa e grafica',
 			'promozione-eventi' => 'Promozione eventi',
 			'chi-siamo'         => 'Chi siamo',
-			'franchising'       => 'Franchising',
 			'contatti'          => 'Contatti',
 		);
 		foreach ( $titles as $slug => $title ) {
