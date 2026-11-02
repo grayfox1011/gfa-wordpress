@@ -71,6 +71,18 @@ Usare i test presenti in `tools/` e i controlli di sintassi appropriati al tema.
 
 La verifica automatica può usare SDK simulati e `wp_mail` simulato, senza richieste ai provider né email reali. L'invio di eventi reali, l'analisi dell'attribuzione e la ricezione email restano controlli distinti, eseguibili soltanto con account, identificativi e destinatari di prova definiti.
 
+## Verifica eseguita — 2 novembre 2026
+
+- Tema 0.5.21 installato con conferma di WordPress; script del tema serviti con versione 0.5.21. Il sito di prova mantiene `noindex`.
+- La vecchia scelta relativa alle sole animazioni non è riutilizzata: viene mostrato il nuovo banner. Nel pannello amministrativo Google Ads e Meta Pixel risultano disattivati, con identificativi e label vuoti.
+- I tre selettori partono non selezionati; i due pubblicitari sono disabilitati finché i servizi non sono configurati. Nello stato attuale «Accetta tutto» abilita soltanto Esperienza di navigazione. Verificati rifiuto persistente dopo ricarica, riapertura dal footer e chiusura con Escape.
+- Controlli desktop e mobile a 390 × 844 pixel: nessuna eccedenza orizzontale; le azioni in fondo al pannello sono raggiungibili da tastiera.
+- Privacy Policy ID 3 e Cookie Policy ID 14 aggiornate e pubblicate con data 2 novembre 2026. Google Analytics 4 è escluso dalla configurazione.
+- Una ricevuta inventata composta da 64 zeri non produce una ricevuta utilizzabile; il parametro è rimosso dall'URL. Nessun elemento script degli SDK pubblicitari rilevato nel DOM. Questo controllo non equivale a una scansione completa delle richieste di rete.
+- Superati 20 test del consenso, 17 test JavaScript pubblicitari, 11 controlli PHP pubblicitari, 18 regressioni SEO e il lint di 6 file PHP modificati.
+
+I test automatici usano fornitori e invio email simulati. Nessun identificativo è configurato e non sono stati inviati eventi reali agli account pubblicitari né verificati conversioni negli account, attribuzione o recapito effettivo delle email. Questi controlli restano da eseguire con la configurazione definitiva e destinatari di prova concordati.
+
 ## Informative e fonti
 
 Le versioni aggiornate per le pagine pubbliche sono [Privacy Policy](../privacy/privacy-policy.html) e [Cookie Policy](../privacy/cookie-policy.html), entrambe in un solo blocco HTML Gutenberg. Usare il template **Pagina a sezioni GFA**; non pubblicare le versioni storiche `.bozza.html`. I documenti in questa cartella descrivono lo stato predisposto e disattivato, non certificano configurazioni future.
