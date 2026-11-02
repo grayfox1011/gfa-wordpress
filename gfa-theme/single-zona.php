@@ -16,13 +16,11 @@ while ( have_posts() ) :
 	if ( 'rapallo' === get_post_field( 'post_name', $gfa_id ) && '' === $gfa_indirizzo ) {
 		$gfa_indirizzo = gfa_opt( 'indirizzo_rapallo' );
 	}
-	if ( 'milano' === get_post_field( 'post_name', $gfa_id ) ) {
-		if ( '' === $gfa_indirizzo ) {
-			$gfa_indirizzo = gfa_opt( 'indirizzo_milano' );
-		}
-		if ( '' === $gfa_telefono ) {
-			$gfa_telefono = gfa_opt( 'telefono' );
-		}
+	if ( 'milano' === get_post_field( 'post_name', $gfa_id ) && '' === $gfa_indirizzo ) {
+		$gfa_indirizzo = gfa_opt( 'indirizzo_milano' );
+	}
+	if ( '' === $gfa_telefono && in_array( get_post_field( 'post_name', $gfa_id ), array( 'milano', 'rapallo' ), true ) ) {
+		$gfa_telefono = gfa_opt( 'telefono' );
 	}
 	?>
 	<section class="page-hero"><div class="wrap stack">
@@ -34,12 +32,12 @@ while ( have_posts() ) :
 	<section class="section"><div class="wrap control">
 		<div class="prose"><?php the_content(); ?></div>
 		<div class="stack">
-			<h3>Sede</h3>
+			<h2 class="office-details__heading">Sede</h2>
 			<?php if ( $gfa_indirizzo || $gfa_telefono ) : ?>
 				<p><?php echo esc_html( $gfa_indirizzo ); ?><?php if ( $gfa_indirizzo && $gfa_telefono ) : ?><br><?php endif; ?><?php if ( $gfa_telefono ) : ?><a href="<?php echo esc_url( 'tel:' . preg_replace( '/[^0-9+]/', '', $gfa_telefono ) ); ?>"><?php echo esc_html( $gfa_telefono ); ?></a><?php endif; ?></p>
 			<?php endif; ?>
 			<?php if ( $gfa_comuni ) : ?>
-				<h3>Comuni serviti</h3>
+				<h2 class="office-details__heading">Comuni serviti</h2>
 				<p><?php echo esc_html( implode( ' · ', $gfa_comuni ) ); ?></p>
 			<?php endif; ?>
 		</div>

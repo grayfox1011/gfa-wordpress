@@ -49,10 +49,10 @@
 <!-- /wp:group -->
 <!-- wp:group {"className":"route-step","layout":{"type":"default"}} -->
 <div class="wp-block-group route-step"><!-- wp:heading {"level":3} -->
-<h3 class="wp-block-heading">Report</h3>
+<h3 class="wp-block-heading">Prossima campagna</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>A fine lavoro ricevi foto a campione e copie consegnate per zona.</p>
+<p>Valutiamo insieme come proseguire la promozione della tua attività.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div>

@@ -93,27 +93,4 @@ function gfa_fallback_menu() {
 	echo '</ul>';
 }
 
-/**
- * Dati strutturati LocalBusiness (solo con dati confermati).
- */
-add_action(
-	'wp_head',
-	function () {
-		if ( ! is_front_page() || '' === gfa_opt( 'ragione' ) ) {
-			return;
-		}
-		$data = array(
-			'@context'  => 'https://schema.org',
-			'@type'     => 'LocalBusiness',
-			'name'      => gfa_opt( 'ragione' ),
-			'url'       => home_url( '/' ),
-			'telephone' => gfa_opt( 'telefono' ),
-			'email'     => gfa_opt( 'email' ),
-			'vatID'     => gfa_opt( 'piva' ),
-			'address'   => gfa_opt( 'sede_legale' ),
-			'areaServed' => array_values( gfa_sedi() ),
-		);
-		echo '<script type="application/ld+json">' . wp_json_encode( array_filter( $data ) ) . '</script>' . "\n";
-	}
-);
 

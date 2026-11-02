@@ -10,7 +10,7 @@ get_header();
 <section class="page-hero">
 	<div class="wrap stack">
 		<p class="eyebrow"><?php esc_html_e( 'Zone servite', 'gfa' ); ?></p>
-		<h1><?php esc_html_e( 'Volantinaggio nelle nostre zone', 'gfa' ); ?></h1>
+		<h1><?php esc_html_e( 'Volantinaggio a Milano e Rapallo', 'gfa' ); ?></h1>
 		<p class="lead"><?php esc_html_e( 'Le sedi di Milano e Rapallo, con squadre che conoscono le proprie vie. Scegli la tua zona per vedere comuni coperti, modalità e referente.', 'gfa' ); ?></p>
 		<div class="wp-block-buttons"><div class="wp-block-button is-style-gfa-primary"><a class="wp-block-button__link wp-element-button" href="#preventivo"><?php esc_html_e( 'Chiedi un preventivo per la tua zona', 'gfa' ); ?></a></div></div>
 	</div>
