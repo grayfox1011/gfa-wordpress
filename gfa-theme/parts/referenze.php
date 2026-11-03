@@ -12,7 +12,7 @@ $gfa_clienti = array(
 	array( 'Ministero della Sanità', '' ),
 );
 ?>
-<div class="clienti" aria-labelledby="clienti-title">
+<div id="portfoglio" class="clienti" aria-labelledby="clienti-title">
 	<h2 id="clienti-title" class="clienti__title">Le nostre referenze</h2>
 	<ul class="clienti__list">
 		<?php foreach ( $gfa_clienti as $cliente ) : ?>
