@@ -17,7 +17,7 @@
 <h1 class="wp-block-heading">Volantinaggio e distribuzione volantini</h1>
 <!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead"} -->
-<p class="lead">In cassetta, nei negozi, nelle piazze e agli eventi, nelle zone di Milano, Como, Rapallo, Genova, Sanremo, Bassano del Grappa, Modena e Reggio Emilia. Ti diciamo quale modalità conviene, quante copie servono e ti mostriamo il lavoro fatto.</p>
+<p class="lead">In cassetta, nei negozi, nelle piazze e agli eventi, nelle zone di Milano e Rapallo. Ti diciamo quale modalità conviene, quante copie servono e ti mostriamo il lavoro fatto.</p>
 <!-- /wp:paragraph -->
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button {"className":"is-style-gfa-primary"} -->
@@ -26,3 +26,4 @@
 <!-- /wp:buttons --></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->
+

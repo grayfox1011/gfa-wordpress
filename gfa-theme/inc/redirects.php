@@ -23,8 +23,8 @@ add_action(
 			'servizi/noleggio-strumentazioni'                => '/promozione-eventi/',
 			'servizi/prodotti-web'                           => '/chi-siamo/',
 			'servizi/web-marketing'                          => '/chi-siamo/',
-			'servizi/consulenze-e-strategie-di-marketing'    => '/chi-siamo/',
-			'servizi'                                        => '/',
+			'servizi/consulenze-e-strategie-di-marketing'    => '/#metodo',
+			'servizi'                                        => '/#servizi',
 			'promozione'                                     => '/volantinaggio/#prezzi',
 			'portfoglio'                                     => '/lavori/',
 			'2019/05/17/ciao-mondo'                          => '/',
@@ -35,5 +35,7 @@ add_action(
 			wp_safe_redirect( home_url( $map[ $path ] ), 301 );
 			exit;
 		}
-	}
+	},
+	// Prima di redirect_canonical, che può interpretare "promozione" come "promozione-eventi".
+	1
 );

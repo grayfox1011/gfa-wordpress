@@ -38,7 +38,7 @@
 <h3 class="wp-block-heading">Documentato</h3>
 <!-- /wp:heading -->
 <!-- wp:paragraph -->
-<p>Report di ogni giro con percorso, foto a campione e copie per zona.</p>
+<p>Report di ogni giro con foto a campione e copie per zona.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->
 <!-- wp:group {"className":"path","layout":{"type":"default"}} -->

@@ -10,12 +10,14 @@ $gfa_prototype = false;
 
 		<form class="form" data-quote-form <?php echo $gfa_prototype ? 'data-prototype' : ''; ?> method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" novalidate>
 			<input type="hidden" name="action" value="gfa_preventivo">
+			<input type="hidden" name="gfa_google_ads_consent" value="0">
+			<input type="hidden" name="gfa_meta_ads_consent" value="0">
 			<?php wp_nonce_field( 'gfa_quote', 'gfa_quote_nonce' ); ?>
 			<div class="hp" aria-hidden="true"><label for="gfa_website">Sito web</label><input type="text" id="gfa_website" name="gfa_website" tabindex="-1" autocomplete="off"></div>
 
 			<?php if ( 'inviato' === $gfa_state ) : ?>
 				<p class="form__notice form__notice--ok" role="status"><strong>Richiesta inviata.</strong> Ti ricontattiamo al più presto all'email che hai indicato.</p>
-				<p><a href="<?php echo esc_url( remove_query_arg( 'preventivo' ) ); ?>#preventivo"><?php esc_html_e( 'Invia un\'altra richiesta', 'gfa' ); ?></a></p>
+				<p><a href="<?php echo esc_url( remove_query_arg( array( 'preventivo', 'gfa_receipt' ) ) ); ?>#preventivo"><?php esc_html_e( 'Invia un\'altra richiesta', 'gfa' ); ?></a></p>
 		</form>
 				<?php
 				return;
@@ -68,3 +70,4 @@ $gfa_prototype = false;
 				<button class="btn btn--primary" type="submit" data-send>Invia la richiesta</button>
 			</div>
 		</form>
+

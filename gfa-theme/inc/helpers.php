@@ -19,16 +19,17 @@ function gfa_defaults() {
 	return array(
 		'brand'         => 'GFA',
 		'ragione'       => '',
-		'piva'          => '',
+		'piva'          => '09182350968',
 		'rea'           => '',
 		'sede_legale'   => '',
-		'telefono'      => '',
+		'telefono'      => '3471174430',
 		'email'         => 'info@gfamarketing.com',
-		'whatsapp'      => '',
-		'anno'          => '',
-		'sedi'          => 'Milano, Como, Rapallo, Genova, Sanremo, Bassano del Grappa, Modena, Reggio Emilia',
-		'copie_anno'    => '',
-		'email_preventivi' => '',
+		'indirizzo_milano' => 'Viale Monte Ceneri, 62, 20155 Milano MI',
+		'indirizzo_rapallo' => 'Via Libertà 46',
+		'whatsapp'      => '393405585032',
+		'anno'          => '1985',
+		'sedi'          => 'Milano, Rapallo',
+		'email_preventivi' => 'info@gfamarketing.com',
 	);
 }
 
@@ -42,6 +43,22 @@ function gfa_opt( $key ) {
 	$defaults = gfa_defaults();
 	$fallback = isset( $defaults[ $key ] ) ? $defaults[ $key ] : '';
 	return (string) get_theme_mod( 'gfa_' . $key, $fallback );
+}
+
+/**
+ * Numero WhatsApp internazionale per i collegamenti wa.me.
+ *
+ * @return string Numero senza simboli, oppure vuoto se non valido.
+ */
+function gfa_whatsapp_number() {
+	$number = preg_replace( '/\D/', '', gfa_opt( 'whatsapp' ) );
+	if ( 0 === strpos( $number, '00' ) ) {
+		$number = substr( $number, 2 );
+	}
+	if ( 10 === strlen( $number ) && '3' === substr( $number, 0, 1 ) ) {
+		$number = '39' . $number;
+	}
+	return preg_match( '/^[1-9][0-9]{7,14}$/D', $number ) ? $number : '';
 }
 
 /**
@@ -88,3 +105,4 @@ function gfa_photo_slot( $title, $spec ) {
 function gfa_sedi() {
 	return array_filter( array_map( 'trim', explode( ',', gfa_opt( 'sedi' ) ) ) );
 }
+

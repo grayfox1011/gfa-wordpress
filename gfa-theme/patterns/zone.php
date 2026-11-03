@@ -16,7 +16,7 @@
 <p class="eyebrow">Zone servite</p>
 <!-- /wp:paragraph -->
 <!-- wp:heading -->
-<h2 class="wp-block-heading">Otto sedi, dal Ponente alla pianura.</h2>
+<h2 class="wp-block-heading">Le nostre sedi: Milano e Rapallo.</h2>
 <!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead"} -->
 <p class="lead">Ogni sede conosce le sue vie. Scegli la tua zona per vedere comuni coperti, modalità e referente.</p>
@@ -27,3 +27,4 @@
 <!-- wp:gfa/zone-mappa /--></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->
+

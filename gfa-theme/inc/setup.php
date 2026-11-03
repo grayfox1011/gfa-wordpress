@@ -13,7 +13,7 @@ add_action(
 		load_theme_textdomain( 'gfa', get_template_directory() . '/languages' );
 		add_theme_support( 'title-tag' );
 		add_theme_support( 'post-thumbnails' );
-		add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 80, 'flex-width' => true ) );
+		add_theme_support( 'custom-logo', array( 'height' => 505, 'width' => 1200, 'flex-width' => true, 'flex-height' => true ) );
 		add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
 		add_theme_support( 'responsive-embeds' );
 		add_theme_support( 'editor-styles' );
@@ -93,26 +93,4 @@ function gfa_fallback_menu() {
 	echo '</ul>';
 }
 
-/**
- * Dati strutturati LocalBusiness (solo con dati confermati).
- */
-add_action(
-	'wp_head',
-	function () {
-		if ( ! is_front_page() || '' === gfa_opt( 'ragione' ) ) {
-			return;
-		}
-		$data = array(
-			'@context'  => 'https://schema.org',
-			'@type'     => 'LocalBusiness',
-			'name'      => gfa_opt( 'ragione' ),
-			'url'       => home_url( '/' ),
-			'telephone' => gfa_opt( 'telefono' ),
-			'email'     => gfa_opt( 'email' ),
-			'vatID'     => gfa_opt( 'piva' ),
-			'address'   => gfa_opt( 'sede_legale' ),
-			'areaServed' => array_values( gfa_sedi() ),
-		);
-		echo '<script type="application/ld+json">' . wp_json_encode( array_filter( $data ) ) . '</script>' . "\n";
-	}
-);
+

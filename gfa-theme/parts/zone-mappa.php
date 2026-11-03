@@ -7,14 +7,8 @@
 
 // Posizioni approssimate delle città su una mappa schematica del Nord Italia (viewBox 520x300).
 $gfa_pos = array(
-	'Milano'             => array( 205, 95 ),
-	'Como'               => array( 188, 58 ),
-	'Bassano del Grappa' => array( 382, 62 ),
-	'Modena'             => array( 318, 168 ),
-	'Reggio Emilia'      => array( 288, 160 ),
-	'Genova'             => array( 180, 205 ),
-	'Rapallo'            => array( 208, 218 ),
-	'Sanremo'            => array( 82, 262 ),
+	'Milano'  => array( 205, 95 ),
+	'Rapallo' => array( 208, 218 ),
 );
 ?>
 		<svg class="north-map" viewBox="0 0 520 300" role="img" aria-label="<?php esc_attr_e( 'Mappa schematica delle sedi GFA nel Nord Italia', 'gfa' ); ?>">
@@ -22,7 +16,8 @@ $gfa_pos = array(
 			<?php foreach ( $gfa_pos as $gfa_city => $gfa_xy ) : ?>
 				<?php if ( in_array( $gfa_city, gfa_sedi(), true ) ) : ?>
 					<circle class="dot<?php echo 'Rapallo' === $gfa_city ? ' dot--home' : ''; ?>" cx="<?php echo (int) $gfa_xy[0]; ?>" cy="<?php echo (int) $gfa_xy[1]; ?>" r="<?php echo 'Rapallo' === $gfa_city ? 8 : 6; ?>"/>
-					<?php $gfa_left = in_array( $gfa_city, array( 'Genova', 'Reggio Emilia', 'Bassano del Grappa' ), true ); ?><text x="<?php echo (int) $gfa_xy[0] + ( $gfa_left ? -11 : 11 ); ?>" y="<?php echo (int) $gfa_xy[1] + ( 'Rapallo' === $gfa_city ? 18 : 4 ); ?>" text-anchor="<?php echo $gfa_left ? 'end' : 'start'; ?>"><?php echo esc_html( $gfa_city ); ?></text>
+					<text x="<?php echo (int) $gfa_xy[0] + 11; ?>" y="<?php echo (int) $gfa_xy[1] + ( 'Rapallo' === $gfa_city ? 18 : 4 ); ?>" text-anchor="start"><?php echo esc_html( $gfa_city ); ?></text>
 				<?php endif; ?>
 			<?php endforeach; ?>
 		</svg>
+

@@ -18,7 +18,7 @@ prezzi, domande frequenti e foto si modificano direttamente nell'editor, come in
 - **Ricominciare una pagina da capo:** "+" → Modelli → *Pagine GFA*.
 - **Sostituire una foto segnaposto:** clic sull'immagine → *Sostituisci*; poi cancella la didascalia "Da fornire".
 - **Segnare un dato da confermare:** seleziona il testo → menu formato → *Da fornire* (evidenziazione arancione).
-- **Evidenziatore giallo** (come "verificare." in homepage): menu formato → *Evidenziatore giallo*.
+- **Evidenziatore giallo** (come "visibilità" in homepage): menu formato → *Evidenziatore giallo*.
 - **Pulsanti:** stili *Giallo GFA*, *Blu GFA*, *Bordo* nel pannello del pulsante.
 - **A capo nei titoli** (Maiusc+Invio): in homepage ogni riga del titolo entra con la sua animazione.
 
@@ -88,8 +88,7 @@ Animazioni (GSAP 3.13 + ScrollTrigger + SplitText, Lenis 1.3 per lo scroll morbi
 - schermata di caricamento con il logo GFA, solo alla prima pagina visitata in una sessione;
   se JavaScript non parte sparisce comunque dopo 6 secondi;
 - titolo della homepage che sale riga per riga e evidenziatore giallo che si disegna;
-- titoli di sezione divisi in righe, card che entrano a gruppi, percorso GPS che si disegna,
-  linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
+- titoli di sezione divisi in righe, card che entrano a gruppi, linea dei passi legata allo scroll, punti delle sedi, foto che si scoprono;
 - transizione tra le pagine con GSAP: una tendina blu GFA copre tutta la pagina (header compreso), si cambia
   pagina e la tendina si apre solo quando la nuova pagina è pronta e in cima; tutti i browser;
 - ogni pagina parte dall'alto, anche dopo ricarica o "indietro"; i link a una sezione (#preventivo)

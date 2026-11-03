@@ -6,6 +6,10 @@
 
   var root = document.documentElement;
 
+  function functionalStorageAllowed() {
+    return !!(window.GfaCookieConsent && window.GfaCookieConsent.allowsFunctional());
+  }
+
   function reduced() {
     return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
@@ -40,7 +44,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && nav.classList.contains('is-open')) { setOpen(false, true); }
     });
-    window.matchMedia('(min-width: 1181px)').addEventListener('change', function (mq) { if (mq.matches) { setOpen(false); } });
+    window.matchMedia('(min-width: 1401px)').addEventListener('change', function (mq) { if (mq.matches) { setOpen(false); } });
   }
 
   /* ---------- Header compatto ---------- */
@@ -56,7 +60,9 @@
   function initBrand() {
     document.querySelectorAll('a.brand').forEach(function (a) {
       a.addEventListener('click', function () {
-        try { window.sessionStorage.removeItem('gfaSeen'); } catch (e) { /* storage non disponibile */ }
+        if (functionalStorageAllowed()) {
+          try { window.sessionStorage.removeItem('gfaSeen'); } catch (e) { /* storage non disponibile */ }
+        }
       });
     });
   }
@@ -159,7 +165,9 @@
       if (url.pathname === window.location.pathname && url.search === window.location.search) { return; } // stessa pagina: ci pensa lo scroll
       if (!window.gsap) { return; }
       e.preventDefault();
-      try { window.sessionStorage.setItem('gfaTrans', '1'); } catch (err) { /* storage non disponibile */ }
+      if (functionalStorageAllowed()) {
+        try { window.sessionStorage.setItem('gfaTrans', '1'); } catch (err) { /* storage non disponibile */ }
+      }
       var go = function () { window.location.href = url.href; };
       if (a.classList.contains('brand')) { go(); return; } // il logo apre con il preload
       curtain.classList.add('is-active');
@@ -251,8 +259,10 @@
       if (h1) { riseText(h1, { duration: 1.3, stagger: 0.07 }); }
       gsap.fromTo(hl, { backgroundSize: '0% 100%' }, { backgroundSize: '100% 100%', duration: 0.9, ease: 'power2.inOut', delay: 0.8 });
       rise(hero.querySelectorAll('.eyebrow, .lead, .hero__cta .wp-block-button, .hero__proof li'), { y: 24, stagger: 0.08, delay: 0.35, duration: 1 });
-      img.forEach(function (i) { i.classList.add('gfa-animated'); });
-      gsap.fromTo(img, { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.12 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1.6, ease: 'expo.inOut', delay: 0.1, clearProps: 'clipPath,transform' });
+      if (img.length) {
+        img.forEach(function (i) { i.classList.add('gfa-animated'); });
+        gsap.fromTo(img, { clipPath: 'inset(100% 0% 0% 0%)', scale: 1.12 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, duration: 1.6, ease: 'expo.inOut', delay: 0.1, clearProps: 'clipPath,transform' });
+      }
       rise(hero.querySelectorAll('.ticket'), { y: 60, delay: 0.9, duration: 1.1 });
     }
 
@@ -275,11 +285,17 @@
 
     // 2. Preload
     if (preloader && root.classList.contains('gfa-preload')) {
-      try { window.sessionStorage.setItem('gfaSeen', '1'); } catch (e) { /* storage non disponibile */ }
+      if (functionalStorageAllowed()) {
+        try { window.sessionStorage.setItem('gfaSeen', '1'); } catch (e) { /* storage non disponibile */ }
+      }
       if (lenis) { lenis.stop(); }
-      gsap.timeline({ onComplete: function () { root.classList.remove('gfa-preload'); preloader.remove(); } })
-        .from('.preloader__box', { scale: 0.7, rotate: -6, autoAlpha: 0, duration: 0.5, ease: 'back.out(1.6)' })
-        .from('.preloader__letter', { yPercent: 110, duration: 0.55, stagger: 0.07, ease: 'expo.out' }, 0.15)
+      var preloadTimeline = gsap.timeline({ onComplete: function () { root.classList.remove('gfa-preload'); preloader.remove(); } })
+        .from('.preloader__box', { scale: 0.7, rotate: -6, autoAlpha: 0, duration: 0.5, ease: 'back.out(1.6)' });
+      var preloadLetters = preloader.querySelectorAll('.preloader__letter');
+      if (preloadLetters.length) {
+        preloadTimeline.from(preloadLetters, { yPercent: 110, duration: 0.55, stagger: 0.07, ease: 'expo.out' }, 0.15);
+      }
+      preloadTimeline
         .fromTo('.preloader__route', { clipPath: 'inset(0% 100% 0% 0%)' }, { clipPath: 'inset(0% 0% 0% 0%)', duration: 0.7, ease: 'power2.inOut' }, 0.45)
         .from('.preloader__claim', { y: 12, autoAlpha: 0, duration: 0.45 }, 0.7)
         .to('.preloader__inner', { y: -24, autoAlpha: 0, duration: 0.4, ease: 'power2.in' }, '+=0.3')
@@ -326,18 +342,6 @@
     // 4. Card e blocchi: a gruppi
     var cards = '.path, .mode, .quote, .person, .zone-list li, .work, .route-step, .checks li, .faq details, .facts-list li, .price-table tr';
     ST.batch(cards, { start: 'top 97%', once: true, onEnter: function (els) { rise(els, { y: 50, stagger: 0.12 }); } });
-
-    // 5. Report GPS
-    var route = document.querySelector('.report__map .route-draw');
-    if (route && route.getTotalLength) {
-      var rlen = route.getTotalLength();
-      gsap.set(route, { strokeDasharray: rlen, strokeDashoffset: rlen });
-      gsap.timeline({ scrollTrigger: { trigger: '.report', start: 'top 75%', once: true } })
-        .to(route, { strokeDashoffset: 0, duration: 2.6, ease: 'power1.inOut' })
-        .from('.report__map .stop', { scale: 0, transformOrigin: 'center', duration: 0.45, stagger: 0.55, ease: 'back.out(2.5)' }, 0)
-        .from('.report__rows li', { x: -20, autoAlpha: 0, duration: 0.5, stagger: 0.25 }, 0.6)
-        .set(route, { strokeDasharray: '9 7', strokeDashoffset: 0 });
-    }
 
     // 6. Linea dei passi legata allo scroll
     document.querySelectorAll('.route-progress').forEach(function (bar) {

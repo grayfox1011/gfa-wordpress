@@ -14,10 +14,11 @@
 <p class="eyebrow">Chi siamo</p>
 <!-- /wp:paragraph -->
 <!-- wp:heading {"level":1} -->
-<h1 class="wp-block-heading">Nel volantinaggio dal <mark class="todo">anno</mark></h1>
+<h1 class="wp-block-heading">Nel volantinaggio dal 1985</h1>
 <!-- /wp:heading -->
 <!-- wp:paragraph {"className":"lead"} -->
-<p class="lead">GFA distribuisce volantini e materiale pubblicitario nel Nord Italia, con otto sedi operative e squadre che conoscono le proprie zone.</p>
+<p class="lead">GFA distribuisce volantini e materiale pubblicitario con sedi operative a Milano e Rapallo e squadre che conoscono le proprie zone.</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->
+

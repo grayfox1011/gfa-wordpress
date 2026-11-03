@@ -26,7 +26,7 @@
 <!-- /wp:details -->
 <!-- wp:details -->
 <details class="wp-block-details"><summary>Come faccio a sapere che i volantini sono stati consegnati?</summary><!-- wp:paragraph -->
-<p>A fine giro ricevi il report con percorso, orari, foto a campione e copie per zona. <mark class="todo">Descrivere i controlli reali di GFA</mark></p>
+<p>A fine giro ricevi il report con foto a campione e copie per zona. <mark class="todo">Descrivere i controlli reali di GFA</mark></p>
 <!-- /wp:paragraph --></details>
 <!-- /wp:details -->
 <!-- wp:details -->

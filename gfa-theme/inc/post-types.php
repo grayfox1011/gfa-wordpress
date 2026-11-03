@@ -110,7 +110,7 @@ function gfa_lavoro_box( $post ) {
 			'esigenza'     => 'Esigenza del cliente',
 			'zona_periodo' => 'Zona e periodo',
 			'attivita'     => 'Attività svolte',
-			'prova'        => 'Prova disponibile (report GPS, foto, copie)',
+			'prova'        => 'Prova disponibile (report, foto, copie)',
 		)
 	);
 }
