@@ -115,9 +115,6 @@ p { margin: 0; max-width: 62ch; }
 .nav ul { display: flex; gap: .2rem; list-style: none; margin: 0; padding: 0; }
 .nav a { white-space: nowrap; text-decoration: none; font-weight: 600; font-size: .95rem; padding: .5rem .7rem; border-radius: 4px; }
 .nav a:hover, .nav .current-menu-item > a { background: var(--paper-2); }
-.nav a.btn--whatsapp { display: inline-flex; justify-content: center; gap: .45rem; color: #146c43; background: transparent; border: 1px solid #146c43; }
-.nav .btn--whatsapp:hover { background: #e5f6ed; }
-.nav .btn--whatsapp svg { width: 1.15rem; height: 1.15rem; flex: 0 0 1.15rem; }
 .nav-toggle { display: none; background: none; border: 2px solid var(--ink); border-radius: 4px; color: var(--ink); min-height: 44px; padding: 0 .8rem; font-weight: 700; font-family: var(--f-body); }
 @media (max-width: 1400px) {
   .nav-toggle { display: inline-flex; align-items: center; flex-shrink: 0; }
@@ -341,6 +338,9 @@ legend { font-family: var(--f-display); font-weight: 700; font-size: var(--step-
 /* Footer */
 .site-footer { background: var(--ink); color: var(--paper); padding-block: 3.5rem 2rem; font-size: .92rem; }
 .site-footer a { color: var(--paper); }
+.site-footer .btn--whatsapp { margin-top: .9rem; color: #fff; background: #146c43; }
+.site-footer .btn--whatsapp:hover, .site-footer .btn--whatsapp:focus-visible { background: #0e5333; }
+.site-footer .btn--whatsapp svg { width: 1.15rem; height: 1.15rem; flex: 0 0 1.15rem; }
 .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 2rem; }
 .footer-grid > * { min-width: 0; }
 .footer-grid h3 { font-size: 1rem; margin-bottom: .8rem; }
