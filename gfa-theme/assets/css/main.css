@@ -95,6 +95,24 @@ p { margin: 0; max-width: 62ch; }
 .btn--ghost { border-color: currentColor; color: var(--ink); background: transparent; }
 .btn--blue { background: var(--blue); color: var(--blue-ink); }
 
+/* Contatto diretto, indipendente dalla posizione di scorrimento. */
+.whatsapp-float {
+  position: fixed; right: calc(1rem + env(safe-area-inset-right, 0px)); bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  z-index: 40; display: grid; place-items: center; width: 56px; height: 56px;
+  color: #fff; background: #146c43; border: 2px solid #fff; border-radius: 50%;
+  box-shadow: 0 3px 12px #141a2e40;
+}
+.whatsapp-float svg { width: 28px; height: 28px; }
+.whatsapp-float:hover, .whatsapp-float:focus-visible { background: #0e5333; }
+body:has(.gfa-cookie-dialog[open]) .whatsapp-float { visibility: hidden; }
+@media (max-width: 1340px) {
+  body:has(.gfa-cookie-banner:not([hidden])) .whatsapp-float { visibility: hidden; }
+}
+@media (max-width: 760px) {
+  body:has(.gfa-cookie-status:not([hidden])) .whatsapp-float { visibility: hidden; }
+}
+@media print { .whatsapp-float { display: none; } }
+
 /* Header */
 .site-header {
   position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
@@ -338,9 +356,6 @@ legend { font-family: var(--f-display); font-weight: 700; font-size: var(--step-
 /* Footer */
 .site-footer { background: var(--ink); color: var(--paper); padding-block: 3.5rem 2rem; font-size: .92rem; }
 .site-footer a { color: var(--paper); }
-.site-footer .btn--whatsapp { margin-top: .9rem; color: #fff; background: #146c43; }
-.site-footer .btn--whatsapp:hover, .site-footer .btn--whatsapp:focus-visible { background: #0e5333; }
-.site-footer .btn--whatsapp svg { width: 1.15rem; height: 1.15rem; flex: 0 0 1.15rem; }
 .footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 2rem; }
 .footer-grid > * { min-width: 0; }
 .footer-grid h3 { font-size: 1rem; margin-bottom: .8rem; }
