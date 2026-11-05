@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "gfa-leads-local",
+  "main": "src/index.mjs",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": false,
+  "preview_urls": false,
+  "access": { "dev": { "aud": "gfa-local-only", "identity": { "email": "admin@example.com" } } },
+  "d1_databases": [{ "binding": "DB", "database_name": "gfa-leads-local", "database_id": "local-only", "migrations_dir": "migrations" }]
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "gfa-leads-admin",
+  "main": "src/index.mjs",
+  "account_id": "90ad1c9af3d23fa110258b67395f054a",
+  "compatibility_date": "2026-11-01",
+  "workers_dev": true,
+  "preview_urls": false,
+  "observability": { "enabled": false },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "gfa-leads-db",
+    "database_id": "ff99bb6a-e444-4b96-9841-95010b35c54a",
+    "jurisdiction": "eu",
+    "migrations_dir": "migrations"
+  }]
+}
